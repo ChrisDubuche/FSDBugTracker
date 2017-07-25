@@ -243,5 +243,5 @@ ModelManifest.xml
 
 # Sensitive user data
 private.config
-FSDBugTracker/config/Web.Release.config
+Web.Release.config
 Configuration.cs
