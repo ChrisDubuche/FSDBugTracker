@@ -61,5 +61,7 @@ namespace FSDBugTracker.Models
         public DbSet<TicketPriority> TicketPriorities { get; set; }
         public DbSet<TicketType> TicketTypes { get; set; }
         public DbSet<Project> Projects { get; set; }
+
+        
     }
 }

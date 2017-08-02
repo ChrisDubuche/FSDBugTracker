@@ -15,12 +15,14 @@ namespace FSDBugTracker.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: TicketTypes
+        [Authorize]
         public ActionResult Index()
         {
             return View(db.TicketTypes.ToList());
         }
 
         // GET: TicketTypes/Details/5
+        [Authorize]
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -36,6 +38,7 @@ namespace FSDBugTracker.Controllers
         }
 
         // GET: TicketTypes/Create
+        [Authorize]
         public ActionResult Create()
         {
             return View();
@@ -59,6 +62,7 @@ namespace FSDBugTracker.Controllers
         }
 
         // GET: TicketTypes/Edit/5
+        [Authorize]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -90,6 +94,7 @@ namespace FSDBugTracker.Controllers
         }
 
         // GET: TicketTypes/Delete/5
+        [Authorize]
         public ActionResult Delete(int? id)
         {
             if (id == null)

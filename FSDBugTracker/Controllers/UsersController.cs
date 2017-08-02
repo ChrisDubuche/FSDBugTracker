@@ -7,115 +7,115 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using FSDBugTracker.Models;
-
+using FSDBugTracker.Helpers;
 namespace FSDBugTracker.Controllers
 {
-    public class ProjectsController : Controller
+    public class UsersController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
-        // GET: Projects
+        // GET: Users
         [Authorize]
         public ActionResult Index()
         {
-            return View(db.Projects.ToList());
+            return View(db.Users.ToList());
         }
 
-        // GET: Projects/Details/5
-        [Authorize(Roles = "Admin, Project Manager, SuperUser")]
-        public ActionResult Details(int? id)
+        // GET: Users/Details/5
+        [Authorize]
+        public ActionResult Details(string id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Project project = db.Projects.Find(id);
-            if (project == null)
+            ApplicationUser applicationUser = db.Users.Find(id);
+            if (applicationUser == null)
             {
                 return HttpNotFound();
             }
-            return View(project);
+            return View(applicationUser);
         }
 
-        // GET: Projects/Create
-        [Authorize(Roles = "Admin, Project Manager, SuperUser")]
+        // GET: Users/Create
+        [Authorize]
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: Projects/Create
+        // POST: Users/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Name")] Project project) //List<string> Developer, List<string> Admin, List<string> ProjectManager, List<string> Submitter
+        public ActionResult Create([Bind(Include = "Id,FirstName,LastName,DisplayName,Email,EmailConfirmed,PasswordHash,SecurityStamp,PhoneNumber,PhoneNumberConfirmed,TwoFactorEnabled,LockoutEndDateUtc,LockoutEnabled,AccessFailedCount,UserName")] ApplicationUser applicationUser)
         {
             if (ModelState.IsValid)
             {
-                db.Projects.Add(project);
+                db.Users.Add(applicationUser);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(project);
+            return View(applicationUser);
         }
 
-        // GET: Projects/Edit/5
-        [Authorize(Roles = "Admin, Project Manager, SuperUser")]
-        public ActionResult Edit(int? id)
+        // GET: Users/Edit/5
+        [Authorize]
+        public ActionResult Edit(string id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Project project = db.Projects.Find(id);
-            if (project == null)
+            ApplicationUser applicationUser = db.Users.Find(id);
+            if (applicationUser == null)
             {
                 return HttpNotFound();
             }
-            return View(project);
+            return View(applicationUser);
         }
 
-        // POST: Projects/Edit/5
+        // POST: Users/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Name")] Project project)
+        public ActionResult Edit([Bind(Include = "Id,FirstName,LastName,DisplayName,Email,EmailConfirmed,PasswordHash,SecurityStamp,PhoneNumber,PhoneNumberConfirmed,TwoFactorEnabled,LockoutEndDateUtc,LockoutEnabled,AccessFailedCount,UserName")] ApplicationUser applicationUser)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(project).State = EntityState.Modified;
+                db.Entry(applicationUser).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(project);
+            return View(applicationUser);
         }
 
-        // GET: Projects/Delete/5
-        [Authorize(Roles = "SuperUser")]
-        public ActionResult Delete(int? id)
+        // GET: Users/Delete/5
+        [Authorize]
+        public ActionResult Delete(string id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Project project = db.Projects.Find(id);
-            if (project == null)
+            ApplicationUser applicationUser = db.Users.Find(id);
+            if (applicationUser == null)
             {
                 return HttpNotFound();
             }
-            return View(project);
+            return View(applicationUser);
         }
 
-        // POST: Projects/Delete/5
+        // POST: Users/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        public ActionResult DeleteConfirmed(string id)
         {
-            Project project = db.Projects.Find(id);
-            db.Projects.Remove(project);
+            ApplicationUser applicationUser = db.Users.Find(id);
+            db.Users.Remove(applicationUser);
             db.SaveChanges();
             return RedirectToAction("Index");
         }
@@ -128,5 +128,6 @@ namespace FSDBugTracker.Controllers
             }
             base.Dispose(disposing);
         }
+       
     }
 }

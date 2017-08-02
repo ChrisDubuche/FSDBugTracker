@@ -15,6 +15,7 @@ namespace FSDBugTracker.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: TicketAttachments
+        [Authorize]
         public ActionResult Index()
         {
             var ticketAttachments = db.TicketAttachments.Include(t => t.Ticket).Include(t => t.User);
@@ -22,6 +23,7 @@ namespace FSDBugTracker.Controllers
         }
 
         // GET: TicketAttachments/Details/5
+        [Authorize]
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -37,6 +39,7 @@ namespace FSDBugTracker.Controllers
         }
 
         // GET: TicketAttachments/Create
+        [Authorize]
         public ActionResult Create()
         {
             ViewBag.TicketId = new SelectList(db.Tickets, "Id", "Titlte");
@@ -64,6 +67,7 @@ namespace FSDBugTracker.Controllers
         }
 
         // GET: TicketAttachments/Edit/5
+        [Authorize]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -99,6 +103,7 @@ namespace FSDBugTracker.Controllers
         }
 
         // GET: TicketAttachments/Delete/5
+        [Authorize]
         public ActionResult Delete(int? id)
         {
             if (id == null)
