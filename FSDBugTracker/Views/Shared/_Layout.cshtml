@@ -24,7 +24,20 @@
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Project List", "Index", "Projects")</li>
                     <li>@Html.ActionLink("Ticket List", "Index", "Tickets")</li>
-                    <li>@Html.ActionLink("User List", "Index", "Users")</li>
+                    @*<li>@Html.ActionLink("User List", "Index", "Users")</li>*@
+                    <li>
+                        <button class="btn btn-link dropdown-toggle" type="button" data-toggle="dropdown" style="color:#999999;padding-top:14px;">
+                            Bug Tracker Users
+                            <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu">
+                            @*<li>@Html.ActionLink("All Users", "Index", "Users")</li>*@
+                            <li>@Html.ActionLink("Administrators", "Index", "Users", new { roleName = "Admin" }, null)</li>
+                            <li>@Html.ActionLink("Project Managers", "Index", "Users", new { roleName = "Project Manager" }, null)</li>
+                            <li>@Html.ActionLink("Developers", "Index", "Users", new { roleName = "Developer" }, null)</li>
+                            <li>@Html.ActionLink("Submitters", "Index", "Users", new { roleName = "Submitter" }, null)</li>
+                        </ul>
+                    </li>
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>

@@ -1,24 +1,30 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
+﻿using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
 using FSDBugTracker.Models;
 using FSDBugTracker.Helpers;
+
 namespace FSDBugTracker.Controllers
 {
     public class UsersController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
+        private UserRolesHelper roleHelper = new UserRolesHelper();
 
         // GET: Users
         [Authorize]
-        public ActionResult Index()
+        public ActionResult Index(string roleName)
         {
-            return View(db.Users.ToList());
+            if (string.IsNullOrEmpty(roleName))
+            {
+                return View(db.Users.ToList());
+            }
+            else
+            {
+                return View(roleHelper.UsersInRole(roleName));
+            }
+            
         }
 
         // GET: Users/Details/5
@@ -94,7 +100,7 @@ namespace FSDBugTracker.Controllers
         }
 
         // GET: Users/Delete/5
-        [Authorize]
+        [Authorize(Roles = "SuperUser")]
         public ActionResult Delete(string id)
         {
             if (id == null)

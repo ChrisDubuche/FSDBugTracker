@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
+﻿using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
 using FSDBugTracker.Models;
 
@@ -22,7 +18,7 @@ namespace FSDBugTracker.Controllers
         }
 
         // GET: TicketStatuses/Details/5
-        [Authorize]
+        [Authorize(Roles = "SuperUser")]
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -62,7 +58,7 @@ namespace FSDBugTracker.Controllers
         }
 
         // GET: TicketStatuses/Edit/5
-        [Authorize]
+        [Authorize(Roles = "Admin, Project Manager, SuperUser")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -94,7 +90,7 @@ namespace FSDBugTracker.Controllers
         }
 
         // GET: TicketStatuses/Delete/5
-        [Authorize]
+        [Authorize(Roles = "SuperUser")]
         public ActionResult Delete(int? id)
         {
             if (id == null)

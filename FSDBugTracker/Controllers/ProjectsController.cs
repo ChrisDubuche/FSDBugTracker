@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
+﻿using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
 using FSDBugTracker.Models;
 
@@ -22,7 +18,7 @@ namespace FSDBugTracker.Controllers
         }
 
         // GET: Projects/Details/5
-        [Authorize(Roles = "Admin, Project Manager, SuperUser")]
+        [Authorize(Roles = "Admin, Project Manager, Developer, Submitter, SuperUser")]
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -38,7 +34,7 @@ namespace FSDBugTracker.Controllers
         }
 
         // GET: Projects/Create
-        [Authorize(Roles = "Admin, Project Manager, SuperUser")]
+        [Authorize(Roles = "Admin, SuperUser")]
         public ActionResult Create()
         {
             return View();

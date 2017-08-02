@@ -29,7 +29,7 @@ namespace FSDBugTracker.Controllers
         }
 
         // GET: Tickets/Details/5
-        [Authorize]
+        [Authorize(Roles = "Admin, Project Manager, Developer, Submitter, SuperUser")]
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -125,7 +125,7 @@ namespace FSDBugTracker.Controllers
         }
 
         // GET: Tickets/Delete/5
-        [Authorize]
+        [Authorize(Roles = "SuperUser")]
         public ActionResult Delete(int? id)
         {
             if (id == null)

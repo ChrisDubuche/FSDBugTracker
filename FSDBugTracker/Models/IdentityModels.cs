@@ -4,6 +4,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FSDBugTracker.Models
 {
@@ -11,9 +13,20 @@ namespace FSDBugTracker.Models
     public class ApplicationUser : IdentityUser
     {
         //Custom Props
+        [Display(Name = "First Name:")]
         public string FirstName { get; set; }
+        [Display(Name = "Last Name:")]
         public string LastName { get; set; }
+        [Display(Name = "Display Name:")]
         public string DisplayName { get; set; }
+        [NotMapped]
+        public string FullName
+        {
+            get
+            {
+                return FirstName + ' ' + LastName;
+            }
+        }
 
         //Nav
         public virtual ICollection<TicketAttachment> TicketAttachments { get; set; }
