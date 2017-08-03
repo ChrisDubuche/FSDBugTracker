@@ -48,6 +48,7 @@ namespace FSDBugTracker.Controllers
         [Authorize(Roles = "Submitter, SuperUser")]
         public ActionResult Create()
         {
+
             ViewBag.AssignedToUserId = new SelectList(db.Users, "Id", "FirstName");
             ViewBag.OwnerUserId = new SelectList(db.Users, "Id", "FirstName");
             ViewBag.ProjectId = new SelectList(db.Projects, "Id", "Name");
