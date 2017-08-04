@@ -80,6 +80,28 @@
                     }
                 </td>
                 <td>
+                    @{
+                        var ticketHelper = new TicketsHelper();
+                        var assignedTix = ticketHelper.GetAssignedTickets(user.Id);
+                        foreach (var ticket in assignedTix)
+                        {
+                            @ticket.Titlte<br />
+                        }
+
+                    }
+                </td>
+                <td>
+                    @{
+                        ticketHelper = new TicketsHelper();
+                        var ownedTix = ticketHelper.GetUserOwnedTickets(user.Id);
+                        foreach (var ticket in ownedTix)
+                        {
+                            @ticket.Titlte<br />
+                        }
+
+                    }
+                </td>
+                <td>
                     @Html.ActionLink("Edit", "Edit", new { id = user.Id }) |
                     @Html.ActionLink("Details", "Details", new { id = user.Id }) |
                     @Html.ActionLink("Delete", "Delete", new { id = user.Id })

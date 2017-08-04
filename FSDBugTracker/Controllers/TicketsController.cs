@@ -67,6 +67,7 @@ namespace FSDBugTracker.Controllers
         {
             if (ModelState.IsValid)
             {
+                ticket.Created = DateTimeOffset.Now;                 
                 db.Tickets.Add(ticket);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -112,6 +113,7 @@ namespace FSDBugTracker.Controllers
         {
             if (ModelState.IsValid)
             {
+                ticket.Updated = DateTimeOffset.Now;
                 db.Entry(ticket).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");

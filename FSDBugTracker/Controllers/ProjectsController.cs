@@ -3,6 +3,7 @@ using System.Linq;
 using System.Net;
 using System.Web.Mvc;
 using FSDBugTracker.Models;
+using System;
 
 namespace FSDBugTracker.Controllers
 {
@@ -49,6 +50,7 @@ namespace FSDBugTracker.Controllers
         {
             if (ModelState.IsValid)
             {
+                project.Created = DateTime.Now;
                 db.Projects.Add(project);
                 db.SaveChanges();
                 return RedirectToAction("Index");
