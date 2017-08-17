@@ -6,7 +6,7 @@ namespace FSDBugTracker.Models
     public class Ticket
     {
         public int Id { get; set; }
-        public string Titlte { get; set; }
+        public string Title { get; set; }
         public string Description { get; set; }
         public DateTimeOffset Created { get; set; }
         public DateTimeOffset? Updated { get; set; }
@@ -33,6 +33,7 @@ namespace FSDBugTracker.Models
         public virtual ICollection<TicketAttachment> TicketAttachments { get; set; }
         public virtual ICollection<TicketComment> TicketComments { get; set; }
         public virtual ICollection<TicketUpdate> TicketUpdates { get; set; }
+        public virtual ICollection<ApplicationUser> Users { get; set; }
 
         //Con
         public Ticket()

@@ -6,43 +6,51 @@
 
 <h2>Index</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
+@if (User.IsInRole("Submitter") || User.IsInRole("SuperUser"))
+{
+    <p>
+        @Html.ActionLink("Create New", "Create")
+    </p>
+}
+
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.AssignedToUser.FirstName)
+                @Html.DisplayName("Assignee")
+                @*@Html.DisplayNameFor(model => model.AssignedToUser.FirstName)*@
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.OwnerUser.FirstName)
+                @Html.DisplayName("Owner")
+                @*@Html.DisplayNameFor(model => model.OwnerUser.FirstName)*@
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Project.Name)
+                @Html.DisplayName("Project")
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.TicketPriority.Name)
+                @Html.DisplayName("Priority")
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.TicketStatus.Name)
+                @Html.DisplayName("Status")
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.TicketType.Name)
+                @Html.DisplayName("Type")
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Titlte)
+                @Html.DisplayName("Title")
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Description)
+                @Html.DisplayName("Description")
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Created)
+                @Html.DisplayName("Created")
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Updated)
+                @Html.DisplayName("Updated")
             </th>
-            <th></th>
+            <th>
+                @Html.DisplayName("Links")
+            </th>
         </tr>
     </thead>
 
@@ -69,7 +77,7 @@
                     @Html.DisplayFor(modelItem => item.TicketType.Name)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Titlte)
+                    @Html.DisplayFor(modelItem => item.Title)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Description)
@@ -84,6 +92,11 @@
                     @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
                     @Html.ActionLink("Details", "Details", new { id=item.Id }) |
                     @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+                    |
+                    @if (User.IsInRole("Admin") || (User.IsInRole("Project Manager") || (User.IsInRole("SuperUser"))))
+                    {
+                    @Html.ActionLink("Assign User", "AssignDevs", "Tickets", new { ticketId = item.Id }, null)
+                    }
                 </td>
             </tr>
         }

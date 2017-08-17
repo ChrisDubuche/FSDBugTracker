@@ -4,6 +4,7 @@ using System.Net;
 using System.Web.Mvc;
 using FSDBugTracker.Models;
 using FSDBugTracker.Helpers;
+using System.Collections.Generic;
 
 namespace FSDBugTracker.Controllers
 {
@@ -11,6 +12,7 @@ namespace FSDBugTracker.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
         private UserRolesHelper roleHelper = new UserRolesHelper();
+        private UserProjectHelper projectHelper = new UserProjectHelper();
 
         // GET: Users
         [Authorize]
@@ -100,6 +102,7 @@ namespace FSDBugTracker.Controllers
         }
 
         // GET: Users/Delete/5
+        [NoDirectAccess]
         [Authorize(Roles = "SuperUser")]
         public ActionResult Delete(string id)
         {
@@ -134,6 +137,75 @@ namespace FSDBugTracker.Controllers
             }
             base.Dispose(disposing);
         }
-       
+
+
+        #region Role stuff
+        // GET: Admin
+        [NoDirectAccess]
+        [Authorize(Roles = "Admin, SuperUser")]
+        public ActionResult AssignRoles(string userId)
+        {
+            ViewBag.UserId = userId;
+            var userRoles = roleHelper.ListUserRoles(userId);
+            ViewBag.Roles = new MultiSelectList(db.Roles, "Name", "Name", userRoles);
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult AssignRoles(string userId, List<string> roles)
+        {
+            //Unassign the user from all roles
+            foreach (var role in roleHelper.ListUserRoles(userId))
+            {
+                roleHelper.RemoveUserFromRole(userId, role);
+            }
+
+            if (roles != null)
+            {
+                //Assign user to selected roles
+                foreach (var role in roles)
+                {
+                    roleHelper.AddUserToRole(userId, role);
+                }
+            }
+
+            return RedirectToAction("Index", "Users");
+        }
+        #endregion
+
+        #region Project stuff
+        // GET: Admin
+        public ActionResult AssignProjects(string userId)
+        {
+            ViewBag.UserId = userId;
+            var userProjects = projectHelper.ListUserProjects(userId);
+            var userProjectIds = userProjects.Select(p => p.Id);
+            ViewBag.Projects = new MultiSelectList(db.Projects, "Id", "Name", userProjectIds);
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult AssignProjects(string userId, List<int> projects)
+        {
+            foreach (var project in projectHelper.ListUserProjects(userId))
+            {
+                projectHelper.RemoveUserFromProject(userId, project.Id);
+            }
+
+            if (projects != null)
+            {
+                foreach (var projectId in projects)
+                {
+                    projectHelper.AddUserToProject(userId, projectId);
+                }
+            }
+
+            return RedirectToAction("Index", "Users");
+        }
+        #endregion
+
+
+
+
     }
 }

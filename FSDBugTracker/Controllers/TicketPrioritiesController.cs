@@ -58,6 +58,7 @@ namespace FSDBugTracker.Controllers
         }
 
         // GET: TicketPriorities/Edit/5
+        [NoDirectAccess]
         [Authorize(Roles = "SuperUser")]
         public ActionResult Edit(int? id)
         {
@@ -90,6 +91,7 @@ namespace FSDBugTracker.Controllers
         }
 
         // GET: TicketPriorities/Delete/5
+        [NoDirectAccess]
         [Authorize(Roles = "SuperUser")]
         public ActionResult Delete(int? id)
         {

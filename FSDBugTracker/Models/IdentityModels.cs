@@ -75,6 +75,15 @@ namespace FSDBugTracker.Models
         public DbSet<TicketType> TicketTypes { get; set; }
         public DbSet<Project> Projects { get; set; }
 
-        
+        //Prevents the cascade error on database update
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<Notification>()
+                .HasRequired(t => t.Ticket)
+                .WithMany()
+                .WillCascadeOnDelete(false);
+        }
     }
 }

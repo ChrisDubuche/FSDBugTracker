@@ -9,12 +9,17 @@ namespace FSDBugTracker.Models
     {
         public int Id { get; set; }
         public string Name { get; set; }
+        public string Description { get; set; }
+        public string OwnerId { get; set; }
+
         public DateTime Created { get; set; }
         public DateTime? Updated { get; set; }
 
         //Nav
         public virtual ICollection<Ticket> Tickets { get; set; }
         public virtual ICollection<ApplicationUser> Users { get; set; }
+
+        public virtual ApplicationUser Owner { get; set; }
 
         //Con
         public Project()

@@ -16,10 +16,17 @@ namespace FSDBugTracker.Models
         //FK's
         public int TicketId { get; set; }
         public string UserId { get; set; }
-
+        
         //Nav
         public virtual Ticket Ticket { get; set; }
         public virtual ApplicationUser User { get; set; }
 
+        public ICollection<Notification> Notifications { get; set; }
+
+        //Constructor
+        public TicketUpdate()
+        {
+            this.Notifications = new HashSet<Notification>();
+        }
     }
 }

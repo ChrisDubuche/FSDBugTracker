@@ -38,7 +38,7 @@ namespace FSDBugTracker.Controllers
         [Authorize]
         public ActionResult Create()
         {
-            ViewBag.TicketId = new SelectList(db.Tickets, "Id", "Titlte");
+            ViewBag.TicketId = new SelectList(db.Tickets, "Id", "Title");
             ViewBag.UserId = new SelectList(db.Users, "Id", "FirstName");
             return View();
         }
@@ -57,7 +57,7 @@ namespace FSDBugTracker.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.TicketId = new SelectList(db.Tickets, "Id", "Titlte", ticketComment.TicketId);
+            ViewBag.TicketId = new SelectList(db.Tickets, "Id", "Title", ticketComment.TicketId);
             ViewBag.UserId = new SelectList(db.Users, "Id", "FirstName", ticketComment.UserId);
             return View(ticketComment);
         }
@@ -75,7 +75,7 @@ namespace FSDBugTracker.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.TicketId = new SelectList(db.Tickets, "Id", "Titlte", ticketComment.TicketId);
+            ViewBag.TicketId = new SelectList(db.Tickets, "Id", "Title", ticketComment.TicketId);
             ViewBag.UserId = new SelectList(db.Users, "Id", "FirstName", ticketComment.UserId);
             return View(ticketComment);
         }
@@ -93,7 +93,7 @@ namespace FSDBugTracker.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.TicketId = new SelectList(db.Tickets, "Id", "Titlte", ticketComment.TicketId);
+            ViewBag.TicketId = new SelectList(db.Tickets, "Id", "Title", ticketComment.TicketId);
             ViewBag.UserId = new SelectList(db.Users, "Id", "FirstName", ticketComment.UserId);
             return View(ticketComment);
         }

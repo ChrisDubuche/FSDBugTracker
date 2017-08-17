@@ -38,7 +38,7 @@ namespace FSDBugTracker.Controllers
         [Authorize]
         public ActionResult Create()
         {
-            ViewBag.TicketId = new SelectList(db.Tickets, "Id", "Titlte");
+            ViewBag.TicketId = new SelectList(db.Tickets, "Id", "Title");
             ViewBag.UserId = new SelectList(db.Users, "Id", "FirstName");
             return View();
         }
@@ -57,13 +57,13 @@ namespace FSDBugTracker.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.TicketId = new SelectList(db.Tickets, "Id", "Titlte", ticketUpdate.TicketId);
+            ViewBag.TicketId = new SelectList(db.Tickets, "Id", "Title", ticketUpdate.TicketId);
             ViewBag.UserId = new SelectList(db.Users, "Id", "FirstName", ticketUpdate.UserId);
             return View(ticketUpdate);
         }
 
         // GET: TicketUpdates/Edit/5
-        [Authorize]
+        [Authorize(Roles = "SuperUser")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -75,7 +75,7 @@ namespace FSDBugTracker.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.TicketId = new SelectList(db.Tickets, "Id", "Titlte", ticketUpdate.TicketId);
+            ViewBag.TicketId = new SelectList(db.Tickets, "Id", "Title", ticketUpdate.TicketId);
             ViewBag.UserId = new SelectList(db.Users, "Id", "FirstName", ticketUpdate.UserId);
             return View(ticketUpdate);
         }
@@ -93,12 +93,13 @@ namespace FSDBugTracker.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.TicketId = new SelectList(db.Tickets, "Id", "Titlte", ticketUpdate.TicketId);
+            ViewBag.TicketId = new SelectList(db.Tickets, "Id", "Title", ticketUpdate.TicketId);
             ViewBag.UserId = new SelectList(db.Users, "Id", "FirstName", ticketUpdate.UserId);
             return View(ticketUpdate);
         }
 
         // GET: TicketUpdates/Delete/5
+        [NoDirectAccess]
         [Authorize(Roles = "SuperUser")]
         public ActionResult Delete(int? id)
         {

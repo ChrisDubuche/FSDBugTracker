@@ -14,16 +14,16 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.FirstName)
+                @Html.DisplayName("First Name")
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.LastName)
+                @Html.DisplayName("Last Name")
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.DisplayName)
+                @Html.DisplayName("Display Name")
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Email)
+                @Html.DisplayName("eMail")
             </th>
             <th>
                 @Html.DisplayName("Roles")
@@ -38,7 +38,7 @@
                 @Html.DisplayName("Owned Tickets")
             </th>
             <th>
-                Management Links
+                @Html.DisplayName("Links")
             </th>                   
         </tr>
     </thead>
@@ -85,7 +85,7 @@
                         var assignedTix = ticketHelper.GetAssignedTickets(user.Id);
                         foreach (var ticket in assignedTix)
                         {
-                            @ticket.Titlte<br />
+                            @ticket.Title<br />
                         }
 
                     }
@@ -96,7 +96,7 @@
                         var ownedTix = ticketHelper.GetUserOwnedTickets(user.Id);
                         foreach (var ticket in ownedTix)
                         {
-                            @ticket.Titlte<br />
+                            @ticket.Title<br />
                         }
 
                     }
@@ -104,7 +104,16 @@
                 <td>
                     @Html.ActionLink("Edit", "Edit", new { id = user.Id }) |
                     @Html.ActionLink("Details", "Details", new { id = user.Id }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = user.Id })
+                    @Html.ActionLink("Delete", "Delete", new { id = user.Id }) |
+                    @if (User.IsInRole("Admin") || (User.IsInRole("SuperUser"))) 
+                    {
+                    @Html.ActionLink("Assign Roles", "AssignRoles", "Home", new { id = user.Id }, null) 
+                    }   
+                    | 
+                    @if (User.IsInRole("Admin") || (User.IsInRole("Project Manager") || (User.IsInRole("SuperUser"))))
+                    {
+                    @Html.ActionLink("Assign Project", "AssignProjects", "Home", new { userId = user.Id }, null)
+                    }
                 </td>
             </tr>
         }

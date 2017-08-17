@@ -7,12 +7,15 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using FSDBugTracker.Models;
+using FSDBugTracker.Helpers;
 
 namespace FSDBugTracker.Controllers
 {
     public class TicketsController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
+        private UserRolesHelper roleHelper = new UserRolesHelper();
+        private TicketsHelper ticketHelper = new TicketsHelper();
 
         // GET: Tickets
         [Authorize]
@@ -29,6 +32,7 @@ namespace FSDBugTracker.Controllers
         }
 
         // GET: Tickets/Details/5
+        [NoDirectAccess]
         [Authorize(Roles = "Admin, Project Manager, Developer, Submitter, SuperUser")]
         public ActionResult Details(int? id)
         {
@@ -45,6 +49,7 @@ namespace FSDBugTracker.Controllers
         }
 
         // GET: Tickets/Create
+        [NoDirectAccess]
         [Authorize(Roles = "Submitter, SuperUser")]
         public ActionResult Create()
         {
@@ -63,11 +68,11 @@ namespace FSDBugTracker.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Titlte,Description,Created,Updated,ProjectId,TicketTypeId,TicketPriorityId,TicketStatusId,OwnerUserId,AssignedToUserId")] Ticket ticket)
+        public ActionResult Create([Bind(Include = "Title,Description,Created,Updated,ProjectId,TicketTypeId,TicketPriorityId,TicketStatusId,OwnerUserId,AssignedToUserId")] Ticket ticket)
         {
             if (ModelState.IsValid)
             {
-                ticket.Created = DateTimeOffset.Now;                 
+                ticket.Created = DateTimeOffset.Now;
                 db.Tickets.Add(ticket);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -83,6 +88,7 @@ namespace FSDBugTracker.Controllers
         }
 
         // GET: Tickets/Edit/5
+        [NoDirectAccess]
         [Authorize(Roles = "Admin, Project Manager, Developer, Submitter, SuperUser")]
         public ActionResult Edit(int? id)
         {
@@ -95,7 +101,10 @@ namespace FSDBugTracker.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.AssignedToUserId = new SelectList(db.Users, "Id", "FirstName", ticket.AssignedToUserId);
+
+            var allDevs = roleHelper.UsersInRole("Developer");
+            ViewBag.AssignedToUserId = new SelectList(allDevs, "Id", "FirstName", ticket.AssignedToUserId);
+
             ViewBag.OwnerUserId = new SelectList(db.Users, "Id", "FirstName", ticket.OwnerUserId);
             ViewBag.ProjectId = new SelectList(db.Projects, "Id", "Name", ticket.ProjectId);
             ViewBag.TicketPriorityId = new SelectList(db.TicketPriorities, "Id", "Name", ticket.TicketPriorityId);
@@ -109,7 +118,7 @@ namespace FSDBugTracker.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Titlte,Description,Created,Updated,ProjectId,TicketTypeId,TicketPriorityId,TicketStatusId,OwnerUserId,AssignedToUserId")] Ticket ticket)
+        public ActionResult Edit([Bind(Include = "Id,Title,Description,Created,Updated,ProjectId,TicketTypeId,TicketPriorityId,TicketStatusId,OwnerUserId,AssignedToUserId")] Ticket ticket)
         {
             if (ModelState.IsValid)
             {
@@ -118,7 +127,10 @@ namespace FSDBugTracker.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.AssignedToUserId = new SelectList(db.Users, "Id", "FirstName", ticket.AssignedToUserId);
+
+            var allDevs = roleHelper.UsersInRole("Developer");
+            ViewBag.AssignedToUserId = new SelectList(allDevs, "Id", "FirstName", ticket.AssignedToUserId);
+
             ViewBag.OwnerUserId = new SelectList(db.Users, "Id", "FirstName", ticket.OwnerUserId);
             ViewBag.ProjectId = new SelectList(db.Projects, "Id", "Name", ticket.ProjectId);
             ViewBag.TicketPriorityId = new SelectList(db.TicketPriorities, "Id", "Name", ticket.TicketPriorityId);
@@ -128,6 +140,7 @@ namespace FSDBugTracker.Controllers
         }
 
         // GET: Tickets/Delete/5
+        [NoDirectAccess]
         [Authorize(Roles = "SuperUser")]
         public ActionResult Delete(int? id)
         {
@@ -162,5 +175,39 @@ namespace FSDBugTracker.Controllers
             }
             base.Dispose(disposing);
         }
+
+        #region Assigning Devs to tickets
+        [NoDirectAccess]
+        [Authorize(Roles = "SuperUser, Project Manager, Admin")]
+        public ActionResult AssignDevs(int ticketId)
+        {
+            ViewBag.TicketId = ticketId;
+            var currentlyAssigned = db.Tickets.FirstOrDefault(t => t.Id == ticketId).AssignedToUserId;
+            var allDevs = roleHelper.UsersInRole("Developer");
+            ViewBag.AssignedDevs = new SelectList(allDevs, "Id", "FirstName", currentlyAssigned);
+            
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult AssignDevs(int TicketId, string AssignedDevs) 
+        {
+            //var allDevs = roleHelper.UsersInRole("Developer");
+            //ViewBag.TicketId = new SelectList(allDevs, "Id", "FirstName", TicketId);
+
+            //if (AssignedDevs != null)
+            //{
+            //    foreach (var userId in AssignedDevs)
+            //    {
+            //        ticketHelper.AddUserToTicket(userId, TicketId);
+            //    }
+
+            //}
+            ticketHelper.AddUserToTicket(AssignedDevs, TicketId);
+
+
+            return RedirectToAction("Index", "Tickets");
+        }
+        #endregion
     }
 }

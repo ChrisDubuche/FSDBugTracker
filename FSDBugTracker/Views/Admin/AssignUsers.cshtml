@@ -1,0 +1,19 @@
+﻿
+@{
+    ViewBag.Title = "Assign Users";
+}
+
+<h2>AssignUsers</h2>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="form-group">
+        @Html.Label("User List", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.ListBox("Users", null, htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessage("Users", "", new { @class = "text-danger" })
+        </div>
+    </div>
+}
