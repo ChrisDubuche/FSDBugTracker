@@ -35,6 +35,7 @@ namespace FSDBugTracker.Models
         public virtual ICollection<Notification> Notifications { get; set; }
         public virtual ICollection<Project> Projects { get; set; }
 
+
         //Con
         public ApplicationUser()
         {
@@ -74,6 +75,8 @@ namespace FSDBugTracker.Models
         public DbSet<TicketPriority> TicketPriorities { get; set; }
         public DbSet<TicketType> TicketTypes { get; set; }
         public DbSet<Project> Projects { get; set; }
+        //public DbSet<ProjectUser> ProjectUsers { get; set; }
+
 
         //Prevents the cascade error on database update
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
@@ -84,6 +87,7 @@ namespace FSDBugTracker.Models
                 .HasRequired(t => t.Ticket)
                 .WithMany()
                 .WillCascadeOnDelete(false);
+
         }
     }
 }

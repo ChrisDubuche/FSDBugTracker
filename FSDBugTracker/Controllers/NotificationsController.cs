@@ -17,7 +17,7 @@ namespace FSDBugTracker.Controllers
         // GET: Notifications
         public ActionResult Index()
         {
-            var notifications = db.Notifications.Include(n => n.Ticket).Include(n => n.User);
+            var notifications = db.Notifications.Include(n => n.Ticket).Include(n => n.Sender);
             return View(notifications.ToList());
         }
 
@@ -59,7 +59,7 @@ namespace FSDBugTracker.Controllers
             }
 
             ViewBag.TicketId = new SelectList(db.Tickets, "Id", "Title", notification.TicketId);
-            ViewBag.UserId = new SelectList(db.Users, "Id", "FirstName", notification.UserId);
+            ViewBag.UserId = new SelectList(db.Users, "Id", "FirstName", notification.SenderId);
             return View(notification);
         }
 
@@ -76,7 +76,7 @@ namespace FSDBugTracker.Controllers
                 return HttpNotFound();
             }
             ViewBag.TicketId = new SelectList(db.Tickets, "Id", "Title", notification.TicketId);
-            ViewBag.UserId = new SelectList(db.Users, "Id", "FirstName", notification.UserId);
+            ViewBag.UserId = new SelectList(db.Users, "Id", "FirstName", notification.SenderId);
             return View(notification);
         }
 
@@ -94,7 +94,7 @@ namespace FSDBugTracker.Controllers
                 return RedirectToAction("Index");
             }
             ViewBag.TicketId = new SelectList(db.Tickets, "Id", "Title", notification.TicketId);
-            ViewBag.UserId = new SelectList(db.Users, "Id", "FirstName", notification.UserId);
+            ViewBag.UserId = new SelectList(db.Users, "Id", "FirstName", notification.SenderId);
             return View(notification);
         }
 

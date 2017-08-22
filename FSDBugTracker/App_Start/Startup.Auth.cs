@@ -3,9 +3,9 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security.Cookies;
-using Microsoft.Owin.Security.Google;
 using Owin;
 using FSDBugTracker.Models;
+using Owin.Security.Providers.LinkedIn;
 
 namespace FSDBugTracker
 {
@@ -50,13 +50,17 @@ namespace FSDBugTracker
             //    clientId: "",
             //    clientSecret: "");
 
-            //app.UseTwitterAuthentication(
-            //   consumerKey: "",
-            //   consumerSecret: "");
+            app.UseTwitterAuthentication(
+               consumerKey: "qm6D6ZJguyJmpv9mVnjdexq5R",
+               consumerSecret: "yo2Y1gnylFAzyjNRmkXMzNAz8yOpeemfZ1LMP7fugpY7wooncH");
 
-            //app.UseFacebookAuthentication(
-            //   appId: "",
-            //   appSecret: "");
+            app.UseFacebookAuthentication(
+               appId: "118876578769080",
+               appSecret: "3cdff8443f1b28969170adb8544cf56e");
+
+            app.UseLinkedInAuthentication(
+                "781zt538rwpel4",
+                "7oD0RPHSGYtzDmMt");
 
             //app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
             //{

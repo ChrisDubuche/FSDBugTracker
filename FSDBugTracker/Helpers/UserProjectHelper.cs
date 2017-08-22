@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System;
 
 namespace FSDBugTracker.Helpers
 {
@@ -12,7 +13,7 @@ namespace FSDBugTracker.Helpers
         public bool IsUserOnProject(string userId, int projectId)
         {
             var project = db.Projects.Find(projectId);
-            var flag = project.Users.Any(u => u.Id == userId);
+            var flag = project.ProjectUsers.Any(u => u.Id == userId);
             return (flag);
         }
 
@@ -22,17 +23,25 @@ namespace FSDBugTracker.Helpers
             var projects = user.Projects.ToList();
             return (projects);
         }
-        
-        public void AddUserToProject(string userId, int projectId)
-        {
-            if (!IsUserOnProject(userId, projectId))
-            {
-                Project proj = db.Projects.Find(projectId);
-                var newUser = db.Users.Find(userId);
 
-                proj.Users.Add(newUser);
-                db.SaveChanges();
+        public void AddUserToProject(string userIds, int projectId)
+        {
+            foreach (var userId in userIds)
+            {
+                if (!IsUserOnProject(userId, projectId))
+                {
+                    Project proj = db.Projects.Find(projectId);
+                    var newUser = db.Users.Find(userId);
+
+                    proj.ProjectUsers.Add(newUser); 
+                    db.SaveChanges();
+                }
             }
+        }
+
+        private bool IsUserOnProject(char userId, int projectId)
+        {
+            throw new NotImplementedException();
         }
 
         public void RemoveUserFromProject(string userId, int projectId)
@@ -41,16 +50,23 @@ namespace FSDBugTracker.Helpers
             {
                 Project proj = db.Projects.Find(projectId);
                 var delUser = db.Users.Find(userId);
-
-                proj.Users.Remove(delUser);
-                db.Entry(proj).State = EntityState.Modified; // this will stave this object instance
+                
+                proj.ProjectUsers.Remove(delUser);
+                db.Entry(proj).State = EntityState.Modified; 
                 db.SaveChanges();
             }
         }
         
         public ICollection<ApplicationUser> UsersOnProject(int projectId)
         {
-            return db.Projects.Find(projectId).Users;
+            var users = new List<ApplicationUser>();
+            var project = db.Projects.FirstOrDefault(p => p.Id == projectId);
+            foreach (var projectUser in project.ProjectUsers)
+            {
+                users.Add(projectUser);
+            }
+            
+            return users;
         }
 
         public ICollection<ApplicationUser> UsersNotOnProject(int projectId)
@@ -58,5 +74,9 @@ namespace FSDBugTracker.Helpers
             return db.Users.Where(u => u.Projects.All(p => p.Id != projectId)).ToList();
         }
 
+        internal void AddUserToProject(List<string> projectUserIds, int id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

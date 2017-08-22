@@ -1,10 +1,15 @@
-﻿
-<div class="login-container animated fadeInDown">
+﻿@using FSDBugTracker.Models
+@model LoginViewModel
+@{
+    ViewBag.Title = "Log in";
+
+
+}<div class="login-container animated fadeInDown">
     <div class="loginbox bg-white">
         <div class="loginbox-title">SIGN IN</div>
         <div class="loginbox-social">
-            <div class="social-title ">Connect with Your Social Accounts</div>
-            <div class="social-buttons">
+            @*<div class="social-title ">Connect with Your Social Accounts</div>*@
+            @*<div class="social-buttons">
                 <a href="" class="button-facebook">
                     <i class="social-icon fa fa-facebook"></i>
                 </a>
@@ -14,28 +19,87 @@
                 <a href="" class="button-linkedin">
                     <i class="social-icon fa fa-linkedin"></i>
                 </a>
-            </div>
+            </div>*@
         </div>
-        <div class="loginbox-or">
+        @*<div class="loginbox-or">
             <div class="or-line"></div>
             <div class="or">OR</div>
-        </div>
-        <div class="loginbox-textbox">
-            <input type="text" class="form-control" placeholder="Email" />
-        </div>
-        <div class="loginbox-textbox">
-            <input type="text" class="form-control" placeholder="Password" />
-        </div>
-        <div class="loginbox-forgot">
-            <a href="">Forgot Password?</a>
-        </div>
-        <div class="loginbox-submit">
-            <input type="button" class="btn btn-primary btn-block" value="Login">
-        </div>
+        </div>*@
+        @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="loginbox-textbox">
+                <input type="text" name="Email" class="form-control" placeholder="Email" />
+            </div>
+            <div class="loginbox-textbox">
+                <input type="password" name="Password" class="form-control" placeholder="Password" />
+            </div>
+            <div class="loginbox-forgot">
+                <a href="@Url.Action("ForgotPassword","Account")">Forgot Password?</a>
+            </div>
+            <div class="loginbox-submit">
+                <input type="submit" class="btn btn-primary btn-block" value="Log in">
+            </div>
+        }
         <div class="loginbox-signup">
-            <a href="register.html">Sign Up With Email</a>
+            @Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })
         </div>
     </div>
-    <div class="logobox">
+    <div class="logobox" style="height: 100px" !important>
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12 social-login">
+                    <h3>...or login as a Demo User:</h3>
+                </div>
+            </div>
+            <div class="social-login-buttons">
+                @*<div class="col-md-3">*@
+                    @using (Html.BeginForm("DemoLogin", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.Hidden("Email", "DemoAdministrator@Mailinator.com")
+
+                        <a class="btn btn-link-2 login-link" href="javascript:void(0)">
+                            <i class="fa fa-user-secret"></i> Demo Admin
+                        </a>
+                    }
+                @*</div>*@
+                @*<div class="col-md-3">*@
+                    @using (Html.BeginForm("DemoLogin", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.Hidden("Email", "DemoProjectManager@Mailinator.com")
+
+                        <a class="btn btn-link-2 login-link" href="javascript:void(0)">
+                            <i class="fa fa-user"></i> Demo PM
+                        </a>
+                    }
+                @*</div>*@
+                @*<div class="col-md-3">*@
+                    @using (Html.BeginForm("DemoLogin", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.Hidden("Email", "DemoDeveloper@Mailinator.com")
+
+                        <a class="btn btn-link-2 login-link" href="javascript:void(0)">
+                            <i class="fa fa-user"></i> Demo Dev
+                        </a>
+                    }
+                @*</div>*@
+                @*<div class="col-md-3">*@
+                    @using (Html.BeginForm("DemoLogin", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.Hidden("Email", "DemoSubmitter@Mailinator.com")
+
+                        <a class="btn btn-link-2 login-link" href="javascript:void(0)">
+                            <i class="fa fa-user"></i> Demo Sub
+                        </a>
+                    }
+                @*</div>*@
+            </div>
+        </div>
     </div>
 </div>
+

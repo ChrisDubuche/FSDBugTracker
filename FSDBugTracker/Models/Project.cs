@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace FSDBugTracker.Models
 {
@@ -11,21 +9,20 @@ namespace FSDBugTracker.Models
         public string Name { get; set; }
         public string Description { get; set; }
         public string OwnerId { get; set; }
+        //public ApplicationUser ProjectUser { get; set; }
 
         public DateTime Created { get; set; }
         public DateTime? Updated { get; set; }
 
         //Nav
         public virtual ICollection<Ticket> Tickets { get; set; }
-        public virtual ICollection<ApplicationUser> Users { get; set; }
-
-        public virtual ApplicationUser Owner { get; set; }
-
+        public virtual ICollection<ApplicationUser> ProjectUsers { get; set; }
+      
         //Con
         public Project()
         {
             this.Tickets = new HashSet<Ticket>();
-            this.Users = new HashSet<ApplicationUser>();
+            this.ProjectUsers = new HashSet<ApplicationUser>();
         }
 
     }
