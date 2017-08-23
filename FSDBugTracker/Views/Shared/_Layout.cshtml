@@ -310,26 +310,28 @@
                                     </li>
                                     <!--Theme Selector Area-->
                                     @*<li class="theme-area">
-                                        <ul class="colorpicker" id="skin-changer">
-                                            <li><a class="colorpick-btn" href="#" style="background-color:#5DB2FF;" rel="~/assets/css/skins/blue.min.css"></a></li>
-                                            <li><a class="colorpick-btn" href="#" style="background-color:#2dc3e8;" rel="~/assets/css/skins/azure.min.css"></a></li>
-                                            <li><a class="colorpick-btn" href="#" style="background-color:#03B3B2;" rel="~/assets/css/skins/teal.min.css"></a></li>
-                                            <li><a class="colorpick-btn" href="#" style="background-color:#53a93f;" rel="~/assets/css/skins/green.min.css"></a></li>
-                                            <li><a class="colorpick-btn" href="#" style="background-color:#FF8F32;" rel="~/assets/css/skins/orange.min.css"></a></li>
-                                            <li><a class="colorpick-btn" href="#" style="background-color:#cc324b;" rel="~/assets/css/skins/pink.min.css"></a></li>
-                                            <li><a class="colorpick-btn" href="#" style="background-color:#AC193D;" rel="~/assets/css/skins/darkred.min.css"></a></li>
-                                            <li><a class="colorpick-btn" href="#" style="background-color:#8C0095;" rel="~/assets/css/skins/purple.min.css"></a></li>
-                                            <li><a class="colorpick-btn" href="#" style="background-color:#0072C6;" rel="~/assets/css/skins/darkblue.min.css"></a></li>
-                                            <li><a class="colorpick-btn" href="#" style="background-color:#585858;" rel="~/assets/css/skins/gray.min.css"></a></li>
-                                            <li><a class="colorpick-btn" href="#" style="background-color:#474544;" rel="~/assets/css/skins/black.min.css"></a></li>
-                                            <li><a class="colorpick-btn" href="#" style="background-color:#001940;" rel="~/assets/css/skins/deepblue.min.css"></a></li>
-                                        </ul>
-                                    </li>*@
+                                            <ul class="colorpicker" id="skin-changer">
+                                                <li><a class="colorpick-btn" href="#" style="background-color:#5DB2FF;" rel="~/assets/css/skins/blue.min.css"></a></li>
+                                                <li><a class="colorpick-btn" href="#" style="background-color:#2dc3e8;" rel="~/assets/css/skins/azure.min.css"></a></li>
+                                                <li><a class="colorpick-btn" href="#" style="background-color:#03B3B2;" rel="~/assets/css/skins/teal.min.css"></a></li>
+                                                <li><a class="colorpick-btn" href="#" style="background-color:#53a93f;" rel="~/assets/css/skins/green.min.css"></a></li>
+                                                <li><a class="colorpick-btn" href="#" style="background-color:#FF8F32;" rel="~/assets/css/skins/orange.min.css"></a></li>
+                                                <li><a class="colorpick-btn" href="#" style="background-color:#cc324b;" rel="~/assets/css/skins/pink.min.css"></a></li>
+                                                <li><a class="colorpick-btn" href="#" style="background-color:#AC193D;" rel="~/assets/css/skins/darkred.min.css"></a></li>
+                                                <li><a class="colorpick-btn" href="#" style="background-color:#8C0095;" rel="~/assets/css/skins/purple.min.css"></a></li>
+                                                <li><a class="colorpick-btn" href="#" style="background-color:#0072C6;" rel="~/assets/css/skins/darkblue.min.css"></a></li>
+                                                <li><a class="colorpick-btn" href="#" style="background-color:#585858;" rel="~/assets/css/skins/gray.min.css"></a></li>
+                                                <li><a class="colorpick-btn" href="#" style="background-color:#474544;" rel="~/assets/css/skins/black.min.css"></a></li>
+                                                <li><a class="colorpick-btn" href="#" style="background-color:#001940;" rel="~/assets/css/skins/deepblue.min.css"></a></li>
+                                            </ul>
+                                        </li>*@
                                     <!--/Theme Selector Area-->
                                     <li class="dropdown-footer">
-                                        <a href="@Url.Action("Login","Account")">
-                                            Sign out
-                                        </a>
+                                        @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" }))
+                                        {
+                                            @Html.AntiForgeryToken()
+                                           <a href="javascript:document.getElementById('logoutForm').submit()">Sign Off</a>                                           
+                                        }                                                                       
                                     </li>
                                 </ul>
                                 <!--/Login Area Dropdown-->
@@ -386,7 +388,7 @@
             <li class="active">
                 <a href="@Url.Action("Index","Home")">
                     <i class="menu-icon glyphicon glyphicon-home"></i>
-                    <span class="menu-text"> Dashboard </span>                    
+                    <span class="menu-text"> Dashboard </span>
                 </a>
             </li>
 
@@ -403,20 +405,21 @@
                     <!--Renaming to Bugtracking user roles -->
                     <li>
                         @Html.ActionLink("All Users", "Index", "Users")
+
                     </li>
                     @*<li>
-                        @Html.ActionLink("Administrators", "Index", "Users", new { roleName = "Admin" }, null)
-                    </li>
+                            @Html.ActionLink("Administrators", "Index", "Users", new { roleName = "Admin" }, null)
+                        </li>
 
-                    <li>
-                        @Html.ActionLink("Project Managers", "Index", "Users", new { roleName = "Project Manager" }, null)
-                    </li>
-                    <li>
-                        @Html.ActionLink("Developers", "Index", "Users", new { roleName = "Developer" }, null)
-                    </li>
-                    <li>
-                        @Html.ActionLink("Submitters", "Index", "Users", new { roleName = "Submitter" }, null)
-                    </li>*@
+                        <li>
+                            @Html.ActionLink("Project Managers", "Index", "Users", new { roleName = "Project Manager" }, null)
+                        </li>
+                        <li>
+                            @Html.ActionLink("Developers", "Index", "Users", new { roleName = "Developer" }, null)
+                        </li>
+                        <li>
+                            @Html.ActionLink("Submitters", "Index", "Users", new { roleName = "Submitter" }, null)
+                        </li>*@
                 </ul>
             </li>
             <li>
@@ -428,6 +431,7 @@
                 <ul class="submenu">
                     <li>
                         @Html.ActionLink("All Projects", "Index", "Projects")
+
                     </li>
                     @*<li>
                             <a href="form-layouts.html">
@@ -452,6 +456,7 @@
                 <ul class="submenu">
                     <li>
                         @Html.ActionLink("Ticket List", "Index", "Tickets")
+
                     </li>
                     <li>
                         <a href="form-inputs.html">
@@ -472,41 +477,41 @@
                         <a href="form-validation.html">
                             <span class="menu-text">Archieved Tickets</span>
                         </a>
-                    </li>                 
+                    </li>
                 </ul>
             </li>
             <!--Profile-->
             @*<li>
-                <a href="profile.html">
-                    <i class="menu-icon fa fa-picture-o"></i>
-                    <span class="menu-text">Profile</span>
-                </a>
-            </li>*@
+                    <a href="profile.html">
+                        <i class="menu-icon fa fa-picture-o"></i>
+                        <span class="menu-text">Profile</span>
+                    </a>
+                </li>*@
             <!--Mail-->
             @*<li>
-                <a href="#" class="menu-dropdown">
-                    <i class="menu-icon fa fa-envelope-o"></i>
-                    <span class="menu-text"> Mail </span>
-                    <i class="menu-expand"></i>
-                </a>
-                <ul class="submenu">
-                    <li>
-                        <a href="inbox.html">
-                            <span class="menu-text">Inbox</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="message-view.html">
-                            <span class="menu-text">View Message</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="message-compose.html">
-                            <span class="menu-text">Compose Message</span>
-                        </a>
-                    </li>
-                </ul>
-            </li>*@
+                    <a href="#" class="menu-dropdown">
+                        <i class="menu-icon fa fa-envelope-o"></i>
+                        <span class="menu-text"> Mail </span>
+                        <i class="menu-expand"></i>
+                    </a>
+                    <ul class="submenu">
+                        <li>
+                            <a href="inbox.html">
+                                <span class="menu-text">Inbox</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="message-view.html">
+                                <span class="menu-text">View Message</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="message-compose.html">
+                                <span class="menu-text">Compose Message</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>*@
         </ul>
         <!-- /Sidebar Menu -->
     </div>
@@ -896,7 +901,7 @@
 
     <script>$('.table').DataTable();</script>
     <script>
-        $("#collapse-icon").click(function() {
+        $("#collapse-icon").click(function () {
             var target = $("#sidebar");
             $(".page-body").position().left = target.width + 2;
 
