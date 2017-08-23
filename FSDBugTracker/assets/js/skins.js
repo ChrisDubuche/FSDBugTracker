@@ -28,7 +28,7 @@ if (location.pathname != "/index-rtl-fa.html" && location.pathname != "/index-rt
     }
     else {
         if (document.getElementById("beyond-link") != null)
-            document.getElementById("beyond-link").setAttribute("href", "../assets/css/beyond.min.css");
+            document.getElementById("beyond-link").setAttribute("href", "../../assets/css/beyond.css");
         if (document.getElementById("bootstrap-rtl-link") != null)
             document.getElementById("bootstrap-rtl-link").setAttribute("href", "");
         //Resolve 4095 Issue With IE<=9
