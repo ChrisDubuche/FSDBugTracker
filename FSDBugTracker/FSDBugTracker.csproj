@@ -410,9 +410,11 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\CounterHelper.cs" />
+    <Compile Include="Helpers\ImageUploadValidator.cs" />
     <Compile Include="Helpers\MyUserHelper.cs" />
     <Compile Include="Helpers\SeedHelper.cs" />
     <Compile Include="Helpers\TicketsHelper.cs" />
+    <Compile Include="Helpers\UserHelper.cs" />
     <Compile Include="Helpers\UserProjectHelper.cs" />
     <Compile Include="Helpers\UserRolesHelper.cs" />
     <Compile Include="Migrations\Configuration.cs" />
@@ -432,6 +434,11 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="assets\attachments\Photo 01.jpeg" />
+    <Content Include="assets\attachments\Photo 02.jpeg" />
+    <Content Include="assets\attachments\Photo 03.jpeg" />
+    <Content Include="assets\attachments\Photo 04.jpeg" />
+    <Content Include="assets\attachments\Photo 05.jpeg" />
     <Content Include="assets\css\4095-rtl.css" />
     <Content Include="assets\css\4095-rtl.min.css" />
     <Content Include="assets\css\4095.css" />
@@ -1022,7 +1029,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="assets\attachments\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

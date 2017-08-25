@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using FSDBugTracker.Models;
+using Microsoft.AspNet.Identity;
 
 namespace FSDBugTracker.Controllers
 {
@@ -49,10 +50,12 @@ namespace FSDBugTracker.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,NotifyReason,TicketId,UserId")] Notification notification)
+        public ActionResult Create([Bind(Include = "Id,NotifyReason,TicketId,RecipientId,NotificationBody")] Notification notification)
         {
             if (ModelState.IsValid)
             {
+                var user = db.Users.Find(User.Identity.GetUserId());
+                notification.SenderId = user.Id;
                 db.Notifications.Add(notification);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -85,7 +88,7 @@ namespace FSDBugTracker.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,NotifyReason,TicketId,UserId")] Notification notification)
+        public ActionResult Edit([Bind(Include = "Id,NotificationBody,TicketUpdateId,NotifyReason,TicketId,SenderId,RecipientId")] Notification notification)
         {
             if (ModelState.IsValid)
             {

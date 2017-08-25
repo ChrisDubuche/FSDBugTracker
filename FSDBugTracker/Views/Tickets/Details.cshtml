@@ -1,7 +1,10 @@
-﻿@model FSDBugTracker.Models.Ticket
+﻿@using FSDBugTracker.Models
+@using Microsoft.AspNet.Identity
+@model FSDBugTracker.Models.Ticket
 
 @{
     ViewBag.Title = "Details";
+    string userId = User.Identity.GetUserId();
 }
 
 <div class="main-container container-fluid">
@@ -131,6 +134,156 @@
                     @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
                     @Html.ActionLink("Back to List", "Index")
                 </p>
+                @if (User.Identity.IsAuthenticated)
+                {
+                    using (Html.BeginForm("Create", "TicketComments", FormMethod.Post))
+                    {
+                        @Html.AntiForgeryToken();
+                        @Html.HiddenFor(model => model.Id)
+
+                        <div class="row" style="text-align:center">
+                            <h4>Please Add Comment: </h4>
+                            @Html.TextArea("Comment", new { rows = 4, style = "vertical-align: middle;" })
+
+                        </div>
+                        <div class="row" style="text-align:center;">
+                            <button type="submit" style="text-align:center; border-radius:50%; height:50px; width: 50px;">+</button>
+                        </div>
+                            <div class="row">
+                                <div class="col-md-2"></div>
+                                <div class="col-md-10">
+                                    @foreach (var comment in Model.TicketComments.OrderByDescending(c => c.Created))
+                                    {
+
+
+                                        <h4><i>@comment.Created</i></h4>
+                                        <h5>@comment.User.DisplayName</h5>
+                                        <p>@comment.Comment</p>
+
+
+                                        <hr />
+                                        <div class="row">
+                                            @if (User.IsInRole("Admin") || (User.IsInRole("SuperUser")))
+                                            {
+
+                                                @Html.ActionLink("Edit", "Edit", "TicketComments", new { id = comment.Id }, new { @class = "btn btn-default" })
+
+                                                @Html.ActionLink("Delete", "Delete", "TicketComments", new { id = comment.Id }, new { @class = "btn btn-default" })
+                                            }
+                                            else if (User.IsInRole("Project Manager") && Model.Project.ProjectUsers.Any(u => u.Id == userId))
+                                            {
+
+                                                @Html.ActionLink("Edit", "Edit", "TicketComments", new { id = comment.Id }, new { @class = "btn btn-default" })
+
+                                                @Html.ActionLink("Delete", "Delete", "TicketComments", new { id = comment.Id }, new { @class = "btn btn-default" })
+                                            }
+                                            else if (User.IsInRole("Submitter") && Model.OwnerUserId == userId)
+                                            {
+
+                                                @Html.ActionLink("Edit", "Edit", "TicketComments", new { id = comment.Id }, new { @class = "btn btn-default" })
+
+                                                @Html.ActionLink("Delete", "Delete", "TicketComments", new { id = comment.Id }, new { @class = "btn btn-default" })
+                                            }
+                                            else if (User.IsInRole("Developer") && Model.AssignedToUser.Id == userId)
+                                            {
+
+                                                @Html.ActionLink("Edit", "Edit", "TicketComments", new { id = comment.Id }, new { @class = "btn btn-default" })
+
+                                                @Html.ActionLink("Delete", "Delete", "TicketComments", new { id = comment.Id }, new { @class = "btn btn-default" })
+                                            }
+                                        </div>
+                                    }
+
+
+                                </div>
+                            </div>
+
+                    }
+                }
+
+                <!--Only users with Admin role, or belonging to project, or assigned to this ticket, or created this ticket, can create ticket attachment-->
+
+                @if (User.IsInRole("Admin") || (User.IsInRole("SuperUser") || Model.Project.ProjectUsers.Any(u => u.Id == userId) || Model.OwnerUserId == userId))
+                {
+                    using (Html.BeginForm("Create", "TicketAttachments", FormMethod.Post, new { enctype = "Multipart/form-data" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        <input type="hidden" name="TicketId" value="@Model.Id" />
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <h5>@TempData["invalid"]</h5>
+                                        <label class="control-label">Attachment</label>
+                                        <input type="file" name="image" class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <input type="text" name="Description" class="form-control" placeholder="Description" />
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <input type="submit" value="Create Attachment" class="btn btn-success" />
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    }
+                }
+
+                @foreach (TicketAttachment attachment in Model.TicketAttachments.OrderByDescending(d => d.Created))
+                {
+                    <hr />
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label class="control-label">Created By</label>
+                            <p>@attachment.User.DisplayName</p>
+                        </div>
+                    </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label class="control-label">Created Date</label>
+                                <p>@attachment.Created.ToString("d")</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label class="control-label">Description</label>
+                                <p>@attachment.Description</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <img src="@attachment.MediaUrl" width="200" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            @if (User.IsInRole("Admin"))
+                            {
+                                @Html.ActionLink("Edit", "Edit", "TicketAttachments", new { id = attachment.Id }, new { @class = "btn btn-default" })
+                                @Html.ActionLink("Delete", "Delete", "TicketAttachments", new { id = attachment.Id }, new { @class = "btn btn-default" })
+                            }
+                            else if (User.IsInRole("Project Manager") && Model.Project.ProjectUsers.Any(u => u.Id == userId))
+                            {
+                                @Html.ActionLink("Edit", "Edit", "TicketAttachments", new { id = attachment.Id }, new { @class = "btn btn-default" })
+                                @Html.ActionLink("Delete", "Delete", "TicketAttachments", new { id = attachment.Id }, new { @class = "btn btn-default" })
+                            }
+                            else if (User.IsInRole("Submitter") && attachment.UserId == userId)
+                            {
+                                @Html.ActionLink("Edit", "Edit", "TicketAttachments", new { id = attachment.Id }, new { @class = "btn btn-default" })
+                                @Html.ActionLink("Delete", "Delete", "TicketAttachments", new { id = attachment.Id }, new { @class = "btn btn-default" })
+                            }
+                            else if (User.IsInRole("Developer") && attachment.UserId == userId)
+                            {
+                                @Html.ActionLink("Edit", "Edit", "TicketAttachments", new { id = attachment.Id }, new { @class = "btn btn-default" })
+                                @Html.ActionLink("Delete", "Delete", "TicketAttachments", new { id = attachment.Id }, new { @class = "btn btn-default" })
+                            }
+                        </div>
+                }
+
             </div>
         </div>
     </div>

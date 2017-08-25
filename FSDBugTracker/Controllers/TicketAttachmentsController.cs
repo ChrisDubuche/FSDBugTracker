@@ -3,6 +3,11 @@ using System.Linq;
 using System.Net;
 using System.Web.Mvc;
 using FSDBugTracker.Models;
+using FSDBugTracker.Helpers;
+using System.IO;
+using System;
+using Microsoft.AspNet.Identity;
+using System.Web;
 
 namespace FSDBugTracker.Controllers
 {
@@ -48,20 +53,37 @@ namespace FSDBugTracker.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,MediaUrl,Description,Created,TicketId,UserId")] TicketAttachment ticketAttachment)
+        public ActionResult Create([Bind(Include = "Id,MediaUrl,Description,Created,TicketId,UserId")] TicketAttachment ticketAttachment, HttpPostedFileBase image)
         {
             if (ModelState.IsValid)
             {
-                db.TicketAttachments.Add(ticketAttachment);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                if (ImageUploadValidator.IsWebFriendlyImage(image))
+                {
+                    var fileName = Path.GetFileName(image.FileName);
+                    var fullName = DateTime.Now.ToString("hh.mm.ss.ffffff") + "_" + fileName;// this is a technique for allowing multiple images with same name and reference properly. it's appending current date in millisecond
+                    image.SaveAs(Path.Combine(Server.MapPath("~/Uploads/"), fullName));
+                    ticketAttachment.MediaUrl = "/Uploads/" + fullName;
+                    ticketAttachment.User = db.Users.Find(User.Identity.GetUserId());
+                    ticketAttachment.Created = DateTime.Now;
+                    db.TicketAttachments.Add(ticketAttachment);
+                    db.TicketUpdates.Add(new TicketUpdate()
+                    {
+                        ChangedDate = DateTime.Now,
+                        NewValue = null,
+                        OldValue = null,
+                        Property = "attachment",
+                        TicketId = ticketAttachment.TicketId,
+                        UserId = ticketAttachment.User.Id
+                    });
+                    db.SaveChanges();
+                    return RedirectToAction("Details", "Tickets", new { id = ticketAttachment.TicketId });
+                }
+
+                TempData["invalid"] = "message";
+                return RedirectToAction("Details", "Tickets", new { id = ticketAttachment.TicketId });
             }
-
-            ViewBag.TicketId = new SelectList(db.Tickets, "Id", "Title", ticketAttachment.TicketId);
-            ViewBag.UserId = new SelectList(db.Users, "Id", "FirstName", ticketAttachment.UserId);
-            return View(ticketAttachment);
+            return RedirectToAction("Details", "Tickets", new { id = ticketAttachment.TicketId });
         }
-
         // GET: TicketAttachments/Edit/5
         [Authorize]
         public ActionResult Edit(int? id)
@@ -85,16 +107,26 @@ namespace FSDBugTracker.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,MediaUrl,Description,Created,TicketId,UserId")] TicketAttachment ticketAttachment)
+        public ActionResult Edit([Bind(Include = "Id,MediaUrl,Description,Created,TicketId,UserId")] TicketAttachment ticketAttachment, HttpPostedFileBase image)
         {
             if (ModelState.IsValid)
             {
+                if (ImageUploadValidator.IsWebFriendlyImage(image))
+                {
+                    var fileName = Path.GetFileName(image.FileName);
+                    var fullName = DateTime.Now.ToString("hh.mm.ss.ffffff") + "_" + fileName;// this is a technique for allowing multiple images with same name and reference properly. it's appending current date in millisecond
+                    image.SaveAs(Path.Combine(Server.MapPath("~/Uploads/"), fullName));
+                    ticketAttachment.MediaUrl = "/Uploads/" + fullName;
+                }
+
+
                 db.Entry(ticketAttachment).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.TicketId = new SelectList(db.Tickets, "Id", "Title", ticketAttachment.TicketId);
-            ViewBag.UserId = new SelectList(db.Users, "Id", "FirstName", ticketAttachment.UserId);
+            //ViewBag.TicketId = new SelectList(db.Tickets, "Id", "Title", ticketAttachment.TicketId);
+            ViewBag.userId = new SelectList(db.Users, "Id", "FirstName", ticketAttachment.UserId);
+
             return View(ticketAttachment);
         }
 
@@ -120,9 +152,10 @@ namespace FSDBugTracker.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             TicketAttachment ticketAttachment = db.TicketAttachments.Find(id);
+            var ticketId = ticketAttachment.TicketId;
             db.TicketAttachments.Remove(ticketAttachment);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Details", "Tickets", new { id = ticketId });
         }
 
         protected override void Dispose(bool disposing)

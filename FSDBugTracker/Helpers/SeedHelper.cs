@@ -1,8 +1,6 @@
 ﻿using FSDBugTracker.Models;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 
 namespace FSDBugTracker.Helpers
 {
@@ -177,19 +175,19 @@ namespace FSDBugTracker.Helpers
                         switch (pickAttach)
                         {
                             case 1:
-                                ticketAttachment.MediaUrl = "/Assets/attachments/-----------";
+                                ticketAttachment.MediaUrl = "/Assets/attachments/Photo 01.jpeg";
                                 break;
                             case 2:
-                                ticketAttachment.MediaUrl = "/Assets/attachments/-----------";
+                                ticketAttachment.MediaUrl = "/Assets/attachments/Photo 02.jpeg";
                                 break;
                             case 3:
-                                ticketAttachment.MediaUrl = "/Assets/attachments/-----------";
+                                ticketAttachment.MediaUrl = "/Assets/attachments/Photo 03.jpeg";
                                 break;
                             case 4:
-                                ticketAttachment.MediaUrl = "/Assets/attachments/-----------";
+                                ticketAttachment.MediaUrl = "/Assets/attachments/Photo 04.jpeg";
                                 break;
                             case 5:
-                                ticketAttachment.MediaUrl = "/Assets/attachments/-----------";
+                                ticketAttachment.MediaUrl = "/Assets/attachments/Photo 05.jpeg";
                                 break;
                         }
 

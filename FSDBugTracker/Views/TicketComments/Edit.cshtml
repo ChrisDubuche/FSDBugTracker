@@ -10,7 +10,8 @@
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+    @Html.HiddenFor(model => model.Created)
+
     <div class="form-horizontal">
         <h4>TicketComment</h4>
         <hr />

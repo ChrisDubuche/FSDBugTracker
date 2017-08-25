@@ -10,11 +10,53 @@ using FSDBugTracker.Models;
 using System.Web.Configuration;
 using System.Net.Mail;
 using System.Net;
+using FSDBugTracker.Helpers;
 
 namespace FSDBugTracker
 {
     public class EmailService : IIdentityMessageService
     {
+        public class NotificationEmailMessage : IdentityMessage
+        {
+            public string Source { get; set; }
+        }
+
+        public static async Task SendNotificationEmailAsync(NotificationEmailMessage message)
+        {
+            var sourceEmail = UserHelper.GetUserEmailFromId(message.Source);
+            var destinationEmail = UserHelper.GetUserEmailFromId(message.Destination);
+            message.Source = sourceEmail + WebConfigurationManager.AppSettings["emailsource"];
+
+            var GmailUsername = WebConfigurationManager.AppSettings["username"];
+            var GmailPassword = WebConfigurationManager.AppSettings["password"];
+            var host = WebConfigurationManager.AppSettings["host"];
+            int port = Convert.ToInt32(WebConfigurationManager.AppSettings["port"]);
+
+            using (var smtp = new SmtpClient()
+            {
+                Host = host,
+                Port = port,
+                EnableSsl = true,
+                DeliveryMethod = SmtpDeliveryMethod.Network,
+                UseDefaultCredentials = false,
+                Credentials = new NetworkCredential(GmailUsername, GmailPassword)
+            })
+            {
+                try
+                {
+                    var emailFrom = WebConfigurationManager.AppSettings["emailfrom"];
+                    await smtp.SendMailAsync(message.Source, destinationEmail, message.Subject, message.Body);// Doc added in here
+
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                    await Task.FromResult(0);
+                }
+            };
+
+        }
+
         public async Task SendAsync(IdentityMessage message)
         {
             var EmailUsername = WebConfigurationManager.AppSettings["username"];

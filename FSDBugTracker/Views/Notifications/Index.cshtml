@@ -16,33 +16,59 @@
                 @Html.DisplayNameFor(model => model.Ticket.Title)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.User.FirstName)
+                @Html.DisplayNameFor(model => model.SentDate)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.NotifyReason)
             </th>
-            <th></th>
+            <th>
+                @Html.DisplayNameFor(model => model.NotificationBody)
+        </th>
+        <th>
+            @Html.DisplayName("Sender Name")
+        </th>
+        <th>
+            @Html.DisplayName("Recipient Name")
+        </th>
+        <th>
+            @Html.DisplayName("Ticket Update Id")
+        </th>
+    </tr>
+</thead>
+<tbody>
+    @foreach (var notification in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => notification.Ticket.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => notification.SentDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => notification.NotifyReason)
+            </td>
+            <td>
+                @Html.DisplayFor(model => notification.NotificationBody)
+            </td>
+            <td>
+                @Html.DisplayFor(model => notification.Sender.FirstName)
+            </td>
+
+            <td>
+                @Html.DisplayFor(model => notification.Recipient.FirstName)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => notification.TicketUpdateId)
+            </td>
+
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = notification.Id }) |
+                @Html.ActionLink("Details", "Details", new { id = notification.Id }) |
+                @Html.ActionLink("Delete", "Delete", new { id = notification.Id })
+            </td>
         </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Ticket.Title)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.User.FirstName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.NotifyReason)
-                </td>
-                <td>
-                    @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-                    @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-                    @Html.ActionLink("Delete", "Delete", new { id=item.Id })
-                </td>
-            </tr>
-        }
-    </tbody>
+    }
+</tbody>
 </table>

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace FSDBugTracker.Models
 {
@@ -9,6 +10,8 @@ namespace FSDBugTracker.Models
     {
         public int Id { get; set; }
         public string MediaUrl { get; set; }
+
+        [AllowHtml]
         public string Description { get; set; }
         public DateTimeOffset Created { get; set; }
 
