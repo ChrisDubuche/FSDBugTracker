@@ -22,7 +22,7 @@ namespace FSDBugTracker.Helpers
             }
             else
             {
-                count = db.Tickets.Where(t => t.TicketStatus.Name == status).Count();
+                count = db.Tickets.Where(t => t.TicketStatus.TicketStatusName == status).Count();
             }
             return count;
         }
@@ -36,7 +36,7 @@ namespace FSDBugTracker.Helpers
             }
             else
             {
-                count = db.Tickets.Where(t => t.TicketType.Name == type).Count();
+                count = db.Tickets.Where(t => t.TicketType.TicketTypeName == type).Count();
             }
             return count;
         }
@@ -50,7 +50,7 @@ namespace FSDBugTracker.Helpers
             }
             else
             {
-                count = db.Tickets.Where(t => t.TicketPriority.Name == priority).Count();
+                count = db.Tickets.Where(t => t.TicketPriority.TicketPriorityName == priority).Count();
             }
             return count;
         }

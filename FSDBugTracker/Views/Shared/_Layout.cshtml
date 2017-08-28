@@ -278,11 +278,11 @@
                                 </ul>
                                 <!--/Tasks Dropdown-->
                             </li>
-                            <li>
+                            @*<li>
                                 <a class="wave in" id="chat-link" title="Chat" href="#">
                                     <i class="icon glyphicon glyphicon-comment"></i>
                                 </a>
-                            </li>
+                            </li>*@
                             <li>
                                 <a class="login-area dropdown-toggle" data-toggle="dropdown">
                                     <div class="avatar" title="View your public profile">
@@ -305,8 +305,8 @@
                                     </li>
                                     <!--Avatar Area-->
                                     <li class="edit">
-                                        <a href="profile.html" class="pull-left">Profile</a>
-                                        <a href="#" class="pull-right">Setting</a>
+                                        <a href="https://www.coderfoundry.com/christiandubuche" target="_blank" class="pull-left">Profile</a>
+                                        @*<a href="#" class="pull-right">Setting</a>*@
                                     </li>
                                     <!--Theme Selector Area-->
                                     @*<li class="theme-area">
@@ -330,8 +330,8 @@
                                         @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" }))
                                         {
                                             @Html.AntiForgeryToken()
-                                           <a href="javascript:document.getElementById('logoutForm').submit()">Sign Off</a>                                           
-                                        }                                                                       
+                                            <a href="javascript:document.getElementById('logoutForm').submit()">Sign Off</a>
+                                        }
                                     </li>
                                 </ul>
                                 <!--/Login Area Dropdown-->
@@ -341,7 +341,7 @@
                             no space must be between these elements-->
                             <!-- Settings -->
                         </ul>
-                        <div class="setting">
+                        @*<div class="setting">
                             <a id="btn-setting" title="Setting" href="#">
                                 <i class="icon glyphicon glyphicon-cog"></i>
                             </a>
@@ -363,7 +363,7 @@
                                 <input type="checkbox" id="checkbox_fixedheader">
                                 <span class="text">Fixed Header</span>
                             </label>
-                        </div>
+                        </div>*@
                         <!-- Settings -->
                     </div>
                 </div>
@@ -389,6 +389,8 @@
                 <a href="@Url.Action("Index","Home")">
                     <i class="menu-icon glyphicon glyphicon-home"></i>
                     <span class="menu-text"> Dashboard </span>
+
+                    
                 </a>
             </li>
 
@@ -407,19 +409,23 @@
                         @Html.ActionLink("All Users", "Index", "Users")
 
                     </li>
-                    @*<li>
-                            @Html.ActionLink("Administrators", "Index", "Users", new { roleName = "Admin" }, null)
-                        </li>
+                    <li>
+                        @Html.ActionLink("Administrators", "Index", "Users", new { roleName = "Admin" }, null)
 
-                        <li>
-                            @Html.ActionLink("Project Managers", "Index", "Users", new { roleName = "Project Manager" }, null)
-                        </li>
-                        <li>
-                            @Html.ActionLink("Developers", "Index", "Users", new { roleName = "Developer" }, null)
-                        </li>
-                        <li>
-                            @Html.ActionLink("Submitters", "Index", "Users", new { roleName = "Submitter" }, null)
-                        </li>*@
+                    </li>
+
+                    <li>
+                        @Html.ActionLink("Project Managers", "Index", "Users", new { roleName = "Project Manager" }, null)
+
+                    </li>
+                    <li>
+                        @Html.ActionLink("Developers", "Index", "Users", new { roleName = "Developer" }, null)
+
+                    </li>
+                    <li>
+                        @Html.ActionLink("Submitters", "Index", "Users", new { roleName = "Submitter" }, null)
+
+                    </li>
                 </ul>
             </li>
             <li>
@@ -434,15 +440,17 @@
 
                     </li>
                     @*<li>
-                            <a href="form-layouts.html">
-                                <span class="menu-text">Unassigned Projects</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="form-layouts.html">
-                                <span class="menu-text">Assigned Projects</span>
-                            </a>
-                        </li>*@
+                        <a href="form-layouts.html">
+                            <span class="menu-text">Unassigned Projects</span>
+
+                        </a>
+                    </li>
+                    <li>
+                        <a href="form-layouts.html">
+                            <span class="menu-text">Assigned Projects</span>
+
+                        </a>
+                    </li>*@
                 </ul>
             </li>
 
@@ -459,25 +467,29 @@
 
                     </li>
                     <li>
-                        <a href="form-inputs.html">
-                            <span class="menu-text">Open/Unassigned Tickets</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="form-pickers.html">
-                            <span class="menu-text">Open Assigned Tickets</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="form-wizard.html">
-                            <span class="menu-text">Resolved Tickets</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="form-validation.html">
-                            <span class="menu-text">Archieved Tickets</span>
-                        </a>
-                    </li>
+                            <a href="form-inputs.html">
+                                <span class="menu-text">Open/Unassigned Tickets</span>
+
+                            </a>
+                        </li>
+                        <li>
+                            <a href="form-pickers.html">
+                                <span class="menu-text">Open Assigned Tickets</span>
+
+                            </a>
+                        </li>
+                        <li>
+                            <a href="form-wizard.html">
+                                <span class="menu-text">Resolved Tickets</span>
+
+                            </a>
+                        </li>
+                        <li>
+                            <a href="form-validation.html">
+                                <span class="menu-text">Archieved Tickets</span>
+
+                            </a>
+                        </li>
                 </ul>
             </li>
             <!--Profile-->
@@ -573,7 +585,6 @@
                 </div>
             </div>
         </div>
-
     </footer>
 
     <script src="~/assets/js/jquery.min.js"></script>
@@ -887,7 +898,6 @@
                 setTimeout(update, updateInterval);
             }
             update();
-
 
             //-------------------------Initiates Easy Pie Chart instances in page--------------------//
             InitiateEasyPieChart.init();

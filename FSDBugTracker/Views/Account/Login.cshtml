@@ -53,52 +53,54 @@
                     <h3>...or login as a Demo User:</h3>
                 </div>
             </div>
-            <div class="social-login-buttons">
-                @*<div class="col-md-3">*@
-                    @using (Html.BeginForm("DemoLogin", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-                    {
-                        @Html.AntiForgeryToken()
-                        @Html.Hidden("Email", "DemoAdministrator@Mailinator.com")
+                
+                <div class="col-md-3 intro-form">
+                    <div class="home-wrapper text-center">
+                        <h3 class="text-center"> Use A Demo Account </h3>
 
-                        <a class="btn btn-link-2 login-link" href="javascript:void(0)">
-                            <i class="fa fa-user-secret"></i> Demo Admin
-                        </a>
-                    }
-                @*</div>*@
-                @*<div class="col-md-3">*@
-                    @using (Html.BeginForm("DemoLogin", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-                    {
-                        @Html.AntiForgeryToken()
-                        @Html.Hidden("Email", "DemoProjectManager@Mailinator.com")
+                        @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                        {
+                            @Html.AntiForgeryToken()
+                            <div class="form-group">
+                                <input value="DemoAdmin@mailinator.com" class="form-control" id="Email" name="Email" type="hidden" />
+                                <input value="Abc&123!" class="form-control" id="Password" name="Password" type="hidden" />
+                                <input type="submit" value="Administrator Demo" style="width:60%;" class="btn btn-primary btn-shadow btn-rounded w-lg" />
+                            </div>
+                        }
 
-                        <a class="btn btn-link-2 login-link" href="javascript:void(0)">
-                            <i class="fa fa-user"></i> Demo PM
-                        </a>
-                    }
-                @*</div>*@
-                @*<div class="col-md-3">*@
-                    @using (Html.BeginForm("DemoLogin", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-                    {
-                        @Html.AntiForgeryToken()
-                        @Html.Hidden("Email", "DemoDeveloper@Mailinator.com")
+                        @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                        {
+                            @Html.AntiForgeryToken()
+                            <div class="form-group">
+                                <input value="DemoProjectManager@mailinator.com" class="form-control" id="Email" name="Email" type="hidden" />
+                                <input value="Abc&123!" class="form-control" id="Password" name="Password" type="hidden" />
+                                <input type="submit" value="Project Manager Demo" style="width:60%;margin-top:10px;" class="btn btn-primary btn-shadow btn-rounded w-lg" />
+                            </div>
+                        }
 
-                        <a class="btn btn-link-2 login-link" href="javascript:void(0)">
-                            <i class="fa fa-user"></i> Demo Dev
-                        </a>
-                    }
-                @*</div>*@
-                @*<div class="col-md-3">*@
-                    @using (Html.BeginForm("DemoLogin", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-                    {
-                        @Html.AntiForgeryToken()
-                        @Html.Hidden("Email", "DemoSubmitter@Mailinator.com")
+                        @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                        {
+                            @Html.AntiForgeryToken()
+                            <div class="form-group">
+                                <input value="DemoDeveloper@mailinator.com" class="form-control" id="Email" name="Email" type="hidden" />
+                                <input value="Abc&123!" class="form-control" id="Password" name="Password" type="hidden" />
+                                <input type="submit" value="Developer Demo" style="width:60%;margin-top:10px;" class="btn btn-primary btn-shadow btn-rounded w-lg" />
+                            </div>
+                        }
 
-                        <a class="btn btn-link-2 login-link" href="javascript:void(0)">
-                            <i class="fa fa-user"></i> Demo Sub
-                        </a>
-                    }
-                @*</div>*@
-            </div>
+                        @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                        {
+                            @Html.AntiForgeryToken()
+                            <div class="form-group">
+                                <input value="DemoSubmitter@mailinator.com" class="form-control" id="Email" name="Email" type="hidden" />
+                                <input value="Abc&123!" class="form-control" id="Password" name="Password" type="hidden" />
+                                <input type="submit" value="Submitter Demo" style="width:60%;margin-top:10px;" class="btn btn-primary btn-shadow btn-rounded w-lg" />
+                            </div>
+                        }
+                    </div>
+
+                </div>
+            
         </div>
     </div>
 </div>

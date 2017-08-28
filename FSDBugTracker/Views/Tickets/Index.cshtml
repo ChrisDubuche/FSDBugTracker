@@ -98,13 +98,13 @@
                                                 @Html.DisplayName("Project")
                                             </th>
                                             <th>
-                                                @Html.DisplayName("Priority")
+                                                @Html.DisplayNameFor(model => model.TicketPriority.TicketPriorityName)
                                             </th>
                                             <th>
-                                                @Html.DisplayName("Status")
+                                                @Html.DisplayNameFor(model => model.TicketStatus.TicketStatusName)
                                             </th>
                                             <th>
-                                                @Html.DisplayName("Type")
+                                                @Html.DisplayNameFor(model => model.TicketType.TicketTypeName)
                                             </th>
                                             <th>
                                                 @Html.DisplayName("Title")
@@ -138,13 +138,13 @@
                                                     @Html.DisplayFor(modelItem => item.Project.Name)
                                                 </td>
                                                 <td>
-                                                    @Html.DisplayFor(modelItem => item.TicketPriority.Name)
+                                                    @Html.DisplayFor(modelItem => item.TicketPriority.TicketPriorityName)
                                                 </td>
                                                 <td>
-                                                    @Html.DisplayFor(modelItem => item.TicketStatus.Name)
+                                                    @Html.DisplayFor(modelItem => item.TicketStatus.TicketStatusName)
                                                 </td>
                                                 <td>
-                                                    @Html.DisplayFor(modelItem => item.TicketType.Name)
+                                                    @Html.DisplayFor(modelItem => item.TicketType.TicketTypeName)
                                                 </td>
                                                 <td>
                                                     @Html.DisplayFor(modelItem => item.Title)

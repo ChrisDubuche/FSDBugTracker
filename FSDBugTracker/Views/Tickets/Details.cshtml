@@ -130,10 +130,7 @@
                     </dl>
                 </div>
 
-                <p>
-                    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-                    @Html.ActionLink("Back to List", "Index")
-                </p>
+                
                 @if (User.Identity.IsAuthenticated)
                 {
                     using (Html.BeginForm("Create", "TicketComments", FormMethod.Post))
@@ -193,15 +190,10 @@
                                             }
                                         </div>
                                     }
-
-
                                 </div>
                             </div>
-
                     }
                 }
-
-                <!--Only users with Admin role, or belonging to project, or assigned to this ticket, or created this ticket, can create ticket attachment-->
 
                 @if (User.IsInRole("Admin") || (User.IsInRole("SuperUser") || Model.Project.ProjectUsers.Any(u => u.Id == userId) || Model.OwnerUserId == userId))
                 {
@@ -261,7 +253,7 @@
                             </div>
                         </div>
                         <div class="row">
-                            @if (User.IsInRole("Admin"))
+                            @if (User.IsInRole("Admin") || (User.IsInRole("SuperUser")))
                             {
                                 @Html.ActionLink("Edit", "Edit", "TicketAttachments", new { id = attachment.Id }, new { @class = "btn btn-default" })
                                 @Html.ActionLink("Delete", "Delete", "TicketAttachments", new { id = attachment.Id }, new { @class = "btn btn-default" })
@@ -283,7 +275,10 @@
                             }
                         </div>
                 }
-
+                <p>
+                    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+                    @Html.ActionLink("Back to List", "Index")
+                </p>
             </div>
         </div>
     </div>

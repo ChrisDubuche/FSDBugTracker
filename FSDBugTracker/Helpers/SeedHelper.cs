@@ -1,214 +1,146 @@
 ﻿using FSDBugTracker.Models;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace FSDBugTracker.Helpers
+
+
 {
     public class SeedHelper
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
-        private UserProjectHelper projHelper = new UserProjectHelper();
+        private static ApplicationDbContext context = new ApplicationDbContext();
+        private UserManager<ApplicationUser> userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
 
-        private void ClearDB()
+        public void CreateRandomUsers(int number)
         {
-            var projects = db.Projects;
-            var tickets = db.Tickets;
-            var ticketComments = db.TicketComments;
-            var ticketAttachments = db.TicketAttachments;
-            var ticketUpdates = db.TicketUpdates;
-            var notifications = db.Notifications;
+            var userManager = new UserManager<ApplicationUser>(
+             new UserStore<ApplicationUser>(context));
 
-            foreach (var project in projects)
+            for (var i = 0; i < number; i++)
             {
-                db.Projects.Remove(project);
-            }
+                var firstName = "Test";
+                var lastName = string.Concat("User", i + 1);
+                var random = new Random();
 
-            foreach (var ticket in tickets)
-            {
-                db.Tickets.Remove(ticket);
-            }
+                var email = string.Concat(firstName, lastName, "@mailinator.com");
 
-            foreach (var ticketComment in ticketComments)
-            {
-                db.TicketComments.Remove(ticketComment);
-            }
+                if (!context.Users.Any(u => u.Email == email))
+                {
+                    userManager.Create(new ApplicationUser
+                    {
+                        UserName = email,
+                        Email = email,
+                        FirstName = firstName,
+                        LastName = lastName,
+                    }, "Abc&123!");
+                }
 
-            foreach (var ticketAttachment in ticketAttachments)
-            {
-                db.TicketAttachments.Remove(ticketAttachment);
+                //Assign user to a random role
+                var rolesList = context.Roles.Where(r => r.Name != "Admin" && r.Name != "Super User").ToList();
+                var userId = userManager.FindByEmail(email).Id;
+                userManager.AddToRole(userId, rolesList[random.Next(0, rolesList.Count())].Name);
             }
-
-            foreach (var ticketUpdate in ticketUpdates)
-            {
-                db.TicketUpdates.Remove(ticketUpdate);
-            }
-
-            foreach (var notification in notifications)
-            {
-                db.Notifications.Remove(notification);
-            }
-
-            db.SaveChanges();
         }
 
-        public void ProjectsTicketsCreator()
+        public void CreateRandomProjects(int number, int tickets)
         {
-            ClearDB();
-            var projectManager = db.Users.FirstOrDefault(pm => pm.UserName == "demoprojectmanager@mailinator.com");
-            var developer = db.Users.FirstOrDefault(pm => pm.UserName == "demodeveloper@mailinator.com");
-            var submitter = db.Users.FirstOrDefault(pm => pm.UserName == "demosubmitter@mailinator.com");
-            var admin = db.Users.FirstOrDefault(pm => pm.UserName == "demoadmin@mailinator.com");
-            Random rnd = new Random();
-
-            for (int p = 1; p < 11; p++)
+            for (var i = 0; i < number; i++)
             {
-                //Create New Project
+                var name = string.Concat("Project", i + 1);
+                var random = new Random();
+
                 var project = new Project();
-                project.Name = "Auto-Gen Project " + p;
-                project.Description = "Automatically generated project for test purposes only";
+                project.Created = DateTime.Now;
+                project.Name = name;
+                project.Id = i + 1;
 
-                project.ProjectUsers.Add(projectManager);
-                project.ProjectUsers.Add(developer);
-                project.ProjectUsers.Add(submitter);
-                project.ProjectUsers.Add(admin);
+                var userList = userManager.Users.ToList();
 
-                db.Projects.Add(project);
-                db.SaveChanges();
-
-                //Create Tickets for project
-                for (int t = 1; t <= 5; t++)
+                //assign 2 developers to each project
+                var devList = new List<ApplicationUser>();
+                foreach (var user in userList)
                 {
-                    var ticket = new Ticket();
-                    ticket.Title = "Auto-Gen Ticket " + t + " for " + project.Name; ;
-                    ticket.Description = "Automatically generated ticket for test purposes only";
-                    ticket.Created = DateTimeOffset.Now;
-                    ticket.ProjectId = project.Id;
-                    ticket.OwnerUserId = submitter.Id;
-                    ticket.AssignedToUserId = developer.Id;
-
-                    //Assign Ticket Status
-                    int pickStatus = rnd.Next(1, 5);
-                    var ticketStatus = new TicketStatus();
-
-                    switch (pickStatus)
+                    if (userManager.IsInRole(user.Id, "Developer"))
                     {
-                        case 1:
-                            ticketStatus = db.TicketStatuses.FirstOrDefault(ts => ts.Name == "Open/Assigned");
-                            break;
-                        case 2:
-                            ticketStatus = db.TicketStatuses.FirstOrDefault(ts => ts.Name == "Resolved");
-                            break;
-                        case 3:
-                            ticketStatus = db.TicketStatuses.FirstOrDefault(ts => ts.Name == "Waiting For Info");
-                            break;
-                        case 4:
-                            ticketStatus = db.TicketStatuses.FirstOrDefault(ts => ts.Name == "Closed");
-                            break;
-                    }
-
-                    ticket.TicketStatusId = ticketStatus.Id;
-
-                    //Assign ticket Priority
-                    int pickPriority = rnd.Next(1, 6);
-                    var ticketPriority = new TicketPriority();
-
-                    switch (pickPriority)
-                    {
-                        case 1:
-                            ticketPriority = db.TicketPriorities.FirstOrDefault(ts => ts.Name == "Critical");
-                            break;
-                        case 2:
-                            ticketPriority = db.TicketPriorities.FirstOrDefault(ts => ts.Name == "Higher");
-                            break;
-                        case 3:
-                            ticketPriority = db.TicketPriorities.FirstOrDefault(ts => ts.Name == "High");
-                            break;
-                        case 4:
-                            ticketPriority = db.TicketPriorities.FirstOrDefault(ts => ts.Name == "Medium");
-                            break;
-                        case 5:
-                            ticketPriority = db.TicketPriorities.FirstOrDefault(ts => ts.Name == "Low");
-                            break;
-                    }
-
-                    ticket.TicketPriorityId = ticketPriority.Id;
-
-                    //Assign Ticket Type
-
-                    int pickType = rnd.Next(1, 6);
-                    var ticketType = new TicketType();
-
-                    switch (pickType)
-                    {
-                        case 1:
-                            ticketType = db.TicketTypes.FirstOrDefault(ts => ts.Name == "Bug");
-                            break;
-                        case 2:
-                            ticketType = db.TicketTypes.FirstOrDefault(ts => ts.Name == "Task");
-                            break;
-                        case 3:
-                            ticketType = db.TicketTypes.FirstOrDefault(ts => ts.Name == "Informational");
-                            break;
-                        case 4:
-                            ticketType = db.TicketTypes.FirstOrDefault(ts => ts.Name == "Feature Request");
-                            break;
-                        case 5:
-                            ticketType = db.TicketTypes.FirstOrDefault(ts => ts.Name == "Call For Documentation");
-                            break;
-                    }
-
-                    ticket.TicketTypeId = ticketType.Id;
-
-                    db.Tickets.Add(ticket);
-                    db.SaveChanges();
-
-                    for (int ta = 1; ta < 6; ta++)
-                    {
-                        int pickAttach = rnd.Next(1, 6);
-                        var ticketAttachment = new TicketAttachment();
-
-                        ticketAttachment.TicketId = ticket.Id;
-                        ticketAttachment.Description = "Auto-Gen Ticket Attachment " + ta + ", " + ticket.Description;
-                        ticketAttachment.Created = DateTimeOffset.Now;
-                        ticketAttachment.UserId = developer.Id;
-
-                        switch (pickAttach)
-                        {
-                            case 1:
-                                ticketAttachment.MediaUrl = "/Assets/attachments/Photo 01.jpeg";
-                                break;
-                            case 2:
-                                ticketAttachment.MediaUrl = "/Assets/attachments/Photo 02.jpeg";
-                                break;
-                            case 3:
-                                ticketAttachment.MediaUrl = "/Assets/attachments/Photo 03.jpeg";
-                                break;
-                            case 4:
-                                ticketAttachment.MediaUrl = "/Assets/attachments/Photo 04.jpeg";
-                                break;
-                            case 5:
-                                ticketAttachment.MediaUrl = "/Assets/attachments/Photo 05.jpeg";
-                                break;
-                        }
-
-                        db.TicketAttachments.Add(ticketAttachment);
-                        db.SaveChanges();
-                    }
-
-                    for (int tc = 1; tc < 6; tc++)
-                    {
-                        int pickComment = rnd.Next(1, 6);
-                        var ticketComment = new TicketComment();
-
-                        ticketComment.TicketId = ticket.Id;
-                        ticketComment.Comment = "Auto-Generated Ticket Comment " + tc + ", " + ticket.Description;
-                        ticketComment.Created = DateTimeOffset.Now;
-                        ticketComment.UserId = developer.Id;
-
-                        db.TicketComments.Add(ticketComment);
-                        db.SaveChanges();
+                        devList.Add(user);
                     }
                 }
+                project.ProjectUsers.Add(devList[random.Next(0, devList.Count())]);
+                project.ProjectUsers.Add(devList[random.Next(0, devList.Count())]);
+
+                //assign the project manager
+                var pmList = new List<ApplicationUser>();
+                foreach (var user in userList)
+                {
+                    if (userManager.IsInRole(user.Id, "Project Manager"))
+                    {
+                        pmList.Add(user);
+                    }
+                }
+                var pm = pmList[random.Next(0, pmList.Count())];
+                project.ProjectUsers.Add(pm);
+                project.OwnerId = pm.FullName;
+
+                context.Projects.Add(project);
+                context.SaveChanges();
+
+                CreateRandomTickets(project.Id, tickets);
+            }
+        }
+
+        public void CreateRandomTickets(int projectId, int number)
+        {
+            //Create 'number' tickets per project
+            for (var i = 0; i < number; i++)
+            {
+                var title = string.Concat("Ticket", i + 1);
+                var random = new Random();
+
+                var ticket = new Ticket();
+                ticket.Created = DateTimeOffset.Now;
+                ticket.Title = title;
+                ticket.Id = i + 1;
+                ticket.ProjectId = projectId;
+                ticket.Description = "This is a seeded ticket.";
+
+                var userList = userManager.Users.ToList();
+
+                //assign the ticket a random submitter
+                var subList = new List<ApplicationUser>();
+                foreach (var user in userList)
+                {
+                    if (userManager.IsInRole(user.Id, "Submitter"))
+                    {
+                        subList.Add(user);
+                    }
+                }
+                ticket.OwnerUserId = subList[random.Next(0, subList.Count())].Id;
+
+                //assign the ticket a random developer and set initial status
+                var devList = new List<ApplicationUser>();
+                foreach (var user in userList)
+                {
+                    if (userManager.IsInRole(user.Id, "Developer") && context.Projects.FirstOrDefault(p => p.Id == projectId).ProjectUsers.Any(u => u.Id == user.Id))
+                    {
+                        devList.Add(user);
+                    }
+                }
+                ticket.AssignedToUserId = devList[random.Next(0, devList.Count())].Id;
+                ticket.TicketStatusId = context.TicketStatuses.FirstOrDefault(t => t.TicketStatusName == "Open/Assigned").Id;
+
+                //assign a random type
+                var typeList = context.TicketTypes.Select(t => t.Id).ToList();
+                ticket.TicketTypeId = typeList[random.Next(0, typeList.Count())];
+
+                //assign a random priority
+                var priorityList = context.TicketPriorities.Select(t => t.Id).ToList();
+                ticket.TicketPriorityId = priorityList[random.Next(0, priorityList.Count())];
+
+                context.Tickets.Add(ticket);
+                context.SaveChanges();
             }
         }
     }

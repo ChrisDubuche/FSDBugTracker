@@ -264,8 +264,8 @@ namespace FSDBugTracker.Controllers
                 updates.Add(new TicketUpdate()
                 {
                     ChangedDate = DateTime.Now,
-                    NewValue = db.TicketPriorities.FirstOrDefault(p => p.Id == ticket.TicketPriorityId).Name,
-                    OldValue = oldTicket.TicketPriority.Name,
+                    NewValue = db.TicketPriorities.FirstOrDefault(p => p.Id == ticket.TicketPriorityId).TicketPriorityName,
+                    OldValue = oldTicket.TicketPriority.TicketPriorityName,
                     Property = "priority",
                     TicketId = ticket.Id,
                     UserId = User.Identity.GetUserId()
@@ -275,8 +275,8 @@ namespace FSDBugTracker.Controllers
                 updates.Add(new TicketUpdate()
                 {
                     ChangedDate = DateTime.Now,
-                    NewValue = db.TicketStatuses.FirstOrDefault(s => s.Id == ticket.TicketStatusId).Name,
-                    OldValue = oldTicket.TicketStatus.Name,
+                    NewValue = db.TicketStatuses.FirstOrDefault(s => s.Id == ticket.TicketStatusId).TicketStatusName,
+                    OldValue = oldTicket.TicketStatus.TicketStatusName,
                     Property = "status",
                     TicketId = ticket.Id,
                     UserId = User.Identity.GetUserId()
@@ -286,8 +286,8 @@ namespace FSDBugTracker.Controllers
                 updates.Add(new TicketUpdate()
                 {
                     ChangedDate = DateTime.Now,
-                    NewValue = db.TicketTypes.FirstOrDefault(t => t.Id == ticket.TicketTypeId).Name,
-                    OldValue = oldTicket.TicketType.Name,
+                    NewValue = db.TicketTypes.FirstOrDefault(t => t.Id == ticket.TicketTypeId).TicketTypeName,
+                    OldValue = oldTicket.TicketType.TicketTypeName,
                     Property = "type",
                     TicketId = ticket.Id,
                     UserId = User.Identity.GetUserId()

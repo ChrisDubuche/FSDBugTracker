@@ -1,5 +1,6 @@
 ﻿using FSDBugTracker.Helpers;
 using FSDBugTracker.Models;
+using FSDBugTracker.ViewModel;
 using Microsoft.AspNet.Identity;
 using System.Collections.Generic;
 using System.Linq;
@@ -122,7 +123,7 @@ namespace FSDBugTracker.Controllers
             }
 
             //If any users are selected we will re-add them to the project
-            if (AssignedUsers  != null)
+            if (AssignedUsers != null)
             {
                 foreach (var userId in AssignedUsers)
                 {
@@ -130,9 +131,26 @@ namespace FSDBugTracker.Controllers
                 }
 
             }
-                     
+
             return RedirectToAction("Index", "Projects");
         }
         #endregion
+
+        [Authorize]
+        public ActionResult Dashboard()
+        {
+            var myIndexData = new IndexVM();
+            var allUnarchived = db.Tickets.Where(t => t.TicketStatus.TicketStatusName != "Deleted").Count();
+
+            ViewBag.AllUnarchived = allUnarchived;
+            var allOpen = db.Tickets.Where(t => t.TicketStatus.TicketStatusName == "Open/Unassigned").Count();
+            ViewBag.AllOpen = allOpen;
+            var allClosed = db.Tickets.Where(t => t.TicketStatus.TicketStatusName == "Closed").Count();
+            ViewBag.AllClosed = allClosed;
+            var allArchived = db.Tickets.Where(t => t.TicketStatus.TicketStatusName == "Open/Assigned").Count();
+            ViewBag.AllArchived = allArchived;
+            return View(myIndexData);
+        }
     }
 }
+     

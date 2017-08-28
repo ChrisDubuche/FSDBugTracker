@@ -11,7 +11,7 @@ namespace FSDBugTracker.Models
         public int Id { get; set; }
 
         [Display(Name = "Priority")]
-        public string Name { get; set; }
+        public string TicketPriorityName { get; set; }
 
         //Nav
         public virtual ICollection<Ticket> Tickets { get; set; }
