@@ -352,13 +352,14 @@
                                     <!--/Theme Selector Area-->
 
                                     <!--When the user comes to the site without first logging through a registered or demo account they'll see a log in link, after loggin in the link becomes a signout link*-->
+                                    <!--Must use "Else If" because of the role conditions, otherwise VS throws an error -->
                                     @if (!Request.IsAuthenticated)
                                     {
                                         <li class="dropdown-footer">
                                             <a href="@Url.Action("Login", "Account")">Log In</a>
                                         </li>
                                     }
-                                    <!--Must use "Else If" because of the role conditions, otherwise VS throws an error -->
+                                    
                                     else if (User.IsInRole("Admin") || (User.IsInRole("Project Manager") || (User.IsInRole("SuperUser") || (User.IsInRole("Developer") || (User.IsInRole("Submitter"))))))
                                     {
                                         <li class="dropdown-footer">
