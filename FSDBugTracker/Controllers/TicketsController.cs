@@ -58,9 +58,9 @@ namespace FSDBugTracker.Controllers
             ViewBag.AssignedToUserId = new SelectList(db.Users, "Id", "FirstName");
             ViewBag.OwnerUserId = new SelectList(db.Users, "Id", "FirstName");
             ViewBag.ProjectId = new SelectList(db.Projects, "Id", "Name");
-            ViewBag.TicketPriorityId = new SelectList(db.TicketPriorities, "Id", "Name");
-            ViewBag.TicketStatusId = new SelectList(db.TicketStatuses, "Id", "Name");
-            ViewBag.TicketTypeId = new SelectList(db.TicketTypes, "Id", "Name");
+            ViewBag.TicketPriorityId = new SelectList(db.TicketPriorities.Where(tp => tp.TicketPriorityName != null), "Id", "TicketPriorityName");
+            ViewBag.TicketStatusId = new SelectList(db.TicketStatuses.Where(ts => ts.TicketStatusName != null), "Id", "TicketStatusName");
+            ViewBag.TicketTypeId = new SelectList(db.TicketTypes.Where(tt => tt.TicketTypeName != null), "Id", "TicketTypeName");
             return View();
         }
 
