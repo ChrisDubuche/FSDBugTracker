@@ -2025,9 +2025,12 @@ a:active {
   line-height: 25px;
 }
 .navbar .navbar-inner .navbar-header .navbar-account .account-area .login-area + .dropdown-menu {
-  width: 100%;
   min-width: 100px;
 }
+.navbar .navbar-inner .navbar-header .navbar-account .account-area .login-area {
+  width: 100%;
+}
+
 .navbar .navbar-inner .navbar-header .navbar-account .account-area .login-area + .dropdown-arrow:before {
   width: 100%;
 }

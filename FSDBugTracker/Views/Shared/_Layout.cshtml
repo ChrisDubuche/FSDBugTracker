@@ -278,23 +278,47 @@
                                 </ul>
                                 <!--/Tasks Dropdown-->
                             </li>
-                            @*<li>
-                                <a class="wave in" id="chat-link" title="Chat" href="#">
-                                    <i class="icon glyphicon glyphicon-comment"></i>
-                                </a>
-                            </li>*@
+
                             <li>
                                 <a class="login-area dropdown-toggle" data-toggle="dropdown">
                                     <div class="avatar" title="View your public profile">
                                         <img src="~/assets/img/avatars/Me.png">
                                     </div>
                                     <section>
-                                        <h2><span class="profile"><span>Dubuche Bug Tracker</span></span></h2>
+                                        @if (User.IsInRole("SuperUser"))
+                                        {
+                                            <h2><span class="profile">SuperUser</span></h2>
+                                        }
+                                        else if (User.IsInRole("Admin"))
+                                        {
+                                            <h2><span class="profile">Admin</span></h2>
+                                        }
+                                        else if (User.IsInRole("Project Manager"))
+                                        {
+                                            <h2><span class="profile"> Project Manager</span></h2>
+                                        }
+                                        else if (User.IsInRole("Developer"))
+                                        {
+                                            <h2><span class="profile"> Developer</span></h2>
+                                        }
+                                        else if (User.IsInRole("Submitter"))
+                                        {
+                                            <h2><span class="profile"> Submitter</span></h2>
+                                        }
+                                        @*else if (User.IsInRole())
+                                            {
+                                                <h2><span class="profile">Guest</span></h2>
+                                            }*@
+                                        else
+                                        {
+                                            <h2><span class="profile">NonUser</span></h2>
+                                        }
                                     </section>
                                 </a>
                                 <!--Login Area Dropdown-->
                                 <ul class="pull-right dropdown-menu dropdown-arrow dropdown-login-area">
-                                    <li class="username"><a>Dubuche Bug Tracker</a></li>
+
+                                    @*<li class="username"><a>Dubuche Bug Tracker</a></li>*@
                                     <li class="email"><a>cdubuche@outlook.com</a></li>
                                     <!--Avatar Area-->
                                     <li>
@@ -305,7 +329,7 @@
                                     </li>
                                     <!--Avatar Area-->
                                     <li class="edit">
-                                        <a href="https://www.coderfoundry.com/christiandubuche" target="_blank" class="pull-left">Profile</a>
+                                        <a href="https://www.coderfoundry.com/christiandubuche" target="_blank" class="pull-left">Portfolio Page</a>
                                         @*<a href="#" class="pull-right">Setting</a>*@
                                     </li>
                                     <!--Theme Selector Area-->
@@ -326,13 +350,25 @@
                                             </ul>
                                         </li>*@
                                     <!--/Theme Selector Area-->
-                                    <li class="dropdown-footer">
-                                        @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" }))
-                                        {
-                                            @Html.AntiForgeryToken()
-                                            <a href="javascript:document.getElementById('logoutForm').submit()">Sign Off</a>
-                                        }
-                                    </li>
+
+                                    <!--When the user comes to the site without first logging through a registered or demo account they'll see a log in link, after loggin in the link becomes a signout link*-->
+                                    @if (!Request.IsAuthenticated)
+                                    {
+                                        <li class="dropdown-footer">
+                                            <a href="@Url.Action("Login", "Account")">Log In</a>
+                                        </li>
+                                    }
+                                    <!--Must use "Else If" because of the role conditions, otherwise VS throws an error -->
+                                    else if (User.IsInRole("Admin") || (User.IsInRole("Project Manager") || (User.IsInRole("SuperUser") || (User.IsInRole("Developer") || (User.IsInRole("Submitter"))))))
+                                    {
+                                        <li class="dropdown-footer">
+                                            @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" }))
+                                            {
+                                                @Html.AntiForgeryToken()
+                                                <a href="javascript:document.getElementById('logoutForm').submit()">Sign Off</a>
+                                            }
+                                        </li>
+                                    }
                                 </ul>
                                 <!--/Login Area Dropdown-->
                             </li>
@@ -342,28 +378,28 @@
                             <!-- Settings -->
                         </ul>
                         @*<div class="setting">
-                            <a id="btn-setting" title="Setting" href="#">
-                                <i class="icon glyphicon glyphicon-cog"></i>
-                            </a>
-                        </div>
-                        <div class="setting-container">
-                            <label>
-                                <input type="checkbox" id="checkbox_fixednavbar">
-                                <span class="text">Fixed Navbar</span>
-                            </label>
-                            <label>
-                                <input type="checkbox" id="checkbox_fixedsidebar">
-                                <span class="text">Fixed SideBar</span>
-                            </label>
-                            <label>
-                                <input type="checkbox" id="checkbox_fixedbreadcrumbs">
-                                <span class="text">Fixed BreadCrumbs</span>
-                            </label>
-                            <label>
-                                <input type="checkbox" id="checkbox_fixedheader">
-                                <span class="text">Fixed Header</span>
-                            </label>
-                        </div>*@
+                                <a id="btn-setting" title="Setting" href="#">
+                                    <i class="icon glyphicon glyphicon-cog"></i>
+                                </a>
+                            </div>
+                            <div class="setting-container">
+                                <label>
+                                    <input type="checkbox" id="checkbox_fixednavbar">
+                                    <span class="text">Fixed Navbar</span>
+                                </label>
+                                <label>
+                                    <input type="checkbox" id="checkbox_fixedsidebar">
+                                    <span class="text">Fixed SideBar</span>
+                                </label>
+                                <label>
+                                    <input type="checkbox" id="checkbox_fixedbreadcrumbs">
+                                    <span class="text">Fixed BreadCrumbs</span>
+                                </label>
+                                <label>
+                                    <input type="checkbox" id="checkbox_fixedheader">
+                                    <span class="text">Fixed Header</span>
+                                </label>
+                            </div>*@
                         <!-- Settings -->
                     </div>
                 </div>
@@ -390,7 +426,7 @@
                     <i class="menu-icon glyphicon glyphicon-home"></i>
                     <span class="menu-text"> Dashboard </span>
 
-                    
+
                 </a>
             </li>
 
@@ -440,17 +476,17 @@
 
                     </li>
                     @*<li>
-                        <a href="form-layouts.html">
-                            <span class="menu-text">Unassigned Projects</span>
+                            <a href="form-layouts.html">
+                                <span class="menu-text">Unassigned Projects</span>
 
-                        </a>
-                    </li>
-                    <li>
-                        <a href="form-layouts.html">
-                            <span class="menu-text">Assigned Projects</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="form-layouts.html">
+                                <span class="menu-text">Assigned Projects</span>
 
-                        </a>
-                    </li>*@
+                            </a>
+                        </li>*@
                 </ul>
             </li>
 
@@ -467,29 +503,29 @@
 
                     </li>
                     <li>
-                            <a href="form-inputs.html">
-                                <span class="menu-text">Open/Unassigned Tickets</span>
+                        <a href="form-inputs.html">
+                            <span class="menu-text">Open/Unassigned Tickets</span>
 
-                            </a>
-                        </li>
-                        <li>
-                            <a href="form-pickers.html">
-                                <span class="menu-text">Open Assigned Tickets</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="form-pickers.html">
+                            <span class="menu-text">Open Assigned Tickets</span>
 
-                            </a>
-                        </li>
-                        <li>
-                            <a href="form-wizard.html">
-                                <span class="menu-text">Resolved Tickets</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="form-wizard.html">
+                            <span class="menu-text">Resolved Tickets</span>
 
-                            </a>
-                        </li>
-                        <li>
-                            <a href="form-validation.html">
-                                <span class="menu-text">Archieved Tickets</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="form-validation.html">
+                            <span class="menu-text">Archieved Tickets</span>
 
-                            </a>
-                        </li>
+                        </a>
+                    </li>
                 </ul>
             </li>
             <!--Profile-->
