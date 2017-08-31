@@ -9,7 +9,7 @@ namespace FSDBugTracker.Helpers
     public class UserProjectHelper
     {
         private ApplicationDbContext db = new ApplicationDbContext();
-        
+
         public bool IsUserOnProject(string userId, int projectId)
         {
             var project = db.Projects.Find(projectId);
@@ -17,31 +17,25 @@ namespace FSDBugTracker.Helpers
             return (flag);
         }
 
-        public ICollection<Project>ListUserProjects(string userId)
+        public ICollection<Project> ListUserProjects(string userId)
         {
             ApplicationUser user = db.Users.Find(userId);
             var projects = user.Projects.ToList();
             return (projects);
         }
 
-        public void AddUserToProject(string userIds, int projectId)
+        public void AddUserToProject(string userId, int projectId)
         {
-            foreach (var userId in userIds)
+
+            if (!IsUserOnProject(userId, projectId))
             {
-                if (!IsUserOnProject(userId, projectId))
-                {
-                    Project proj = db.Projects.Find(projectId);
-                    var newUser = db.Users.Find(userId);
+                Project proj = db.Projects.Find(projectId);
+                var newUser = db.Users.Find(userId);
 
-                    proj.ProjectUsers.Add(newUser); 
-                    db.SaveChanges();
-                }
+                proj.ProjectUsers.Add(newUser);
+                db.SaveChanges();
             }
-        }
 
-        private bool IsUserOnProject(char userId, int projectId)
-        {
-            throw new NotImplementedException();
         }
 
         public void RemoveUserFromProject(string userId, int projectId)
@@ -50,13 +44,13 @@ namespace FSDBugTracker.Helpers
             {
                 Project proj = db.Projects.Find(projectId);
                 var delUser = db.Users.Find(userId);
-                
+
                 proj.ProjectUsers.Remove(delUser);
-                db.Entry(proj).State = EntityState.Modified; 
+                db.Entry(proj).State = EntityState.Modified;
                 db.SaveChanges();
             }
         }
-        
+
         public ICollection<ApplicationUser> UsersOnProject(int projectId)
         {
             var users = new List<ApplicationUser>();
@@ -65,7 +59,7 @@ namespace FSDBugTracker.Helpers
             {
                 users.Add(projectUser);
             }
-            
+
             return users;
         }
 
