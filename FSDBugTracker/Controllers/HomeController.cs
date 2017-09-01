@@ -5,6 +5,7 @@ using Microsoft.AspNet.Identity;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
+using System.Threading.Tasks;
 
 namespace FSDBugTracker.Controllers
 {
@@ -24,10 +25,10 @@ namespace FSDBugTracker.Controllers
             return View();
         }
 
-        public ActionResult SeedData()
+        public async Task<ActionResult> SeedDataAsync()
         {
             SeedHelper helper = new SeedHelper();
-            helper.SeedData();
+            await helper.SeedData();
             return RedirectToAction("Index");
         }
 
