@@ -46,7 +46,7 @@ namespace FSDBugTracker.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Name")] TicketStatus ticketStatus)
+        public ActionResult Create([Bind(Include = "Id,TicketStatusName")] TicketStatus ticketStatus)
         {
             if (ModelState.IsValid)
             {
@@ -80,7 +80,7 @@ namespace FSDBugTracker.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Name")] TicketStatus ticketStatus)
+        public ActionResult Edit([Bind(Include = "Id,TicketStatusName")] TicketStatus ticketStatus)
         {
             if (ModelState.IsValid)
             {

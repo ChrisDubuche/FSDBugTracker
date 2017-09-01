@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using System;
 
 namespace FSDBugTracker.Helpers
 {
@@ -35,7 +34,6 @@ namespace FSDBugTracker.Helpers
                 proj.ProjectUsers.Add(newUser);
                 db.SaveChanges();
             }
-
         }
 
         public void RemoveUserFromProject(string userId, int projectId)
@@ -68,9 +66,17 @@ namespace FSDBugTracker.Helpers
             return db.Users.Where(u => u.Projects.All(p => p.Id != projectId)).ToList();
         }
 
-        internal void AddUserToProject(List<string> projectUserIds, int id)
+        public void AddUsersToProject(List<string> userIds, int projectId)
         {
-            throw new NotImplementedException();
+            foreach (var user in userIds)
+            {
+                if (!IsUserOnProject(user, projectId))
+                {
+                    Project proj = db.Projects.Find(projectId);
+                    var newUser = db.Users.Find(user);
+                    proj.ProjectUsers.Add(newUser);
+                }
+            }
         }
     }
 }

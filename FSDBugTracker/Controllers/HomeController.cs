@@ -24,6 +24,13 @@ namespace FSDBugTracker.Controllers
             return View();
         }
 
+        public ActionResult SeedData()
+        {
+            SeedHelper helper = new SeedHelper();
+            helper.SeedData();
+            return RedirectToAction("Index");
+        }
+
         public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";

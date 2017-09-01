@@ -1,4 +1,6 @@
-﻿<!-- Main Container -->
+﻿@using FSDBugTracker.Helpers;
+
+<!-- Main Container -->
 <div class="main-container container-fluid">
     <!-- Page Container -->
     <div class="page-container">
@@ -243,9 +245,9 @@
             <!-- Page Breadcrumb -->
             <div class="page-breadcrumbs">
                 <ul class="breadcrumb">
-                   @if (User.IsInRole("Admin"))
+                   @if (User.IsInRole("Admin") || (User.IsInRole("SuperUser")))
                    {
-                    <li style="color:black;"><a href="@Url.Action("SeedMethod")">Seed Database</a></li>
+                    <li style="color:black;"><a href="@Url.Action("SeedData")">Seed Database</a></li>
                    }
                     <li>
                         <i class="fa fa-home"></i>

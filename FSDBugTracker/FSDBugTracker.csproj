@@ -411,6 +411,7 @@
     </Compile>
     <Compile Include="Helpers\CounterHelper.cs" />
     <Compile Include="Helpers\ImageUploadValidator.cs" />
+    <Compile Include="Helpers\LogHelper.cs" />
     <Compile Include="Helpers\MyUserHelper.cs" />
     <Compile Include="Helpers\SeedHelper.cs" />
     <Compile Include="Helpers\TicketsHelper.cs" />

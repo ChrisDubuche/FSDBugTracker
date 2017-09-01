@@ -82,9 +82,12 @@ namespace FSDBugTracker.Controllers
             ViewBag.AssignedToUserId = new SelectList(db.Users, "Id", "FirstName", ticket.AssignedToUserId);
             ViewBag.OwnerUserId = new SelectList(db.Users, "Id", "FirstName", ticket.OwnerUserId);
             ViewBag.ProjectId = new SelectList(db.Projects, "Id", "Name", ticket.ProjectId);
-            ViewBag.TicketPriorityId = new SelectList(db.TicketPriorities, "Id", "Name", ticket.TicketPriorityId);
-            ViewBag.TicketStatusId = new SelectList(db.TicketStatuses, "Id", "Name", ticket.TicketStatusId);
-            ViewBag.TicketTypeId = new SelectList(db.TicketTypes, "Id", "Name", ticket.TicketTypeId);
+            ViewBag.TicketPriorityId = new SelectList(db.TicketPriorities.Where(tp => tp.TicketPriorityName != null), "Id", "TicketPriorityName");
+            ViewBag.TicketStatusId = new SelectList(db.TicketStatuses.Where(ts => ts.TicketStatusName != null), "Id", "TicketStatusName");
+            ViewBag.TicketTypeId = new SelectList(db.TicketTypes.Where(tt => tt.TicketTypeName != null), "Id", "TicketTypeName");
+            //ViewBag.TicketPriorityId = new SelectList(db.TicketPriorities, "Id", "TicketPriorityName", ticket.TicketPriorityId);
+            //ViewBag.TicketStatusId = new SelectList(db.TicketStatuses, "Id", "TicketStatusName", ticket.TicketStatusId);
+            //ViewBag.TicketTypeId = new SelectList(db.TicketTypes, "Id", "TicketTypeName", ticket.TicketTypeId);
             return View(ticket);
         }
 
@@ -132,9 +135,9 @@ namespace FSDBugTracker.Controllers
             ViewBag.AssignedToUserId = new SelectList(userRolesAssigned, "Id", "FirstName", ticket.AssignedToUserId);//make an instatiate Selectlist called viewbag AssignToUserId that pass in list of users w/Id and firsst Name Select with the box
             ViewBag.OwnerUserId = new SelectList(db.Users, "Id", "FirstName", ticket.OwnerUserId);
             ViewBag.ProjectId = new SelectList(db.Projects, "Id", "Name", ticket.ProjectId);
-            ViewBag.TicketPriorityId = new SelectList(db.TicketPriorities, "Id", "Name", ticket.TicketPriorityId);
-            ViewBag.TicketStatusId = new SelectList(db.TicketStatuses, "Id", "Name", ticket.TicketStatusId);
-            ViewBag.TicketTypeId = new SelectList(db.TicketTypes, "Id", "Name", ticket.TicketTypeId);
+            ViewBag.TicketPriorityId = new SelectList(db.TicketPriorities.Where(tp => tp.TicketPriorityName != null), "Id", "TicketPriorityName");
+            ViewBag.TicketStatusId = new SelectList(db.TicketStatuses.Where(ts => ts.TicketStatusName != null), "Id", "TicketStatusName");
+            ViewBag.TicketTypeId = new SelectList(db.TicketTypes.Where(tt => tt.TicketTypeName != null), "Id", "TicketTypeName");
             if (User.IsInRole("Admin"))
             {
                 return View(ticket);
@@ -217,9 +220,9 @@ namespace FSDBugTracker.Controllers
             ViewBag.AssignedToUserId = new SelectList(db.Users, "Id", "FirstName", ticket.AssignedToUserId);
             ViewBag.OwnerUserId = new SelectList(db.Users, "Id", "FirstName", ticket.OwnerUserId);
             ViewBag.ProjectId = new SelectList(db.Projects, "Id", "ProjectName", ticket.ProjectId);
-            ViewBag.TicketPriorityId = new SelectList(db.TicketPriorities, "Id", "TkPriorityName", ticket.TicketPriorityId);
-            ViewBag.TicketStatusId = new SelectList(db.TicketStatuses, "Id", "TkStatusName", ticket.TicketStatusId);
-            ViewBag.TicketTypeId = new SelectList(db.TicketTypes, "Id", "TkTypeName", ticket.TicketTypeId);
+            ViewBag.TicketPriorityId = new SelectList(db.TicketPriorities.Where(tp => tp.TicketPriorityName != null), "Id", "TicketPriorityName");
+            ViewBag.TicketStatusId = new SelectList(db.TicketStatuses.Where(ts => ts.TicketStatusName != null), "Id", "TicketStatusName");
+            ViewBag.TicketTypeId = new SelectList(db.TicketTypes.Where(tt => tt.TicketTypeName != null), "Id", "TicketTypeName");
             return View(ticket);
         }
         #region
