@@ -25,6 +25,11 @@ namespace FSDBugTracker.Controllers
             return View();
         }
 
+        public ActionResult Landing()
+        {
+            return View();
+        }
+
         public async Task<ActionResult> SeedDataAsync()
         {
             SeedHelper helper = new SeedHelper();

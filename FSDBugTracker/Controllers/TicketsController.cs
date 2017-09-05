@@ -85,9 +85,6 @@ namespace FSDBugTracker.Controllers
             ViewBag.TicketPriorityId = new SelectList(db.TicketPriorities.Where(tp => tp.TicketPriorityName != null), "Id", "TicketPriorityName");
             ViewBag.TicketStatusId = new SelectList(db.TicketStatuses.Where(ts => ts.TicketStatusName != null), "Id", "TicketStatusName");
             ViewBag.TicketTypeId = new SelectList(db.TicketTypes.Where(tt => tt.TicketTypeName != null), "Id", "TicketTypeName");
-            //ViewBag.TicketPriorityId = new SelectList(db.TicketPriorities, "Id", "TicketPriorityName", ticket.TicketPriorityId);
-            //ViewBag.TicketStatusId = new SelectList(db.TicketStatuses, "Id", "TicketStatusName", ticket.TicketStatusId);
-            //ViewBag.TicketTypeId = new SelectList(db.TicketTypes, "Id", "TicketTypeName", ticket.TicketTypeId);
             return View(ticket);
         }
 
@@ -95,27 +92,6 @@ namespace FSDBugTracker.Controllers
         [NoDirectAccess]
         [Authorize(Roles = "Admin, Project Manager, Developer, Submitter, SuperUser")]
         public ActionResult Edit(int? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-        //    }
-        //    Ticket ticket = db.Tickets.Find(id);
-        //    if (ticket == null)
-        //    {
-        //        return HttpNotFound();
-        //    }
-
-        //    var allDevs = roleHelper.UsersInRole("Developer");
-        //    ViewBag.AssignedToUserId = new SelectList(allDevs, "Id", "FirstName", ticket.AssignedToUserId);
-
-        //    ViewBag.OwnerUserId = new SelectList(db.Users, "Id", "FirstName", ticket.OwnerUserId);
-        //    ViewBag.ProjectId = new SelectList(db.Projects, "Id", "Name", ticket.ProjectId);
-        //    ViewBag.TicketPriorityId = new SelectList(db.TicketPriorities, "Id", "Name", ticket.TicketPriorityId);
-        //    ViewBag.TicketStatusId = new SelectList(db.TicketStatuses, "Id", "Name", ticket.TicketStatusId);
-        //    ViewBag.TicketTypeId = new SelectList(db.TicketTypes, "Id", "Name", ticket.TicketTypeId);
-        //    return View(ticket);
-        //}
         {
             var userId = User.Identity.GetUserId();
 
@@ -165,29 +141,6 @@ namespace FSDBugTracker.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        //public ActionResult Edit([Bind(Include = "Id,Title,Description,Created,Updated,ProjectId,TicketTypeId,TicketPriorityId,TicketStatusId,OwnerUserId,AssignedToUserId")] Ticket ticket)
-        //{
-        //    var oldTicket = db.Tickets.AsNoTracking().FirstOrDefault(t => t.Id == ticket.Id);
-        //    if (ModelState.IsValid)
-        //    {
-        //        ticket.Updated = DateTimeOffset.Now;
-        //        db.Entry(ticket).State = EntityState.Modified;
-        //        db.SaveChanges();
-        //        // await ... call tickethelper method for generating notification
-        //        return RedirectToAction("Index");
-        //    }
-
-        //    var allDevs = roleHelper.UsersInRole("Developer");
-        //    ViewBag.AssignedToUserId = new SelectList(allDevs, "Id", "FirstName", ticket.AssignedToUserId);
-
-        //    ViewBag.OwnerUserId = new SelectList(db.Users, "Id", "FirstName", ticket.OwnerUserId);
-        //    ViewBag.ProjectId = new SelectList(db.Projects, "Id", "Name", ticket.ProjectId);
-        //    ViewBag.TicketPriorityId = new SelectList(db.TicketPriorities, "Id", "Name", ticket.TicketPriorityId);
-        //    ViewBag.TicketStatusId = new SelectList(db.TicketStatuses, "Id", "Name", ticket.TicketStatusId);
-        //    ViewBag.TicketTypeId = new SelectList(db.TicketTypes, "Id", "Name", ticket.TicketTypeId);
-        //    return View(ticket);
-        //}
-
         public async Task<ActionResult> Edit([Bind(Include = "Id,Title,Description,Created,Updated,ProjectId,TicketTypeId,TicketPriorityId,TicketStatusId,OwnerUserId,AssignedToUserId")] Ticket ticket)
         {
             if (ModelState.IsValid)
