@@ -30,7 +30,8 @@ namespace FSDBugTracker.Helpers
 
         public ICollection<Ticket> GetAssignedTickets(string userId)
         {
-            return db.Tickets.Where(t => t.AssignedToUserId == userId).ToList();
+            var myTickets = db.Tickets.AsNoTracking().Where(t => t.AssignedToUserId == userId).ToList();
+            return myTickets;
         }
         
         public ICollection<Ticket> GetPMTickets(string userId)

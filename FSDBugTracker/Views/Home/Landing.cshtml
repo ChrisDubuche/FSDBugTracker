@@ -1,192 +1,189 @@
-﻿
-        <div class="page-content">
-            <!-- Page Breadcrumb -->
-            <div class="page-breadcrumbs">
-                <ul class="breadcrumb">
-                    <li>
-                        <i class="fa fa-home"></i>
-                        <a href="@Url.Action("Index","Home")">Home</a>
-                    </li>
-                    <li class="active">Index</li>
-                </ul>
-            </div>
-            <div class="page-header position-relative">
-                <div class="header-title">
-                    <h1>
-                        Users Log-In
-                    </h1>
-                </div>
-                <!--Header Buttons-->
-                <div class="header-buttons">
-                    <a class="sidebar-toggler" href="#">
-                        <i class="fa fa-arrows-h"></i>
-                    </a>
-                    <a class="refresh" id="refresh-toggler" href="">
-                        <i class="glyphicon glyphicon-refresh"></i>
-                    </a>
-                    <a class="fullscreen" id="fullscreen-toggler" href="#">
-                        <i class="glyphicon glyphicon-fullscreen"></i>
-                    </a>
-                </div>
-                <!--Header Buttons End-->
-            </div>
-            <!-- Page Body -->
-            
-            <div class="page-body">
-                <h5 class="row-title before-themeprimary">Demo User Roles</h5>
-                <div class="row pricing-container">
-                    <div class="col-xs-12 col-sm-6 col-md-3">
-                        <div class="plan">
-                            <div class="header bordered-yellow">Administrator</div>
-                            <div class="price yellow">Role</div>
-                            <div class="monthly">Demo Admin</div>
-                            <ul>
-                                <li>Assign TICKETS</li>
-                                <li>Create PROJECTS</li>
-                                <li>Edit TICKETS</li>
-                                <li>Manage USERS</li>
-                            </ul>                            
-                            @using (Html.BeginForm("DemoLogin", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-                            {
-                                @Html.AntiForgeryToken()
-                                <div class="form-group">
-                                    <input value="DemoAdmin@mailinator.com" class="form-control" id="Email" name="Email" type="hidden" />
-                                    <input value="Abc&123!" class="form-control" id="Password" name="Password" type="hidden" />
-                                    <button type="submit" class="signup bg-yellow">Demo Admin Log In</button>
-                                </div>
-                            }
-                        </div>
-                    </div>
-                    <div class="col-xs-12 col-sm-6 col-md-3">
-                        <div class="plan popular-plan animated bounce">
-                            <div class="header bordered-palegreen">Project Manager</div>
-                            <div class="price palegreen">Role</div>
-                            <div class="monthly">Demo Project Manager</div>
-                            <ul>
-                                <li>Assign TICKETS</li>
-                                <li>View PROJECTS</li>
-                                <li>Create PROJECTS</li>
-                                <li>Edit TICKETS</li>
-                            </ul>                           
-                        @using (Html.BeginForm("DemoLogin", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-                        {
-                            @Html.AntiForgeryToken()
-                            <div class="form-group">
-                                <input value="DemoProjectManager@mailinator.com" class="form-control" id="Email" name="Email" type="hidden" />
-                                <input value="Abc&123!" class="form-control" id="Password" name="Password" type="hidden" />
-                                <button type="submit" class="signup bg-palegreen">Demo Project Manager Log In</button>
-                            </div>
-                        }
-                        </div>
-                    </div>
-                    <div class="col-xs-12 col-sm-6 col-md-3">
-                        <div class="plan">
-                            <div class="header bordered-orange">Developer</div>
-                            <div class="price orange">Role</div>
-                            <div class="monthly">Demo Developer</div>
-                            <ul>
-                                <li>View TICKETS</li>
-                                <li>View PROJECTS</li>
-                                <li>Edit TICKETS</li>
-                                <li></li>
-                            </ul>                            
-                        @using (Html.BeginForm("DemoLogin", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-                        {
-                            @Html.AntiForgeryToken()
-                            <div class="form-group">
-                                <input value="DemoDeveloper@mailinator.com" class="form-control" id="Email" name="Email" type="hidden" />
-                                <input value="Abc&123!" class="form-control" id="Password" name="Password" type="hidden" />
-                                <button type="submit" class="signup bg-orange" >Demo Developer Log In</button>
-                            </div>
-                        }
-                        </div>
-                    </div>
-                    <div class="col-xs-12 col-sm-6 col-md-3">
-                        <div class="plan">
-                            <div class="header bordered-azure">Submitter</div>
-                            <div class="price azure">Role</div>
-                            <div class="monthly">Demo Submitter</div>
-                            <ul>
-                                <li>Submit TICKETS</li>
-                                <li>View TICKETS</li>
-                                <li>View PROJECTS</li>
-                                <li></li>
-                            </ul>                       
-                            @using (Html.BeginForm("DemoLogin", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-                            {
-                                @Html.AntiForgeryToken()
-                                <div class="form-group">
-                                    <input value="DemoSubmitter@mailinator.com" class="form-control" id="Email" name="Email" type="hidden" />
-                                    <input value="Abc&123!" class="form-control" id="Password" name="Password" type="hidden" />
-                                    <button type="submit" class="signup bg-azure">Demo Submitter Log In</button>
-                                </div>
-                            }
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="page-body">
-                <h5 class="row-title before-themeprimary">BugTracker User Roles</h5>
-                <div class="row pricing-container">
-                    <div class="col-xs-12 col-sm-6 col-md-3">
-                        <div class="plan">
-                            <div class="header bordered-yellow">Administrator</div>
-                            <div class="price yellow">Role</div>
-                            <div class="monthly"></div>
-                            <ul>
-                                <li>Assign TICKETS</li>
-                                <li>Create PROJECTS</li>
-                                <li>Edit TICKETS</li>
-                                <li>Manage USERS</li>
-                            </ul>
-                            <a class="signup bg-yellow" href="@Url.Action("Login", "Account")">Administrator Log In</a>
-                        </div>
-                    </div>
-                    <div class="col-xs-12 col-sm-6 col-md-3">
-                        <div class="plan popular-plan animated bounce">
-                            <div class="header bordered-palegreen">Project Manager</div>
-                            <div class="price palegreen">Role</div>
-                            <div class="monthly"></div>
-                            <ul>
-                                <li>Assign TICKETS</li>
-                                <li>View PROJECTS</li>
-                                <li>Create PROJECTS</li>
-                                <li>Edit TICKETS</li>
-                            </ul>
-                            <a class="signup bg-palegreen" href="@Url.Action("Login", "Account")">Project Manager Log In</a>
-                        </div>
-                    </div>
-                    <div class="col-xs-12 col-sm-6 col-md-3">
-                        <div class="plan">
-                            <div class="header bordered-orange">Developer</div>
-                            <div class="price orange">Role</div>
-                            <div class="monthly"></div>
-                            <ul>
-                                <li>View TICKETS</li>
-                                <li>View PROJECTS</li>
-                                <li>Edit TICKETS</li>
-                                <li></li>
-                            </ul>
-                            <a class="signup bg-orange" href="@Url.Action("Login", "Account")">Developer Log In</a>
-                        </div>
-                    </div>
-                    <div class="col-xs-12 col-sm-6 col-md-3">
-                        <div class="plan">
-                            <div class="header bordered-azure">Submitter</div>
-                            <div class="price azure">Role</div>
-                            <div class="monthly"></div>
-                            <ul>
-                                <li>Submit TICKETS</li>
-                                <li>View TICKETS</li>
-                                <li>View PROJECTS</li>
-                                <li></li>
-                            </ul>
-                            <a class="signup bg-azure" href="@Url.Action("Login", "Account")">Submitter Log In</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-
+﻿<div class="page-content">
+    <!-- Page Breadcrumb -->
+    <div class="page-breadcrumbs">
+        <ul class="breadcrumb">
+            <li>
+                <i class="fa fa-home"></i>
+                <a href="@Url.Action("Index","Home")">Home</a>
+            </li>
+            <li class="active">Index</li>
+        </ul>
+    </div>
+    <div class="page-header position-relative">
+        <div class="header-title">
+            <h1>
+                Users Log-In
+            </h1>
         </div>
+        <!--Header Buttons-->
+        <div class="header-buttons">
+            <a class="sidebar-toggler" href="#">
+                <i class="fa fa-arrows-h"></i>
+            </a>
+            <a class="refresh" id="refresh-toggler" href="">
+                <i class="glyphicon glyphicon-refresh"></i>
+            </a>
+            <a class="fullscreen" id="fullscreen-toggler" href="#">
+                <i class="glyphicon glyphicon-fullscreen"></i>
+            </a>
+        </div>
+        <!--Header Buttons End-->
+    </div>
+    <!-- Page Body -->
+
+    <div class="page-body">
+        <h5 class="row-title before-themeprimary">Demo User Roles</h5>
+        <div class="row pricing-container">
+            <div class="col-xs-12 col-sm-6 col-md-3">
+                <div class="plan">
+                    <div class="header bordered-yellow">Administrator</div>
+                    <div class="price yellow">Role</div>
+                    <div class="monthly">Demo Admin</div>
+                    <ul>
+                        <li>Assign TICKETS</li>
+                        <li>Create PROJECTS</li>
+                        <li>Edit TICKETS</li>
+                        <li>Manage USERS</li>
+                    </ul>
+                    @using (Html.BeginForm("DemoLogin", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        <div class="form-group">
+                            <input value="DemoAdmin@mailinator.com" class="form-control" id="Email" name="Email" type="hidden" />
+                            <input value="Abc&123!" class="form-control" id="Password" name="Password" type="hidden" />
+                            <button type="submit" class="signup bg-yellow">Demo Admin Log In</button>
+                        </div>
+                    }
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-3">
+                <div class="plan popular-plan animated bounce">
+                    <div class="header bordered-palegreen">Project Manager</div>
+                    <div class="price palegreen">Role</div>
+                    <div class="monthly">Demo Project Manager</div>
+                    <ul>
+                        <li>Assign TICKETS</li>
+                        <li>View PROJECTS</li>
+                        <li>Create PROJECTS</li>
+                        <li>Edit TICKETS</li>
+                    </ul>
+                    @using (Html.BeginForm("DemoLogin", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        <div class="form-group">
+                            <input value="DemoProjectManager@mailinator.com" class="form-control" id="Email" name="Email" type="hidden" />
+                            <input value="Abc&123!" class="form-control" id="Password" name="Password" type="hidden" />
+                            <button type="submit" class="signup bg-palegreen">Demo Project Manager Log In</button>
+                        </div>
+                    }
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-3">
+                <div class="plan">
+                    <div class="header bordered-orange">Developer</div>
+                    <div class="price orange">Role</div>
+                    <div class="monthly">Demo Developer</div>
+                    <ul>
+                        <li>View TICKETS</li>
+                        <li>View PROJECTS</li>
+                        <li>Edit TICKETS</li>
+                        <li></li>
+                    </ul>
+                    @using (Html.BeginForm("DemoLogin", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        <div class="form-group">
+                            <input value="DemoDeveloper@mailinator.com" class="form-control" id="Email" name="Email" type="hidden" />
+                            <input value="Abc&123!" class="form-control" id="Password" name="Password" type="hidden" />
+                            <button type="submit" class="signup bg-orange">Demo Developer Log In</button>
+                        </div>
+                    }
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-3">
+                <div class="plan">
+                    <div class="header bordered-azure">Submitter</div>
+                    <div class="price azure">Role</div>
+                    <div class="monthly">Demo Submitter</div>
+                    <ul>
+                        <li>Submit TICKETS</li>
+                        <li>View TICKETS</li>
+                        <li>View PROJECTS</li>
+                        <li></li>
+                    </ul>
+                    @using (Html.BeginForm("DemoLogin", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        <div class="form-group">
+                            <input value="DemoSubmitter@mailinator.com" class="form-control" id="Email" name="Email" type="hidden" />
+                            <input value="Abc&123!" class="form-control" id="Password" name="Password" type="hidden" />
+                            <button type="submit" class="signup bg-azure">Demo Submitter Log In</button>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="page-body">
+        <h5 class="row-title before-themeprimary">BugTracker User Roles</h5>
+        <div class="row pricing-container">
+            <div class="col-xs-12 col-sm-6 col-md-3">
+                <div class="plan">
+                    <div class="header bordered-yellow">Administrator</div>
+                    <div class="price yellow">Role</div>
+                    <div class="monthly"></div>
+                    <ul>
+                        <li>Assign TICKETS</li>
+                        <li>Create PROJECTS</li>
+                        <li>Edit TICKETS</li>
+                        <li>Manage USERS</li>
+                    </ul>
+                    <a class="signup bg-yellow" href="@Url.Action("Login", "Account")">Administrator Log In</a>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-3">
+                <div class="plan popular-plan animated bounce">
+                    <div class="header bordered-palegreen">Project Manager</div>
+                    <div class="price palegreen">Role</div>
+                    <div class="monthly"></div>
+                    <ul>
+                        <li>Assign TICKETS</li>
+                        <li>View PROJECTS</li>
+                        <li>Create PROJECTS</li>
+                        <li>Edit TICKETS</li>
+                    </ul>
+                    <a class="signup bg-palegreen" href="@Url.Action("Login", "Account")">Project Manager Log In</a>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-3">
+                <div class="plan">
+                    <div class="header bordered-orange">Developer</div>
+                    <div class="price orange">Role</div>
+                    <div class="monthly"></div>
+                    <ul>
+                        <li>View TICKETS</li>
+                        <li>View PROJECTS</li>
+                        <li>Edit TICKETS</li>
+                        <li></li>
+                    </ul>
+                    <a class="signup bg-orange" href="@Url.Action("Login", "Account")">Developer Log In</a>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-3">
+                <div class="plan">
+                    <div class="header bordered-azure">Submitter</div>
+                    <div class="price azure">Role</div>
+                    <div class="monthly"></div>
+                    <ul>
+                        <li>Submit TICKETS</li>
+                        <li>View TICKETS</li>
+                        <li>View PROJECTS</li>
+                        <li></li>
+                    </ul>
+                    <a class="signup bg-azure" href="@Url.Action("Login", "Account")">Submitter Log In</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

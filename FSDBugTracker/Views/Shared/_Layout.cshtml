@@ -1,4 +1,10 @@
-﻿<!DOCTYPE html>
+﻿@using FSDBugTracker.Helpers
+@using Microsoft.AspNet.Identity
+@{ 
+    var urHelper = new UserRolesHelper();
+}
+
+<!DOCTYPE html>
 <html>
 
 <head>
@@ -69,30 +75,34 @@
                                         <img src="~/assets/img/avatars/Me.png">
                                     </div>
                                     <section>
-                                        @if (User.IsInRole("SuperUser"))
+                                        @if (Request.IsAuthenticated)
                                         {
-                                            <h2><span class="profile">SuperUser</span></h2>
-                                        }
-                                        else if (User.IsInRole("Admin"))
-                                        {
-                                            <h2><span class="profile">Admin</span></h2>
-                                        }
-                                        else if (User.IsInRole("Project Manager"))
-                                        {
-                                            <h2><span class="profile"> Project Manager</span></h2>
-                                        }
-                                        else if (User.IsInRole("Developer"))
-                                        {
-                                            <h2><span class="profile"> Developer</span></h2>
-                                        }
-                                        else if (User.IsInRole("Submitter"))
-                                        {
-                                            <h2><span class="profile"> Submitter</span></h2>
-                                        }
-                                        @*else if (User.IsInRole())
+                                            var userId = HttpContext.Current.User.Identity.GetUserId();
+                                            if (urHelper.IsUserInRole(userId, "SuperUser"))
                                             {
-                                                <h2><span class="profile">Guest</span></h2>
-                                            }*@
+                                                <h2><span class="profile">SuperUser</span></h2>
+                                            }
+                                            else if (urHelper.IsUserInRole(userId, "Admin"))
+                                            {
+                                                <h2><span class="profile">Admin</span></h2>
+                                            }
+                                            else if (urHelper.IsUserInRole(userId, "Project Manager"))
+                                            {
+                                                <h2><span class="profile"> Project Manager</span></h2>
+                                            }
+                                            else if (urHelper.IsUserInRole(userId, "Developer"))
+                                            {
+                                                <h2><span class="profile"> Developer</span></h2>
+                                            }
+                                            else if (urHelper.IsUserInRole(userId, "Submitter"))
+                                            {
+                                                <h2><span class="profile"> Submitter</span></h2>
+                                            }
+                                            else
+                                            {
+                                                <h2><span class="profile"> Guest</span></h2>
+                                            }
+                                        }
                                         else
                                         {
                                             <h2><span class="profile">NonUser</span></h2>
@@ -126,8 +136,7 @@
                                             <a href="@Url.Action("Login", "Account")">Log In</a>
                                         </li>
                                     }
-
-                                    else if (User.IsInRole("Admin") || (User.IsInRole("Project Manager") || (User.IsInRole("SuperUser") || (User.IsInRole("Developer") || (User.IsInRole("Submitter"))))))
+                                    else
                                     {
                                         <li class="dropdown-footer">
                                             @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" }))

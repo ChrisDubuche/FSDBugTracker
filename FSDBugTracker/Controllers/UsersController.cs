@@ -57,7 +57,8 @@ namespace FSDBugTracker.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,FirstName,LastName,DisplayName,Email,EmailConfirmed,PasswordHash,SecurityStamp,PhoneNumber,PhoneNumberConfirmed,TwoFactorEnabled,LockoutEndDateUtc,LockoutEnabled,AccessFailedCount,UserName")] ApplicationUser applicationUser)
+        [Authorize]
+        public ActionResult Create([Bind(Include = "FirstName,LastName,DisplayName,Email,PhoneNumber,Password")] ApplicationUser applicationUser)
         {
             if (ModelState.IsValid)
             {
