@@ -28,6 +28,10 @@
     <link href="~/assets/css/animate.min.css" rel="stylesheet" />
     <link id="skin-link" href="" rel="stylesheet" type="text/css" />
 
+    @section styles{
+        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css">
+    }
+
     <!--Skin Script: Place this script in head to load scripts for skins and rtl support-->
     <script src="~/assets/js/skins.js"></script>
 </head>
@@ -55,8 +59,8 @@
                 <div class="navbar-header pull-right">
                     <div class="navbar-account">
                         <ul class="account-area">
-                            <li>                               
-                                <!--Tasks Dropdown-->                               
+                            <li>
+                                <!--Tasks Dropdown-->
                                 <!--/Tasks Dropdown-->
                             </li>
                             <li>
@@ -112,7 +116,7 @@
                                         <a href="https://www.coderfoundry.com/christiandubuche" target="_blank" class="pull-left">Portfolio Page</a>
                                         @*<a href="#" class="pull-right">Setting</a>*@
                                     </li>
-                          
+
 
                                     <!--When the user comes to the site without first logging through a registered or demo account they'll see a log in link, after loggin in the link becomes a signout link*-->
                                     <!--Must use "Else If" because of the role conditions, otherwise VS throws an error -->
@@ -122,7 +126,7 @@
                                             <a href="@Url.Action("Login", "Account")">Log In</a>
                                         </li>
                                     }
-                                    
+
                                     else if (User.IsInRole("Admin") || (User.IsInRole("Project Manager") || (User.IsInRole("SuperUser") || (User.IsInRole("Developer") || (User.IsInRole("Submitter"))))))
                                     {
                                         <li class="dropdown-footer">
@@ -136,9 +140,9 @@
                                 </ul>
                                 <!--/Login Area Dropdown-->
                             </li>
-                          
+
                         </ul>
-                  
+
                     </div>
                 </div>
                 <!-- /Account Area and Settings -->
@@ -146,189 +150,198 @@
         </div>
     </div>
 
-    @RenderBody()
+    <div class="main-container container-fluid">
+        <!-- Page Container -->
+        <div class="page-container">
+            <div class="page-sidebar" id="sidebar">
+                <!-- Page Sidebar Header-->
+                <div class="sidebar-header-wrapper">
+                    <input type="text" class="searchinput" />
+                    <i class="searchicon fa fa-search"></i>
+                    <div class="searchhelper">Search Reports, Charts, Emails or Notifications</div>
+                </div>
+                <!-- /Page Sidebar Header -->
+                <!-- Sidebar Menu -->
+                <ul class="nav sidebar-menu">
+                    <!--Dashboard-->
+                    <li class="active">
+                        <a href="@Url.Action("Index","Home")">
+                            <i class="menu-icon glyphicon glyphicon-home"></i>
+                            <span class="menu-text"> Dashboard </span>
 
-    <div class="page-sidebar" id="sidebar">
-        <!-- Page Sidebar Header-->
-        <div class="sidebar-header-wrapper">
-            <input type="text" class="searchinput" />
-            <i class="searchicon fa fa-search"></i>
-            <div class="searchhelper">Search Reports, Charts, Emails or Notifications</div>
+
+                        </a>
+                    </li>
+
+                    <!--Forms -- Renaming to User Mgmt-->
+                    <li>
+                        <a href="#" class="menu-dropdown">
+                            <i class="menu-icon fa fa-pencil-square-o"></i>
+                            <span class="menu-text"> User Management </span>
+
+                            <i class="menu-expand"></i>
+                        </a>
+
+                        <ul class="submenu">
+                            <!--Renaming to Bugtracking user roles -->
+                            <li>
+                                @Html.ActionLink("All Users", "Index", "Users")
+
+                            </li>
+                            <li>
+                                @Html.ActionLink("Administrators", "Index", "Users", new { roleName = "Admin" }, null)
+
+                            </li>
+
+                            <li>
+                                @Html.ActionLink("Project Managers", "Index", "Users", new { roleName = "Project Manager" }, null)
+
+                            </li>
+                            <li>
+                                @Html.ActionLink("Developers", "Index", "Users", new { roleName = "Developer" }, null)
+
+                            </li>
+                            <li>
+                                @Html.ActionLink("Submitters", "Index", "Users", new { roleName = "Submitter" }, null)
+
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#" class="menu-dropdown">
+                            <i class="menu-icon fa fa-pencil-square-o"></i>
+                            <span class="menu-text"> Projects </span>
+                            <i class="menu-expand"></i>
+                        </a>
+                        <ul class="submenu">
+                            <li>
+                                @Html.ActionLink("All Projects", "Index", "Projects")
+
+                            </li>
+                            @*<li>
+                                    <a href="form-layouts.html">
+                                        <span class="menu-text">Unassigned Projects</span>
+
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="form-layouts.html">
+                                        <span class="menu-text">Assigned Projects</span>
+
+                                    </a>
+                                </li>*@
+                        </ul>
+                    </li>
+
+                    <!--Forms -- Renaming to Tickets-->
+                    <li>
+                        <a href="#" class="menu-dropdown">
+                            <i class="menu-icon fa fa-pencil-square-o"></i>
+                            <span class="menu-text"> Tickets </span>
+                            <i class="menu-expand"></i>
+                        </a>
+                        <ul class="submenu">
+                            <li>
+                                @Html.ActionLink("Ticket List", "Index", "Tickets")
+
+                            </li>
+                            @*<li>
+                                    <a href="form-inputs.html">
+                                        <span class="menu-text">Open/Unassigned Tickets</span>
+
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="form-pickers.html">
+                                        <span class="menu-text">Open Assigned Tickets</span>
+
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="form-wizard.html">
+                                        <span class="menu-text">Resolved Tickets</span>
+
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="form-validation.html">
+                                        <span class="menu-text">Archieved Tickets</span>
+
+                                    </a>
+                                </li>*@
+                        </ul>
+                    </li>
+
+                </ul>
+                <!-- /Sidebar Menu -->
+            </div>
+            @RenderBody()
         </div>
-        <!-- /Page Sidebar Header -->
-        <!-- Sidebar Menu -->
-        <ul class="nav sidebar-menu">
-            <!--Dashboard-->
-            <li class="active">
-                <a href="@Url.Action("Index","Home")">
-                    <i class="menu-icon glyphicon glyphicon-home"></i>
-                    <span class="menu-text"> Dashboard </span>
 
 
-                </a>
-            </li>
-
-            <!--Forms -- Renaming to User Mgmt-->
-            <li>
-                <a href="#" class="menu-dropdown">
-                    <i class="menu-icon fa fa-pencil-square-o"></i>
-                    <span class="menu-text"> User Management </span>
-
-                    <i class="menu-expand"></i>
-                </a>
-
-                <ul class="submenu">
-                    <!--Renaming to Bugtracking user roles -->
-                    <li>
-                        @Html.ActionLink("All Users", "Index", "Users")
-
-                    </li>
-                    <li>
-                        @Html.ActionLink("Administrators", "Index", "Users", new { roleName = "Admin" }, null)
-
-                    </li>
-
-                    <li>
-                        @Html.ActionLink("Project Managers", "Index", "Users", new { roleName = "Project Manager" }, null)
-
-                    </li>
-                    <li>
-                        @Html.ActionLink("Developers", "Index", "Users", new { roleName = "Developer" }, null)
-
-                    </li>
-                    <li>
-                        @Html.ActionLink("Submitters", "Index", "Users", new { roleName = "Submitter" }, null)
-
-                    </li>
-                </ul>
-            </li>
-            <li>
-                <a href="#" class="menu-dropdown">
-                    <i class="menu-icon fa fa-pencil-square-o"></i>
-                    <span class="menu-text"> Projects </span>
-                    <i class="menu-expand"></i>
-                </a>
-                <ul class="submenu">
-                    <li>
-                        @Html.ActionLink("All Projects", "Index", "Projects")
-
-                    </li>
-                    @*<li>
-                            <a href="form-layouts.html">
-                                <span class="menu-text">Unassigned Projects</span>
-
-                            </a>
-                        </li>
-                        <li>
-                            <a href="form-layouts.html">
-                                <span class="menu-text">Assigned Projects</span>
-
-                            </a>
-                        </li>*@
-                </ul>
-            </li>
-
-            <!--Forms -- Renaming to Tickets-->
-            <li>
-                <a href="#" class="menu-dropdown">
-                    <i class="menu-icon fa fa-pencil-square-o"></i>
-                    <span class="menu-text"> Tickets </span>
-                    <i class="menu-expand"></i>
-                </a>
-                <ul class="submenu">
-                    <li>
-                        @Html.ActionLink("Ticket List", "Index", "Tickets")
-
-                    </li>
-                    <li>
-                        <a href="form-inputs.html">
-                            <span class="menu-text">Open/Unassigned Tickets</span>
-
-                        </a>
-                    </li>
-                    <li>
-                        <a href="form-pickers.html">
-                            <span class="menu-text">Open Assigned Tickets</span>
-
-                        </a>
-                    </li>
-                    <li>
-                        <a href="form-wizard.html">
-                            <span class="menu-text">Resolved Tickets</span>
-
-                        </a>
-                    </li>
-                    <li>
-                        <a href="form-validation.html">
-                            <span class="menu-text">Archieved Tickets</span>
-
-                        </a>
-                    </li>
-                </ul>
-            </li>
-           
-        </ul>
-        <!-- /Sidebar Menu -->
-    </div>
-
-    <footer style="text-align:right;">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                    <ul class="list-inline text-center">
-                        <li>
-                            <a href="https://www.coderfoundry.com/christiandubuche" target="_blank">
-                                @*Portfolio Site*@
-                                <span class="fa-stack fa-lg">
-                                    <i class="fa fa-circle fa-stack-2x"></i>
-                                    <i class="fa fa-briefcase fa-stack-1x fa-inverse"></i>
-                                </span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="https://www.linkedin.com/in/christiandubuche" target="_blank">
-                                @*LinkedIn Profile*@
-                                <span class="fa-stack fa-lg">
-                                    <i class="fa fa-circle fa-stack-2x"></i>
-                                    <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
-                                </span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="https://twitter.com/ChrisDubuche" target="_blank">
-                                @*Twitter Profile*@
-                                <span class="fa-stack fa-lg">
-                                    <i class="fa fa-circle fa-stack-2x"></i>
-                                    <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
-                                </span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="https://github.com/ChrisDubuche" target="_blank">
-                                @*GitHub Profile*@
-                                <span class="fa-stack fa-lg">
-                                    <i class="fa fa-circle fa-stack-2x"></i>
-                                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
-                                </span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="https://stackoverflow.com/users/8138529" target="_blank">
-                                @*Stackoverflow Profile*@
-                                <span class="fa-stack fa-lg">
-                                    <i class="fa fa-circle fa-stack-2x"></i>
-                                    <i class="fa fa-stack-overflow fa-stack-1x fa-inverse"></i>
-                                </span>
-                            </a>
-                        </li>
-                        <li>
-                            <p class="copyright text-muted">Copyright &copy; <strong>Christian Yves Dubuche @DateTime.Now.Year</strong></p>
-                        </li>
-                    </ul>
+        <footer style="text-align:right;">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                        <ul class="list-inline text-center">
+                            <li>
+                                <a href="https://www.coderfoundry.com/christiandubuche" target="_blank">
+                                    @*Portfolio Site*@
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fa fa-circle fa-stack-2x"></i>
+                                        <i class="fa fa-briefcase fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://www.linkedin.com/in/christiandubuche" target="_blank">
+                                    @*LinkedIn Profile*@
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fa fa-circle fa-stack-2x"></i>
+                                        <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://twitter.com/ChrisDubuche" target="_blank">
+                                    @*Twitter Profile*@
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fa fa-circle fa-stack-2x"></i>
+                                        <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://github.com/ChrisDubuche" target="_blank">
+                                    @*GitHub Profile*@
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fa fa-circle fa-stack-2x"></i>
+                                        <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://stackoverflow.com/users/8138529" target="_blank">
+                                    @*Stackoverflow Profile*@
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fa fa-circle fa-stack-2x"></i>
+                                        <i class="fa fa-stack-overflow fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                </a>
+                            </li>
+                            <li>
+                                <p class="copyright text-muted">Copyright &copy; <strong>Christian Yves Dubuche @DateTime.Now.Year</strong></p>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </div>
-        </div>
-    </footer>
+        </footer>
+    </div>
+
+
+
+    
 
     <script src="~/assets/js/jquery.min.js"></script>
     @Scripts.Render("~/bundles/bootstrap")
@@ -353,6 +366,15 @@
     <script src="~/assets/js/charts/flot/jquery.flot.pie.js"></script>
     <script src="~/assets/js/charts/flot/jquery.flot.tooltip.js"></script>
     <script src="~/assets/js/charts/flot/jquery.flot.orderBars.js"></script>
+
+    @section scripts {
+        <script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
+
+    }
+
+
+
 
     <script>
         // If you want to draw your charts with Theme colors you must run initiating charts after that current skin is loaded
@@ -663,5 +685,7 @@
     @RenderSection("scripts", required: false)
 
 </body>
+
+
 
 </html>
