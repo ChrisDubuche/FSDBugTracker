@@ -3,46 +3,46 @@
     ViewBag.Title = "Register";
 }
 
-        <div class="page-content">
-            <!-- Page Breadcrumb -->
-            <div class="page-breadcrumbs">
-                <ul class="breadcrumb">
-                    <li>
-                        <i class="fa fa-home"></i>
-                        <a href="#">Home</a>
-                    </li>
-                    <li class="active">Index</li>
-                </ul>
-            </div>
-            <div class="page-header position-relative">
-                <div class="header-title">
-                    <h1>
-                        Register New User
-                    </h1>
-                </div>
-                <!--Header Buttons-->
-                <div class="header-buttons">
-                    <a class="sidebar-toggler" href="#">
-                        <i class="fa fa-arrows-h"></i>
-                    </a>
-                    <a class="refresh" id="refresh-toggler" href="">
-                        <i class="glyphicon glyphicon-refresh"></i>
-                    </a>
-                    <a class="fullscreen" id="fullscreen-toggler" href="#">
-                        <i class="glyphicon glyphicon-fullscreen"></i>
-                    </a>
-                </div>
-                <!--Header Buttons End-->
-            </div>
-            <!-- Page Body -->
-            <div class="page-body">
-    <h2>@ViewBag.Title.</h2>
+<div class="page-content">
+    <!-- Page Breadcrumb -->
+    <div class="page-breadcrumbs">
+        <ul class="breadcrumb">
+            <li>
+                <i class="fa fa-home"></i>
+                <a href="#">Home</a>
+            </li>
+            <li class="active">Index</li>
+        </ul>
+    </div>
+    <div class="page-header position-relative">
+        <div class="header-title">
+            <h1>
+                Register New User
+            </h1>
+        </div>
+        <!--Header Buttons-->
+        <div class="header-buttons">
+            <a class="sidebar-toggler" href="#">
+                <i class="fa fa-arrows-h"></i>
+            </a>
+            <a class="refresh" id="refresh-toggler" href="">
+                <i class="glyphicon glyphicon-refresh"></i>
+            </a>
+            <a class="fullscreen" id="fullscreen-toggler" href="#">
+                <i class="glyphicon glyphicon-fullscreen"></i>
+            </a>
+        </div>
+        <!--Header Buttons End-->
+    </div>
+    <!-- Page Body -->
+    <div class="page-body">
+        <h2>@ViewBag.Title.</h2>
 
-    @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-    {
-        @Html.AntiForgeryToken()
-        <h4>Create a new account.</h4>
-                    <hr />
+        @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+        {
+            @Html.AntiForgeryToken()
+            <h4>Create a new account.</h4>
+            <hr />
                     <div class="form-group">
                         @Html.LabelFor(model => model.FirstName, htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
@@ -51,13 +51,13 @@
                         </div>
                     </div>
 
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.LastName, htmlAttributes: new { @class = "control-label col-md-2" })
-                            <div class="col-md-10">
-                                @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control", placeholder = "Last Name" } })
-                                @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
-                            </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.LastName, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control", placeholder = "Last Name" } })
+                            @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
                         </div>
+                    </div>
 
                         <div class="form-group">
                             @Html.LabelFor(model => model.DisplayName, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -86,7 +86,7 @@
                         <div class="form-group">
                             @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
                             <div class="col-md-10">
-                                @Html.PasswordFor(m => m.Password, new { @class = "form-control" , placeholder = "Sample P@s$w0rd123!" })
+                                @Html.PasswordFor(m => m.Password, new { @class = "form-control", placeholder = "Sample P@s$w0rd123!" })
                             </div>
                         </div>
                         <div class="form-group">
@@ -101,11 +101,11 @@
                                 <input type="submit" value="Create" class="btn btn-default" />
                             </div>
                         </div>
-            
-    }
-        </div>
-    </div>
 
-         @section Scripts {
-                        @Scripts.Render("~/bundles/jqueryval")
-                    }
+        }
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

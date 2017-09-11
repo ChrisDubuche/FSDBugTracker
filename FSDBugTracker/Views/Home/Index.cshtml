@@ -9,7 +9,7 @@
                 <ul class="breadcrumb">
                    @if (User.IsInRole("Admin") || (User.IsInRole("SuperUser")))
                    {
-                    <li style="color:black;"><a href="@Url.Action("SeedData")">Seed Database</a></li>
+                    <li style="color:black;"><a href="@Url.Action("SeedDataAsync")">Seed Database</a></li>
                    }
                     <li>
                         <i class="fa fa-home"></i>

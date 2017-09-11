@@ -1,6 +1,6 @@
 ﻿@using FSDBugTracker.Helpers
 @using Microsoft.AspNet.Identity
-@{ 
+@{
     var urHelper = new UserRolesHelper();
 }
 
@@ -27,7 +27,7 @@
     <!--Fonts-->
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,400,600,700,300" rel="stylesheet" type="text/css">
     <link href='https://fonts.googleapis.com/css?family=Roboto:400,300' rel='stylesheet' type='text/css'>
-    
+
     <!--Beyond styles-->
     <link id="beyond-link" href="~/assets/css/beyond.css" rel="stylesheet" type="text/css" />
     <link href="~/assets/css/demo.min.css" rel="stylesheet" />
@@ -123,10 +123,19 @@
                                         </div>
                                     </li>
                                     <!--Avatar Area-->
-                                    <li class="edit">
-                                        <a href="https://www.coderfoundry.com/christiandubuche" target="_blank" class="pull-left">Portfolio Page</a>
-                                        @*<a href="#" class="pull-right">Setting</a>*@
-                                    </li>
+                                    @if (!Request.IsAuthenticated)
+                                    {
+                                        <li class="edit">
+                                            <a href="https://www.coderfoundry.com/christiandubuche" target="_blank" class="pull-left">Portfolio Page</a>
+                                        </li>
+                                    }
+
+                                    else
+                                    {
+                                        <li class="edit">
+                                            <a href="@Url.Action("ChangePassword", "Manage")">Change Password</a>                                           
+                                        </li>
+                                    }
 
 
                                     <!--When the user comes to the site without first logging through a registered or demo account they'll see a log in link, after loggin in the link becomes a signout link*-->
@@ -227,17 +236,17 @@
 
                             </li>
                             @*<li>
-                            <a href="form-layouts.html">
-                                <span class="menu-text">Unassigned Projects</span>
+                                    <a href="form-layouts.html">
+                                        <span class="menu-text">Unassigned Projects</span>
 
-                            </a>
-                        </li>
-                        <li>
-                            <a href="form-layouts.html">
-                                <span class="menu-text">Assigned Projects</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="form-layouts.html">
+                                        <span class="menu-text">Assigned Projects</span>
 
-                            </a>
-                        </li>*@
+                                    </a>
+                                </li>*@
                         </ul>
                     </li>
 
@@ -254,29 +263,29 @@
 
                             </li>
                             @*<li>
-                            <a href="form-inputs.html">
-                                <span class="menu-text">Open/Unassigned Tickets</span>
+                                    <a href="form-inputs.html">
+                                        <span class="menu-text">Open/Unassigned Tickets</span>
 
-                            </a>
-                        </li>
-                        <li>
-                            <a href="form-pickers.html">
-                                <span class="menu-text">Open Assigned Tickets</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="form-pickers.html">
+                                        <span class="menu-text">Open Assigned Tickets</span>
 
-                            </a>
-                        </li>
-                        <li>
-                            <a href="form-wizard.html">
-                                <span class="menu-text">Resolved Tickets</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="form-wizard.html">
+                                        <span class="menu-text">Resolved Tickets</span>
 
-                            </a>
-                        </li>
-                        <li>
-                            <a href="form-validation.html">
-                                <span class="menu-text">Archieved Tickets</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="form-validation.html">
+                                        <span class="menu-text">Archieved Tickets</span>
 
-                            </a>
-                        </li>*@
+                                    </a>
+                                </li>*@
                         </ul>
                     </li>
 
@@ -294,7 +303,7 @@
 
                         </ul>
                 </ul>
-               
+
                 <!-- /Sidebar Menu -->
             </div>
             @RenderBody()
@@ -363,7 +372,7 @@
 
 
 
-    
+
 
     <script src="~/assets/js/jquery.min.js"></script>
     @Scripts.Render("~/bundles/bootstrap")
