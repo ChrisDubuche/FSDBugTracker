@@ -107,7 +107,7 @@
                         </div>
 
                         <div class="form-group">
-                            @if (User.IsInRole("Developer") || (User.IsInRole("Submitter")))
+                            @if (User.IsInRole("Developer"))
                             {
                                 @Html.LabelFor(model => model.TicketStatusId, "TicketStatusId", htmlAttributes: new { @class = "control-label col-md-2" })
                                 <div class="col-md-10">
@@ -134,7 +134,7 @@
                         </div>
 
                         <div class="form-group">
-                            @if (User.IsInRole("Developer") || (User.IsInRole("Submitter")))
+                            @if (User.IsInRole("Developer"))
                             {
                                 @Html.LabelFor(model => model.AssignedToUserId, "AssignedToUserId", htmlAttributes: new { @class = "control-label col-md-2" })
                                 <div class="col-md-10">

@@ -27,6 +27,7 @@
     <!--Fonts-->
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,400,600,700,300" rel="stylesheet" type="text/css">
     <link href='https://fonts.googleapis.com/css?family=Roboto:400,300' rel='stylesheet' type='text/css'>
+    
     <!--Beyond styles-->
     <link id="beyond-link" href="~/assets/css/beyond.css" rel="stylesheet" type="text/css" />
     <link href="~/assets/css/demo.min.css" rel="stylesheet" />
@@ -177,8 +178,6 @@
                         <a href="@Url.Action("Index","Home")">
                             <i class="menu-icon glyphicon glyphicon-home"></i>
                             <span class="menu-text"> Dashboard </span>
-
-
                         </a>
                     </li>
 
@@ -228,17 +227,17 @@
 
                             </li>
                             @*<li>
-                                    <a href="form-layouts.html">
-                                        <span class="menu-text">Unassigned Projects</span>
+                            <a href="form-layouts.html">
+                                <span class="menu-text">Unassigned Projects</span>
 
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="form-layouts.html">
-                                        <span class="menu-text">Assigned Projects</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="form-layouts.html">
+                                <span class="menu-text">Assigned Projects</span>
 
-                                    </a>
-                                </li>*@
+                            </a>
+                        </li>*@
                         </ul>
                     </li>
 
@@ -255,33 +254,47 @@
 
                             </li>
                             @*<li>
-                                    <a href="form-inputs.html">
-                                        <span class="menu-text">Open/Unassigned Tickets</span>
+                            <a href="form-inputs.html">
+                                <span class="menu-text">Open/Unassigned Tickets</span>
 
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="form-pickers.html">
-                                        <span class="menu-text">Open Assigned Tickets</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="form-pickers.html">
+                                <span class="menu-text">Open Assigned Tickets</span>
 
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="form-wizard.html">
-                                        <span class="menu-text">Resolved Tickets</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="form-wizard.html">
+                                <span class="menu-text">Resolved Tickets</span>
 
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="form-validation.html">
-                                        <span class="menu-text">Archieved Tickets</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="form-validation.html">
+                                <span class="menu-text">Archieved Tickets</span>
 
-                                    </a>
-                                </li>*@
+                            </a>
+                        </li>*@
                         </ul>
                     </li>
 
+                    <li>
+                        <a href="#" class="menu-dropdown">
+                            <i class="menu-icon fa fa-pencil-square-o"></i>
+                            <span class="menu-text"> Notifications </span>
+                            <i class="menu-expand"></i>
+                        </a>
+                        <ul class="submenu">
+                            <li>
+                                @Html.ActionLink("Ticket Notifications", "Index", "Notifications")
+
+                            </li>
+
+                        </ul>
                 </ul>
+               
                 <!-- /Sidebar Menu -->
             </div>
             @RenderBody()

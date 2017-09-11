@@ -4,71 +4,104 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<div class="page-content">
+    <!-- Page Breadcrumb -->
+    <div class="page-breadcrumbs">
+        <ul class="breadcrumb">
+            <li>
+                <i class="fa fa-home"></i>
+                <a href="@Url.Action("Index","Home")">Home</a>
+            </li>
+            <li class="active">Index</li>
+        </ul>
+    </div>
+    <div class="page-header position-relative">
+        <div class="header-title">
+            <h1>
+                Notifications Index
+            </h1>
+        </div>
+        <!--Header Buttons-->
+        <div class="header-buttons">
+            <a class="sidebar-toggler" href="#">
+                <i class="fa fa-arrows-h"></i>
+            </a>
+            <a class="refresh" id="refresh-toggler" href="">
+                <i class="glyphicon glyphicon-refresh"></i>
+            </a>
+            <a class="fullscreen" id="fullscreen-toggler" href="#">
+                <i class="glyphicon glyphicon-fullscreen"></i>
+            </a>
+        </div>
+        <!--Header Buttons End-->
+    </div>
+    <!-- Page Body -->
+    <div class="page-body">
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Ticket.Title)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.SentDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.NotifyReason)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.NotificationBody)
-        </th>
-        <th>
-            @Html.DisplayName("Sender Name")
-        </th>
-        <th>
-            @Html.DisplayName("Recipient Name")
-        </th>
-        <th>
-            @Html.DisplayName("Ticket Update Id")
-        </th>
-    </tr>
-</thead>
-<tbody>
-    @foreach (var notification in Model)
-    {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => notification.Ticket.Title)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => notification.SentDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => notification.NotifyReason)
-            </td>
-            <td>
-                @Html.DisplayFor(model => notification.NotificationBody)
-            </td>
-            <td>
-                @Html.DisplayFor(model => notification.Sender.FirstName)
-            </td>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Ticket.Title)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.SentDate)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.NotifyReason)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.NotificationBody)
+                    </th>
+                    <th>
+                        @Html.DisplayName("Sender Name")
+                    </th>
+                    <th>
+                        @Html.DisplayName("Recipient Name")
+                    </th>
+                    <th>
+                        @Html.DisplayName("Ticket Update Id")
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var notification in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => notification.Ticket.Title)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => notification.SentDate)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => notification.NotifyReason)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => notification.NotificationBody)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => notification.Sender.FirstName)
+                        </td>
 
-            <td>
-                @Html.DisplayFor(model => notification.Recipient.FirstName)
-            </td>
+                        <td>
+                            @Html.DisplayFor(model => notification.Recipient.FirstName)
+                        </td>
 
-            <td>
-                @Html.DisplayFor(modelItem => notification.TicketUpdateId)
-            </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => notification.TicketUpdateId)
+                        </td>
 
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id = notification.Id }) |
-                @Html.ActionLink("Details", "Details", new { id = notification.Id }) |
-                @Html.ActionLink("Delete", "Delete", new { id = notification.Id })
-            </td>
-        </tr>
-    }
-</tbody>
-</table>
+                        <td>
+                            @Html.ActionLink("Edit", "Edit", new { id = notification.Id }) |
+                            @Html.ActionLink("Details", "Details", new { id = notification.Id }) |
+                            @Html.ActionLink("Delete", "Delete", new { id = notification.Id })
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+    </div>
+</div>
+
