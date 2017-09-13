@@ -81,13 +81,11 @@ namespace FSDBugTracker.Helpers
 
             return myTickets;
         }
-
         
         public bool IsUserOnTicket(string userId, int ticketId)
         {
             return db.Tickets.FirstOrDefault(t => t.Id == ticketId).AssignedToUserId == userId;
         }
-
 
         public void AddUserToTicket(string userId, int ticketId)
         {
@@ -95,7 +93,6 @@ namespace FSDBugTracker.Helpers
             Ticket tix = db.Tickets.Find(ticketId);
             tix.AssignedToUserId = userId;
               
-
             db.Tickets.Attach(tix);
             db.SaveChanges();
         }
@@ -114,11 +111,11 @@ namespace FSDBugTracker.Helpers
         }
 
         #region TicketNotification Helper(s)
-        //Abstracting away the work necessary to record a Notification
+        
         public static async Task GenerateNotificationAsync(int ticketUpdateId, Ticket oldTicket, Ticket newTicket)
         {
-            //I need to generate Notifications when the AssignedToUserId changes...that's all
-            //Be carefull of NULLs
+            //generate Notifications when the AssignedToUserId changes
+            
             var oldAssignedToId = oldTicket.AssignedToUserId;
             var newAssignedToId = newTicket.AssignedToUserId;
             var assignedUser = db.Users.Find(newAssignedToId);
@@ -126,12 +123,10 @@ namespace FSDBugTracker.Helpers
             var newNotification = new Notification();
             newNotification.SenderId = HttpContext.Current.User.Identity.GetUserId();
             newNotification.SentDate = DateTime.Now;
-            //newTicketNotification.Id = ticketHistoryId;
             newNotification.TicketId = oldTicket.Id;
             newNotification.NotifyReason = string.Format("Ticket Assignment for Ticket - {0} has changed", oldTicket.Title);
             newNotification.TicketUpdateId = ticketUpdateId;
             var notifcationBody = new StringBuilder();
-            //Send Email Notifcation
             var notificationMessage = new NotificationEmailMessage();
             notificationMessage.Source = currentUser.Email;//HttpContext.Current.User.Identity.GetUserId();//You may need to be passing the current user's email here, instead of their id
             notificationMessage.Subject = newNotification.NotifyReason;
@@ -139,7 +134,6 @@ namespace FSDBugTracker.Helpers
             {
                 //Case 1: Initial Ticket Assignement - oldTicket.AssignedToUserId = null and newTicket.AssignedToUserId has a value          
                 newNotification.RecipientId = newAssignedToId;
-                //Building the body of my Notification
                 notifcationBody.Clear();
                 notifcationBody.AppendLine("You have been assigned to a Ticket! Please read the following Ticket Details");
                 notifcationBody.AppendLine("Ticket Title: " + newTicket.Title);
@@ -147,7 +141,7 @@ namespace FSDBugTracker.Helpers
                 newNotification.NotificationBody = notifcationBody.ToString();
                 db.Notifications.Add(newNotification);
                 db.SaveChanges();
-                //Send Email Notifcation
+                
                 notificationMessage.Destination = newNotification.RecipientId;//pass the email address here, not the id
                 notificationMessage.Body = newNotification.NotificationBody;
                 await SendNotificationEmailAsync(notificationMessage);
@@ -160,23 +154,23 @@ namespace FSDBugTracker.Helpers
                 notifcationBody.Clear();
                 notifcationBody.AppendLine("You have been assigned to a Ticket! Please read the following Ticket Details");
                 notifcationBody.AppendLine("Ticket Title: " + newTicket.Title);
-                notifcationBody.AppendLine("Ticket for Project Id: " + newTicket.ProjectId);////////////This notification is the exact same as the one below it
+                notifcationBody.AppendLine("Ticket for Project Id: " + newTicket.ProjectId);
                 newNotification.NotificationBody = notifcationBody.ToString();
                 db.Notifications.Add(newNotification);
                 db.SaveChanges();
-                //Send Email Notifcation
-                notificationMessage.Destination = assignedUser.Email;//.RecipientId;//pass the email address here, not the id
+                
+                notificationMessage.Destination = assignedUser.Email;
                 notificationMessage.Body = newNotification.NotificationBody;
                 await SendNotificationEmailAsync(notificationMessage);
                 //Notifcation 2: UnAssignment Notification
                 newNotification.RecipientId = oldAssignedToId;
                 notifcationBody.Clear();
                 notifcationBody.AppendLine(string.Format("Ticket Title: {0} has been reassigned to {1}", newTicket.Title, UserHelper.GetUserNameFromId(newAssignedToId)));
-                newNotification.NotificationBody = notifcationBody.ToString();//Right here
+                newNotification.NotificationBody = notifcationBody.ToString();
                 db.Notifications.Add(newNotification);
                 db.SaveChanges();
                 //Send Email Notifcation
-                notificationMessage.Destination = assignedUser.Email; //newTicketNotification.RecipientId;//you need te be passing the email address here, not the Id
+                notificationMessage.Destination = assignedUser.Email; 
                 notificationMessage.Body = newNotification.NotificationBody;
                 await EmailService.SendNotificationEmailAsync(notificationMessage);
             }
@@ -193,21 +187,13 @@ namespace FSDBugTracker.Helpers
                 db.Notifications.Add(newNotification);
                 db.SaveChanges();
                 //Send Email Notifcation
-                notificationMessage.Destination = assignedUser.Email; //newTicketNotification.RecipientId;
+                notificationMessage.Destination = assignedUser.Email; 
                 notificationMessage.Body = newNotification.NotificationBody;
                 await EmailService.SendNotificationEmailAsync(notificationMessage);
             }
             var property = db.TicketUpdates.Find(ticketUpdateId).Property;
-            //You can create your TicketNotifications based off of this property
-            //You'd probably need to redo the code above to fit into this kind of structure
-            //Right now, I am going to just wrap this in a mock if statement
-            if (true)//You can add all the other properties to this switch statement that you'd want to create notifications for and send emails for and this would be a pretty 
-                     //clean and easy way to handle it. Does that make sense?absolutely, sir.
-                     //Ok. Also, you should probably try to go over your code above for the assignement notifications and try to make sure there aren't duplicates being made
-                     //I would wait and take care of that after you add all the other properties in down here and get them taken care of.sure sir.I am vary happy that u help me a lot, sir.
-                     //I'm glad to help. Your project is looking very good. You're doing a nice job. Keep it up!yes sir .wishing u a g9, sir. Thanks Tim. I hope you have a good night
-                     //too and I will see you tomorrow. I can help you more tomorrow night and this weekend if you need it.Wowooowowow.Iam vey happy that you are available, sir. 
-                     //Great. Well, I will talk to you tomorrow. Have a great night.u do the same !!!
+            
+            if (true)
             {
                 Notification notification = new Notification()
                 {

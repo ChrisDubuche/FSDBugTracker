@@ -15,7 +15,7 @@ namespace FSDBugTracker.Controllers
         private UserProjectHelper projectHelper = new UserProjectHelper();
 
         // GET: Users
-        [Authorize]
+        [Authorize(Roles = "Admin, Project Manager, Developer, Submitter, SuperUser")]
         public ActionResult Index(string roleName)
         {
             if (string.IsNullOrEmpty(roleName))

@@ -8,6 +8,7 @@ using FSDBugTracker.Models;
 using FSDBugTracker.Helpers;
 using Microsoft.AspNet.Identity;
 using System.Threading.Tasks;
+using System.Web.Security;
 
 namespace FSDBugTracker.Controllers
 {
@@ -19,7 +20,7 @@ namespace FSDBugTracker.Controllers
         private UserProjectHelper projectHelper = new UserProjectHelper();
 
         // GET: Tickets
-        [Authorize]
+        [Authorize(Roles = "Admin, Project Manager, Developer, Submitter, SuperUser")]
         public ActionResult Index()
         {
             var tickets = db.Tickets.Include
@@ -114,11 +115,11 @@ namespace FSDBugTracker.Controllers
             ViewBag.TicketPriorityId = new SelectList(db.TicketPriorities.Where(tp => tp.TicketPriorityName != null), "Id", "TicketPriorityName");
             ViewBag.TicketStatusId = new SelectList(db.TicketStatuses.Where(ts => ts.TicketStatusName != null), "Id", "TicketStatusName");
             ViewBag.TicketTypeId = new SelectList(db.TicketTypes.Where(tt => tt.TicketTypeName != null), "Id", "TicketTypeName");
-            if (User.IsInRole("Admin"))
+            if (User.IsInRole("Admin") || (User.IsInRole("SuperUser")))
             {
                 return View(ticket);
             }
-            if (User.IsInRole("Project Manager"))
+            if (User.IsInRole("Project Manager") || (User.IsInRole("SuperUser")))
             {
                 if (projectHelper.IsUserOnProject(userId, ticket.ProjectId))
                 {
@@ -160,7 +161,6 @@ namespace FSDBugTracker.Controllers
                     }
 
                 #endregion
-                ticket.Updated = DateTimeOffset.Now;
 
                 db.Entry(ticket).State = EntityState.Modified;
                 db.SaveChanges();

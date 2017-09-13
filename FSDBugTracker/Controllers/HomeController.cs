@@ -149,7 +149,7 @@ namespace FSDBugTracker.Controllers
         }
         #endregion
 
-        [Authorize]
+        [Authorize] //TODO: - Fix to display on dashboard
         public ActionResult Dashboard()
         {
             var myIndexData = new IndexVM();

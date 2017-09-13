@@ -17,7 +17,6 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <link rel="shortcut icon" href="~/assets/img/favicon.png" type="image/x-icon">
 
-
     <!--Basic Styles-->
     <link href="~/assets/css/bootstrap.min.css" rel="stylesheet" />
     <link id="bootstrap-rtl-link" href="" rel="stylesheet" />
@@ -41,6 +40,7 @@
 
     <!--Skin Script: Place this script in head to load scripts for skins and rtl support-->
     <script src="~/assets/js/skins.js"></script>
+
 </head>
 
 <body>
@@ -81,39 +81,38 @@
                                             var userId = HttpContext.Current.User.Identity.GetUserId();
                                             if (urHelper.IsUserInRole(userId, "SuperUser"))
                                             {
-                                                <h2><span class="profile">SuperUser</span></h2>
+                                        <h2><span class="profile">SuperUser</span></h2>
                                             }
                                             else if (urHelper.IsUserInRole(userId, "Admin"))
                                             {
-                                                <h2><span class="profile">Admin</span></h2>
+                                        <h2><span class="profile">Admin</span></h2>
                                             }
                                             else if (urHelper.IsUserInRole(userId, "Project Manager"))
                                             {
-                                                <h2><span class="profile"> Project Manager</span></h2>
+                                        <h2><span class="profile"> Project Manager</span></h2>
                                             }
                                             else if (urHelper.IsUserInRole(userId, "Developer"))
                                             {
-                                                <h2><span class="profile"> Developer</span></h2>
+                                        <h2><span class="profile"> Developer</span></h2>
                                             }
                                             else if (urHelper.IsUserInRole(userId, "Submitter"))
                                             {
-                                                <h2><span class="profile"> Submitter</span></h2>
+                                        <h2><span class="profile"> Submitter</span></h2>
                                             }
                                             else
                                             {
-                                                <h2><span class="profile"> Guest</span></h2>
+                                        <h2><span class="profile"> Guest</span></h2>
                                             }
                                         }
                                         else
                                         {
-                                            <h2><span class="profile">NonUser</span></h2>
+                                        <h2><span class="profile">NonUser</span></h2>
                                         }
                                     </section>
                                 </a>
                                 <!--Login Area Dropdown-->
                                 <ul class="pull-right dropdown-menu dropdown-arrow dropdown-login-area">
 
-                                    @*<li class="username"><a>Dubuche Bug Tracker</a></li>*@
                                     <li class="email"><a>cdubuche@outlook.com</a></li>
                                     <!--Avatar Area-->
                                     <li>
@@ -125,43 +124,40 @@
                                     <!--Avatar Area-->
                                     @if (!Request.IsAuthenticated)
                                     {
-                                        <li class="edit">
-                                            <a href="https://www.coderfoundry.com/christiandubuche" target="_blank" class="pull-left">Portfolio Page</a>
-                                        </li>
+                                    <li class="edit">
+                                        <a href="https://www.coderfoundry.com/christiandubuche" target="_blank" class="pull-left">Portfolio Page</a>
+                                    </li>
                                     }
 
                                     else
                                     {
-                                        <li class="edit">
-                                            <a href="@Url.Action("ChangePassword", "Manage")">Change Password</a>                                           
-                                        </li>
+                                    <li class="edit">
+                                        <a href="@Url.Action("ChangePassword", "Manage")">Change Password</a>
+                                    </li>
                                     }
-
 
                                     <!--When the user comes to the site without first logging through a registered or demo account they'll see a log in link, after loggin in the link becomes a signout link*-->
                                     <!--Must use "Else If" because of the role conditions, otherwise VS throws an error -->
                                     @if (!Request.IsAuthenticated)
                                     {
-                                        <li class="dropdown-footer">
-                                            <a href="@Url.Action("Login", "Account")">Log In</a>
-                                        </li>
+                                    <li class="dropdown-footer">
+                                        <a href="@Url.Action("Login", "Account")">Log In</a>
+                                    </li>
                                     }
                                     else
                                     {
-                                        <li class="dropdown-footer">
-                                            @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" }))
+                                    <li class="dropdown-footer">
+                                        @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" }))
                                             {
-                                                @Html.AntiForgeryToken()
-                                                <a href="javascript:document.getElementById('logoutForm').submit()">Sign Off</a>
+                                            @Html.AntiForgeryToken()
+                                            <a href="javascript:document.getElementById('logoutForm').submit()">Sign Off</a>
                                             }
-                                        </li>
+                                    </li>
                                     }
                                 </ul>
                                 <!--/Login Area Dropdown-->
                             </li>
-
                         </ul>
-
                     </div>
                 </div>
                 <!-- /Account Area and Settings -->
@@ -195,7 +191,6 @@
                         <a href="#" class="menu-dropdown">
                             <i class="menu-icon fa fa-pencil-square-o"></i>
                             <span class="menu-text"> User Management </span>
-
                             <i class="menu-expand"></i>
                         </a>
 
@@ -203,27 +198,22 @@
                             <!--Renaming to Bugtracking user roles -->
                             <li>
                                 @Html.ActionLink("All Users", "Index", "Users")
-
                             </li>
                             <li>
                                 @Html.ActionLink("Administrators", "Index", "Users", new { roleName = "Admin" }, null)
-
                             </li>
-
                             <li>
                                 @Html.ActionLink("Project Managers", "Index", "Users", new { roleName = "Project Manager" }, null)
-
                             </li>
                             <li>
                                 @Html.ActionLink("Developers", "Index", "Users", new { roleName = "Developer" }, null)
-
                             </li>
                             <li>
                                 @Html.ActionLink("Submitters", "Index", "Users", new { roleName = "Submitter" }, null)
-
                             </li>
                         </ul>
                     </li>
+
                     <li>
                         <a href="#" class="menu-dropdown">
                             <i class="menu-icon fa fa-pencil-square-o"></i>
@@ -233,24 +223,10 @@
                         <ul class="submenu">
                             <li>
                                 @Html.ActionLink("All Projects", "Index", "Projects")
-
                             </li>
-                            @*<li>
-                                    <a href="form-layouts.html">
-                                        <span class="menu-text">Unassigned Projects</span>
-
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="form-layouts.html">
-                                        <span class="menu-text">Assigned Projects</span>
-
-                                    </a>
-                                </li>*@
                         </ul>
                     </li>
 
-                    <!--Forms -- Renaming to Tickets-->
                     <li>
                         <a href="#" class="menu-dropdown">
                             <i class="menu-icon fa fa-pencil-square-o"></i>
@@ -260,32 +236,7 @@
                         <ul class="submenu">
                             <li>
                                 @Html.ActionLink("Ticket List", "Index", "Tickets")
-
                             </li>
-                            @*<li>
-                                    <a href="form-inputs.html">
-                                        <span class="menu-text">Open/Unassigned Tickets</span>
-
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="form-pickers.html">
-                                        <span class="menu-text">Open Assigned Tickets</span>
-
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="form-wizard.html">
-                                        <span class="menu-text">Resolved Tickets</span>
-
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="form-validation.html">
-                                        <span class="menu-text">Archieved Tickets</span>
-
-                                    </a>
-                                </li>*@
                         </ul>
                     </li>
 
@@ -298,17 +249,17 @@
                         <ul class="submenu">
                             <li>
                                 @Html.ActionLink("Ticket Notifications", "Index", "Notifications")
-
                             </li>
 
                         </ul>
+                    </li>
                 </ul>
-
                 <!-- /Sidebar Menu -->
             </div>
-            @RenderBody()
-        </div>
 
+            @RenderBody()
+
+        </div>
 
         <footer style="text-align:right;">
             <div class="container">
@@ -368,11 +319,8 @@
                 </div>
             </div>
         </footer>
+
     </div>
-
-
-
-
 
     <script src="~/assets/js/jquery.min.js"></script>
     @Scripts.Render("~/bundles/bootstrap")
@@ -398,14 +346,11 @@
     <script src="~/assets/js/charts/flot/jquery.flot.tooltip.js"></script>
     <script src="~/assets/js/charts/flot/jquery.flot.orderBars.js"></script>
 
-    @section scripts {
+    @section scripts{
         <script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
 
     }
-
-
-
 
     <script>
         // If you want to draw your charts with Theme colors you must run initiating charts after that current skin is loaded
@@ -706,6 +651,7 @@
     <script src="~/Scripts/jquery.dataTables.js"></script>
 
     <script>$('.table').DataTable();</script>
+
     <script>
         $("#collapse-icon").click(function () {
             var target = $("#sidebar");
@@ -713,10 +659,9 @@
 
         });
     </script>
+
     @RenderSection("scripts", required: false)
 
 </body>
-
-
 
 </html>

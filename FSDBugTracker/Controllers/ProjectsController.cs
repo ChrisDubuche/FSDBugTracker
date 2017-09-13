@@ -1,5 +1,4 @@
-﻿using System.Data.Entity;
-using System.Linq;
+﻿using System.Linq;
 using System.Net;
 using System.Web.Mvc;
 using FSDBugTracker.Models;
@@ -16,7 +15,6 @@ namespace FSDBugTracker.Controllers
         private UserRolesHelper roleHelper = new UserRolesHelper();
         private UserProjectHelper projHelper = new UserProjectHelper();
         // GET: Projects
-        [Authorize]
         public ActionResult Index()
         {
             var allProjects = db.Projects.ToList();

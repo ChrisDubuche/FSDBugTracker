@@ -18,7 +18,7 @@ namespace FSDBugTracker.Controllers
         // GET: Notifications
         public ActionResult Index()
         {
-            var notifications = db.Notifications.Include(n => n.Ticket).Include(n => n.Sender);
+            var notifications = db.Notifications.AsNoTracking().Include(n => n.Ticket).Include(n => n.Sender);
             return View(notifications.ToList());
         }
 

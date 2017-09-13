@@ -4,63 +4,98 @@
     ViewBag.Title = "Details";
 }
 
-<h2>Details</h2>
+<div class="page-content">
+    <!-- Page Breadcrumb -->
+    <div class="page-breadcrumbs">
+        <ul class="breadcrumb">
+            <li>
+                <i class="fa fa-home"></i>
+                <a href="@Url.Action("Index","Home")">Home</a>
+            </li>
+            <li class="active">Index</li>
+        </ul>
+    </div>
+    <div class="page-header position-relative">
+        <div class="header-title">
+            <h1>
+                Ticket Updates
+            </h1>
+        </div>
+        <!--Header Buttons-->
+        <div class="header-buttons">
+            <a class="sidebar-toggler" href="#">
+                <i class="fa fa-arrows-h"></i>
+            </a>
+            <a class="refresh" id="refresh-toggler" href="">
+                <i class="glyphicon glyphicon-refresh"></i>
+            </a>
+            <a class="fullscreen" id="fullscreen-toggler" href="#">
+                <i class="glyphicon glyphicon-fullscreen"></i>
+            </a>
+        </div>
+        <!--Header Buttons End-->
+    </div>
+    <!-- Page Body -->
+    <div class="page-body">
 
-<div>
-    <h4>TicketUpdate</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Ticket.Title)
-        </dt>
+        <div>
+            <h4>TicketUpdate</h4>
+            <hr />
+            <dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayNameFor(model => model.Ticket.Title)
+                </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Ticket.Title)
-        </dd>
+                <dd>
+                    @Html.DisplayFor(model => model.Ticket.Title)
+                </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.User.FirstName)
-        </dt>
+                <dt>
+                    @Html.DisplayNameFor(model => model.User.FirstName)
+                </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.User.FirstName)
-        </dd>
+                <dd>
+                    @Html.DisplayFor(model => model.User.FirstName)
+                </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Property)
-        </dt>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Property)
+                </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Property)
-        </dd>
+                <dd>
+                    @Html.DisplayFor(model => model.Property)
+                </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.OldValue)
-        </dt>
+                <dt>
+                    @Html.DisplayNameFor(model => model.OldValue)
+                </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.OldValue)
-        </dd>
+                <dd>
+                    @Html.DisplayFor(model => model.OldValue)
+                </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.NewValue)
-        </dt>
+                <dt>
+                    @Html.DisplayNameFor(model => model.NewValue)
+                </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.NewValue)
-        </dd>
+                <dd>
+                    @Html.DisplayFor(model => model.NewValue)
+                </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.ChangedDate)
-        </dt>
+                <dt>
+                    @Html.DisplayNameFor(model => model.ChangedDate)
+                </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.ChangedDate)
-        </dd>
+                <dd>
+                    @Html.DisplayFor(model => model.ChangedDate)
+                </dd>
 
-    </dl>
+            </dl>
+        </div>
+
+        <p>
+            @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+            @Html.ActionLink("Back to List", "Index")
+        </p>
+    </div>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>

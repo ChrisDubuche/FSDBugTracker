@@ -45,7 +45,7 @@ namespace FSDBugTracker
                 try
                 {
                     var emailFrom = WebConfigurationManager.AppSettings["emailfrom"];
-                    await smtp.SendMailAsync(message.Source, destinationEmail, message.Subject, message.Body);// Doc added in here
+                    await smtp.SendMailAsync(message.Source, destinationEmail, message.Subject, message.Body);
 
                 }
                 catch (Exception e)
@@ -59,8 +59,8 @@ namespace FSDBugTracker
 
         public async Task SendAsync(IdentityMessage message)
         {
-            var EmailUsername = WebConfigurationManager.AppSettings["username"];
-            var EmailPassword = WebConfigurationManager.AppSettings["password"];
+            var GmailUsername = WebConfigurationManager.AppSettings["username"];
+            var GmailPassword = WebConfigurationManager.AppSettings["password"];
             var host = WebConfigurationManager.AppSettings["host"];
             int port = Convert.ToInt32(WebConfigurationManager.AppSettings["port"]);
 
@@ -71,7 +71,7 @@ namespace FSDBugTracker
                 EnableSsl = true,
                 DeliveryMethod = SmtpDeliveryMethod.Network,
                 UseDefaultCredentials = false,
-                Credentials = new NetworkCredential(EmailUsername, EmailPassword)
+                Credentials = new NetworkCredential(GmailUsername, GmailPassword)
             })
             {
                 try

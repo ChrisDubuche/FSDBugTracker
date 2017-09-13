@@ -19,15 +19,18 @@ namespace FSDBugTracker.Helpers
         {
             return userManager.IsInRole(userId, roleName);
         }
+
         public ICollection<string> ListUserRoles(string userId)
         {
             return userManager.GetRoles(userId);
         }
+
         public bool AddUserToRole(string userId, string roleName)
         {
             var result = userManager.AddToRole(userId, roleName);
             return result.Succeeded;
         }
+
         public bool RemoveUserFromRole(string userId, string roleName)
         {
             var result = userManager.RemoveFromRole(userId, roleName);
@@ -45,6 +48,7 @@ namespace FSDBugTracker.Helpers
             }
             return resultList;
         }
+
         public ICollection<ApplicationUser> UsersNotInRole(string roleName)
         {
             var resultList = new List<ApplicationUser>();
@@ -55,7 +59,6 @@ namespace FSDBugTracker.Helpers
                     resultList.Add(user);
             }
             return resultList;
-        }
-    
+        }   
     }
 }

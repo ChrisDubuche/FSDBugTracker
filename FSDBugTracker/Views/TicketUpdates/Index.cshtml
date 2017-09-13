@@ -4,68 +4,99 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<div class="page-content">
+    <!-- Page Breadcrumb -->
+    <div class="page-breadcrumbs">
+        <ul class="breadcrumb">
+            <li>
+                <i class="fa fa-home"></i>
+                <a href="@Url.Action("Index","Home")">Home</a>
+            </li>
+            <li class="active">Details</li>
+        </ul>
+    </div>
+    <div class="page-header position-relative">
+        <div class="header-title">
+            <h1>
+                Ticket Updates
+            </h1>
+        </div>
+        <!--Header Buttons-->
+        <div class="header-buttons">
+            <a class="sidebar-toggler" href="#">
+                <i class="fa fa-arrows-h"></i>
+            </a>
+            <a class="refresh" id="refresh-toggler" href="">
+                <i class="glyphicon glyphicon-refresh"></i>
+            </a>
+            <a class="fullscreen" id="fullscreen-toggler" href="#">
+                <i class="glyphicon glyphicon-fullscreen"></i>
+            </a>
+        </div>
+        <!--Header Buttons End-->
+    </div>
+    <!-- Page Body -->
+    <div class="page-body">
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Ticket.Title)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.User.FirstName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Property)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.OldValue)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.NewValue)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ChangedDate)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Ticket.Title)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.User.FirstName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Property)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.OldValue)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.NewValue)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.ChangedDate)
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
 
-    <tbody>
-        @foreach (var item in Model)
-        {
+            <tbody>
+                @foreach (var item in Model)
+                {
 
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Ticket.Title)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.User.FirstName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Property)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.OldValue)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.NewValue)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ChangedDate)
-                </td>
-                <td>
-                    @if (User.IsInRole("SuperUser"))
-                    {
-                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }) 
-                    }
-                    @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-                    @Html.ActionLink("Delete", "Delete", new { id=item.Id })
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Ticket.Title)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.User.FirstName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Property)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.OldValue)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.NewValue)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ChangedDate)
+                        </td>
+                        <td>
+                            @if (User.IsInRole("SuperUser"))
+                            {
+                                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) 
+                                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                            }
+                            @Html.ActionLink("Details", "Details", new { id = item.Id })                             
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
