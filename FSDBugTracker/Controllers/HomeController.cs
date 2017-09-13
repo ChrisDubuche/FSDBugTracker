@@ -22,6 +22,19 @@ namespace FSDBugTracker.Controllers
 
         public ActionResult Index()
         {
+
+
+            var allUnarchived = db.Tickets.Where(t => t.TicketStatus.TicketStatusName != "Deleted").Count();
+            ViewBag.AllUnarchived = allUnarchived;
+            var allOpen = db.Tickets.Where(t => t.TicketStatus.TicketStatusName == "Open/Unassigned").Count();
+            ViewBag.AllOpen = allOpen;
+            var allClosed = db.Tickets.Where(t => t.TicketStatus.TicketStatusName == "Closed").Count();
+            ViewBag.AllClosed = allClosed;
+            var allArchived = db.Tickets.Where(t => t.TicketStatus.TicketStatusName == "Open/Assigned").Count();
+            ViewBag.AllArchived = allArchived;
+
+
+
             return View();
         }
 

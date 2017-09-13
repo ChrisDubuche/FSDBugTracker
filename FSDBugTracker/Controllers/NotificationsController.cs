@@ -16,6 +16,7 @@ namespace FSDBugTracker.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Notifications
+        [Authorize(Roles = "Admin, Project Manager, Developer, Submitter, SuperUser")]
         public ActionResult Index()
         {
             var notifications = db.Notifications.AsNoTracking().Include(n => n.Ticket).Include(n => n.Sender);

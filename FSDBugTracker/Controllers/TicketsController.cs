@@ -8,7 +8,6 @@ using FSDBugTracker.Models;
 using FSDBugTracker.Helpers;
 using Microsoft.AspNet.Identity;
 using System.Threading.Tasks;
-using System.Web.Security;
 
 namespace FSDBugTracker.Controllers
 {
@@ -23,14 +22,16 @@ namespace FSDBugTracker.Controllers
         [Authorize(Roles = "Admin, Project Manager, Developer, Submitter, SuperUser")]
         public ActionResult Index()
         {
-            var tickets = db.Tickets.Include
-                (t => t.AssignedToUser).Include
-                (t => t.OwnerUser).Include
-                (t => t.Project).Include
-                (t => t.TicketPriority).Include
-                (t => t.TicketStatus).Include
-                (t => t.TicketType);
-            return View(tickets.ToList());
+            //var tickets = db.Tickets.Include
+            //    (t => t.AssignedToUser).Include
+            //    (t => t.OwnerUser).Include
+            //    (t => t.Project).Include
+            //    (t => t.TicketPriority).Include
+            //    (t => t.TicketStatus).Include
+            //    (t => t.TicketType);
+            //return View(tickets.ToList());
+
+            return View(ticketHelper.GetMyTickets());
         }
 
         // GET: Tickets/Details/5

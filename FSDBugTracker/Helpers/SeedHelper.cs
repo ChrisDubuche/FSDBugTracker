@@ -209,7 +209,7 @@ namespace FSDBugTracker.Helpers
 
             var task = Task.Run(() =>
             {
-                for (var loop = 1; loop <= 10; loop++)
+                for (var loop = 1; loop <= 3; loop++)
                 {
                     seededProject.Name = string.Concat(projectName, loop);
                     seededProject.Created = DateTime.Now;
