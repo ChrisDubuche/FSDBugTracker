@@ -204,7 +204,7 @@ namespace FSDBugTracker.Helpers
             var ownerId = demo ? UserManager.FindByEmail("DemoProjectManager@mailinator.com").Id : UserManager.FindByEmail("FSDProjectManager@mailinator.com").Id;
 
 
-            #region 50 Test Projects created
+            #region 30 Test Projects created
             var seededProject = new Project();
 
             var task = Task.Run(() =>

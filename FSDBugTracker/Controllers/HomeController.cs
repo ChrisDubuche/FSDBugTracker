@@ -16,14 +16,11 @@ namespace FSDBugTracker.Controllers
         private UserProjectHelper projectHelper = new UserProjectHelper();
         private UserProjectHelper projHelper = new UserProjectHelper();
 
-
         //new helper to assign PM users to tickets
         private MyUserHelper userHelper = new MyUserHelper();
 
         public ActionResult Index()
         {
-
-
             var allUnarchived = db.Tickets.Where(t => t.TicketStatus.TicketStatusName != "Deleted").Count();
             ViewBag.AllUnarchived = allUnarchived;
             var allOpen = db.Tickets.Where(t => t.TicketStatus.TicketStatusName == "Open/Unassigned").Count();
@@ -33,7 +30,17 @@ namespace FSDBugTracker.Controllers
             var allArchived = db.Tickets.Where(t => t.TicketStatus.TicketStatusName == "Open/Assigned").Count();
             ViewBag.AllArchived = allArchived;
 
+            var AA = allOpen / allUnarchived * 100; // % of tickets that are open
+            ViewBag.AA = AA;
 
+            var AO = allArchived / allOpen * 100; // % of open tickets that are assigned
+            ViewBag.AO = AO;
+
+            var AC = allClosed / allUnarchived * 100; // % of total tickets that are closed/resolved
+            ViewBag.AC = AC;
+
+            //var AU = allOpen / allArchived + 0.01 * 100; // % of open tickets that are unassigned
+            //ViewBag.AU = AU;
 
             return View();
         }
@@ -162,21 +169,21 @@ namespace FSDBugTracker.Controllers
         }
         #endregion
 
-        [Authorize] //TODO: - Fix to display on dashboard
-        public ActionResult Dashboard()
-        {
-            var myIndexData = new IndexVM();
-            var allUnarchived = db.Tickets.Where(t => t.TicketStatus.TicketStatusName != "Deleted").Count();
+        //[Authorize] //TODO: - Fix to display on dashboard
+        //public ActionResult Dashboard()
+        //{
+        //    var myIndexData = new IndexVM();
+        //    var allUnarchived = db.Tickets.Where(t => t.TicketStatus.TicketStatusName != "Deleted").Count();
 
-            ViewBag.AllUnarchived = allUnarchived;
-            var allOpen = db.Tickets.Where(t => t.TicketStatus.TicketStatusName == "Open/Unassigned").Count();
-            ViewBag.AllOpen = allOpen;
-            var allClosed = db.Tickets.Where(t => t.TicketStatus.TicketStatusName == "Closed").Count();
-            ViewBag.AllClosed = allClosed;
-            var allArchived = db.Tickets.Where(t => t.TicketStatus.TicketStatusName == "Open/Assigned").Count();
-            ViewBag.AllArchived = allArchived;
-            return View(myIndexData);
-        }
+        //    ViewBag.AllUnarchived = allUnarchived;
+        //    var allOpen = db.Tickets.Where(t => t.TicketStatus.TicketStatusName == "Open/Unassigned").Count();
+        //    ViewBag.AllOpen = allOpen;
+        //    var allClosed = db.Tickets.Where(t => t.TicketStatus.TicketStatusName == "Closed").Count();
+        //    ViewBag.AllClosed = allClosed;
+        //    var allArchived = db.Tickets.Where(t => t.TicketStatus.TicketStatusName == "Open/Assigned").Count();
+        //    ViewBag.AllArchived = allArchived;
+        //    return View(myIndexData);
+        //}
     }
 }
      

@@ -86,7 +86,7 @@
                                         <span class="databox-number themeprimary">@ViewBag.AllArchived</span>
                                         <div class="databox-text darkgray">ASSIGNED TICKETS</div>
                                         <div class="databox-state bg-themeprimary">
-                                            <i class="fa fa-check"></i>
+                                            <i class="fa fa-tags"></i>
                                         </div>
                                     </div>
                                 </div>
@@ -100,7 +100,7 @@
                                     </div>
                                     <div class="databox-right">
                                         <span class="databox-number themeprimary">@ViewBag.AllClosed</span>
-                                        <div class="databox-text darkgray">CLOSED TICKETS</div>
+                                        <div class="databox-text darkgray">RESOLVED TICKETS</div>
                                         <div class="databox-state bg-themeprimary">
                                             <i class="fa fa-check"></i>
                                         </div>
@@ -111,73 +111,101 @@
                     </div>
                 </div>   
                 
-                @*<div class="row">
-                    <div class="col-xs-12 col-md-6">
-                        <div class="widget">
-                            <div class="widget-header ">
-                                <span class="widget-caption" id="title">Pie Chart</span>
-                                <div class="widget-buttons">
-                                    <a href="#" data-toggle="maximize">
-                                        <i class="fa fa-expand"></i>
-                                    </a>
-                                    <a href="#" data-toggle="collapse">
-                                        <i class="fa fa-minus"></i>
-                                    </a>
-                                    <a href="#" data-toggle="dispose">
-                                        <i class="fa fa-times"></i>
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="widget-body">
-                                <div class="row">
-                                    <div class="col-xs-12 col-md-3">
-                                        <div class="btn-toolbar pull-left">
-                                            <div class="btn-group-vertical">
-                                                <button id="example-1" class="btn btn-default btn-sm">All Tickets</button>
-                                                <button id="example-2" class="btn btn-default btn-sm">Open Tickets</button>
-                                                <button id="example-3" class="btn btn-default btn-sm">Assigned Tickets</button>
-                                                <button id="example-4" class="btn btn-default btn-sm">Resolved Tickets</button>
-                                              
-                                            </div>
-                                        </div>
-
+                <div class="col-lg-6 col-sm-6 col-xs-12">
+                    <div class="widget">
+                        <div class="widget-header bg-orange">
+                            <span class="widget-caption">Precentage of Total Tickets that are currently "Open"</span>
+                            <div class="widget-buttons">
+                                <div class="progress progress-bordered progress-striped active" style="width:150px;">
+                                    <div class="progress-bar progress-bar-darkorange" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: @ViewBag.AA%">
+                                        <span class="sr-only">
+                                            20% Complete (success)
+                                        </span>
                                     </div>
-                                    <div class="col-xs-12 col-md-9">
-                                        <div id="pie-chart" class="chart chart"></div>
-                                       
-                                    </div>
-
                                 </div>
                             </div>
                         </div>
+                        <div class="widget-body">
+
+                            <p>
+                                This is to advise the Admin and Project Managers the the STATUS of the ticket queues.
+                            </p>
+
+                        </div>
                     </div>
-                    <div class="col-xs-12 col-md-6">
-                        <div class="widget">
-                            <div class="widget-header ">
-                                <span class="widget-caption" id="title">Horizonal Chart</span>
-                                <div class="widget-buttons">
-                                    <a href="#" data-toggle="maximize">
-                                        <i class="fa fa-expand"></i>
-                                    </a>
-                                    <a href="#" data-toggle="collapse">
-                                        <i class="fa fa-minus"></i>
-                                    </a>
-                                    <a href="#" data-toggle="dispose">
-                                        <i class="fa fa-times"></i>
-                                    </a>
+                </div>
+
+                <div class="col-lg-6 col-sm-6 col-xs-12">
+                    <div class="widget">
+                        <div class="widget-header bg-yellow">
+                            <span class="widget-caption">Precentage of all Tickets that are currently "Resolved"</span>
+                            <div class="widget-buttons">
+                                <div class="progress progress-bordered progress-striped active" style="width:150px;">
+                                    <div class="progress-bar progress-bar-darkorange" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: @ViewBag.AC%" >
+                                        <span class="sr-only">
+                                            20% Complete (success)
+                                        </span>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="widget-body">
+                        </div>
+                        <div class="widget-body">
 
-                                <div id="horizonal-chart" class="chart chart-lg"></div>
+                            <p>
+                                This is to advise the Admin and Project Managers the PACE by which tickets in the queue get Resolved.
+                            </p>
 
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-6 col-sm-6 col-xs-12">
+                    <div class="widget">
+                        <div class="widget-header bg-blue">
+                            <span class="widget-caption">Precentage of all "Open" Tickets that are currently "Unassigned"</span>
+                            <div class="widget-buttons">
+                                <div class="progress progress-bordered progress-striped active" style="width:150px;">
+                                    <div class="progress-bar progress-bar-darkorange" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: @ViewBag.AO%">
+                                        <span class="sr-only">
+                                            20% Complete (success)
+                                        </span>
+                                    </div>
+                                </div>
                             </div>
+                        </div>
+                        <div class="widget-body">
+
+                            <p>
+                                This is to advise the Admin and Project Managers how many tickets have yet to be ADDRESSED by the Developers.
+                            </p>
+
+                        </div>
+                    </div>
+                </div>
+
+                @*<div class="col-lg-6 col-sm-6 col-xs-12">
+                    <div class="widget">
+                        <div class="widget-header bg-magenta">
+                            <span class="widget-caption">Colored Widget with Bordered ProgressBar</span>
+                            <div class="widget-buttons">
+                                <div class="progress progress-bordered progress-striped active" style="width:150px;">
+                                    <div class="progress-bar progress-bar-darkorange" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: @ViewBag.AC%">
+                                        <span class="sr-only">
+                                            20% Complete (success)
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="widget-body">
+
+                            <p>
+                                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                            </p>
+
                         </div>
                     </div>
                 </div>*@
-
-
-
             </div>
             <!-- /Page Body -->
         </div>
